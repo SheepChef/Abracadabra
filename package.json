@@ -4,6 +4,7 @@
   "private": false,
   "version": "3.1.10",
   "main": "./dist/abracadabra-cn.js",
+  "types": "./dist/abracadabra-cn.d.ts",
   "type": "module",
   "scripts": {
     "dev": "vite",
