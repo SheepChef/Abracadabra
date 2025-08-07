@@ -18,17 +18,19 @@
 传入的参数应当是JSON
 
 {
-  "method":"", // NEXT | OLD
+  "method":"", // WENYAN | OLD
   "inputType":"", // TEXT | UINT8
   "outputType":"", // TEXT | UINT8
-  "input":"",  //输入的数据，如果是TEXT请直接输入纯文本，如果是任意字节，请输入Base64编码字符串
+  "input":"",  // 输入的数据，如果是TEXT请直接输入纯文本，如果是任意字节，请输入Base64编码字符串
   "mode":"",   // ENCRYPT | DECRYPT | AUTO   // AUTO 仅在 method 指定 OLD 时合法 
-  "key":"",    //加密密钥，一个字符串 //如果缺省，自动使用默认值
-  "q":bool,    //OLD模式下，决定是否添加标志位 | NEXT模式下，决定输出密文是否有标点符号
-  "r":number,  //仅NEXT模式下需要：算法的随机程度，越大随机性越强，默认 50，最大100，超过100将会出错;
-  "p":bool,    //仅NEXT模式下需要：尽可能使用对仗的骈文句式; 与逻辑句式冲突
-  "l":bool,    //仅NEXT模式下需要：尽可能使用逻辑句式; 与骈文句式冲突
-  
+  "key":"",    // 加密密钥，一个字符串 //如果缺省，自动使用默认值
+  "q":bool,    // OLD模式下，决定是否添加标志位
+  "WenyanConfig":{ //文言文生成配置，解密时可以缺省。
+    "PunctuationMark": bool;// 指定是否为密文添加标点符号，默认 true/添加;
+    "RandomIndex":number,  // 仅WENYAN模式下需要：算法的随机程度，越大随机性越强，默认 50，最大100，超过100将会出错;
+    "PianwenMode":bool,    // 仅WENYAN模式下需要：尽可能使用对仗的骈文句式; 与逻辑句式冲突
+    "LogicMode":bool,    // 仅WENYAN模式下需要：尽可能使用逻辑句式; 与骈文句式冲突
+  },
 }
 
 */
@@ -62,18 +64,10 @@ function index(input) {
     return "INCORRECT JSON";
   }
 
-  if (input.method == "NEXT") {
+  if (input.method == "WENYAN") {
     if (input.inputType == "TEXT") {
       let Abra = new Abracadabra(input.inputType, input.outputType);
-      Abra.Input_Next(
-        input.input,
-        input.mode,
-        input.key,
-        input.q,
-        input.r,
-        input.p,
-        input.l
-      );
+      Abra.WenyanInput(input.input, input.mode, input.key, input.WenyanConfig);
       let Output = Abra.Output();
       if (input.outputType == "UINT8") {
         Output = uint8ArrayToBase64(Output);
@@ -82,15 +76,7 @@ function index(input) {
     } else if (input.inputType == "UINT8") {
       let Abra = new Abracadabra(input.inputType, input.outputType);
       let UINT8In = base64ToUint8Array(input.input);
-      Abra.Input_Next(
-        UINT8In,
-        input.mode,
-        input.key,
-        input.q,
-        input.r,
-        input.p,
-        input.l
-      );
+      Abra.WenyanInput(UINT8In, input.mode, input.key, input.WenyanConfig);
       let Output = Abra.Output();
       if (input.outputType == "UINT8") {
         Output = uint8ArrayToBase64(Output);

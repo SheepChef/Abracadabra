@@ -36,9 +36,89 @@ let Abra = new Abracadabra(InputMode, OutputMode);
 
 `TEXT` 表明将来的输入/输出为 `String`，`UINT8` 表明将来的输入/输出为 `Uint8Array`，你可以灵活使用两种不同的类型。
 
-### Input() 传统加密函数
+::: warning 接口兼容性须知
+旧的接口 `Input_Next()` 和 `Input()` 目前仍然可以使用，但未来的版本更新中会移除它们。
+:::
 
-Abracadabra 库中仅有三个方法，`Input()` 是其中一个。
+::: tip 文件加/解密
+使用`Uint8Array`作为输入/输出方式，魔曰可以加解密任意二进制(图片/视频/任何文件)，但是不推荐这么做。
+:::
+
+### WenyanInput() 文言仿真加密函数
+
+`WenyanInput()` 函数用来对数据执行文言文仿真加密。
+
+```js
+import { Abracadabra } from "abracadabra-cn";
+
+let Abra = new Abracadabra(); //不附带参数，
+
+/**
+ * 魔曰 文言文加密模式
+ *
+ * @param {string | Uint8Array} input 输入的数据，根据此前指定的输入类型，可能是字符串或字节数组
+ * @param {string} mode 指定模式，可以是 ENCRYPT DECRYPT 中的一种;
+ * @param {string} key 指定密钥，默认是 ABRACADABRA;
+ * @param {WenyanConfig} WenyanConfigObj 文言文的生成配置;
+ * @return {number} 成功则返回 0（失败不会返回，会抛出异常）
+ */
+Abra.WenyanInput(input, mode, key, {...});
+```
+
+第一个参数 `input` 接受两种类型的输入，分别是 `String` 和 `Uint8Array`，这是此前在实例化的时候指定的输入类型。
+
+如果你指定了 `UINT8` 却传入 `String`，将抛出错误，反之亦然。
+
+第二个参数 `mode` 接受上文中特定字符串的输入，任何其他输入都将被忽略，不会输出任何结果。
+
+第三个参数 `key` 接受字符串类型的密钥输入，如果不提供，则默认使用内置密钥 `ABRACADABRA`。
+
+如果指定了错误的密码，那么在解码/解密数据校验过程中会抛出错误。
+
+第四个参数接受一个`WenyanConfig`配置对象的输入，仅在加密的时候需要：
+
+```javascript
+export interface WenyanConfig {
+  /** 指定是否为密文添加标点符号，默认 true/添加; */
+  PunctuationMark?: boolean;
+  /** 密文算法的随机程度，越大随机性越强，默认 50，最大100，超过100将会出错; */
+  RandomIndex?: number;
+  /** 指定是否强制生成骈文密文，默认 false; */
+  PianwenMode?: boolean;
+  /** 指定是否强制生成逻辑密文，默认 false; */
+  LogicMode?: boolean;
+}
+```
+
+`PunctuationMark` 是布尔值，默认为 `true`。如果传入 `false`，则加密结果中将不含标点符号，解密时可以忽略这个参数。
+
+`RandomIndex` 是整数值，默认为`50`，最小值`0`，最大值`100`，超过 100 的输入将会报错。输入值越大，载荷量选择算法的随机性越大；输入值为 0 时，句式选择步骤将只选择载荷字较多的那个。解密时可以忽略这个参数。
+
+`PianwenMode` 是布尔值，不指定则默认为 `false`。如果传入 `true`，则加密结果会优先使用骈文句式，呈现四字到五字一组的对仗格律，这有助于减少密文的总体长度。解密时可以忽略这个参数。
+
+`LogicMode` 是布尔值，默认为 `false`。如果传入 `true`，则加密结果会优先使用逻辑句式，呈现强论述类逻辑风格。解密时可以忽略这个参数。
+
+`PianwenMode` 和 `LogicMode` 不能同时指定为 `true`，否则会抛出错误。
+
+```javascript
+//正确调用方式：
+
+import { Abracadabra } from "abracadabra-cn";
+let Abra = new Abracadabra(); //不附带参数，
+
+Abra.WenyanInput(TestTemp, "ENCRYPT", "ABRACADABRA", {
+  RandomIndex: 25,
+  PianwenMode: true,
+}); //指定随机指数为25，并使用骈文模式，缺省项自动使用默认值
+
+Abra.WenyanInput(TestTemp, "DECRYPT", "ABRACADABRA"); //解密不需要传入配置
+```
+
+在无错误的情况下， `WenyanInput()` 函数的返回值通常是 `0`。
+
+### OldInput() 传统加密函数
+
+`OldInput()` 用传统模式加密密文。
 
 ```js
 import { Abracadabra } from "abracadabra-cn";
@@ -58,7 +138,7 @@ Abracadabra.AUTO = "AUTO";
 自动(遵循自动逻辑)
 
 */
-Abra.Input(input, mode, key, q);
+Abra.OldInput(input, mode, key, q);
 ```
 
 第一个参数 `input` 接受两种类型的输入，分别是 `String` 和 `Uint8Array`，这是此前在实例化的时候指定的输入类型。
@@ -73,51 +153,7 @@ Abra.Input(input, mode, key, q);
 
 第四个参数 `q` 接受布尔值的输入，如果传入 `true`，则加密结果中将不含标志位，更加隐蔽，但解密时需要强制解密。
 
-在无错误的情况下， `Input()` 函数的返回值通常是 `0`。
-
-### Input_Next() 文言仿真加密函数
-
-`Input_Next()` 函数用来对数据执行文言文仿真加密。
-
-```js
-import { Abracadabra } from "abracadabra-cn";
-
-let Abra = new Abracadabra(); //不附带参数，
-
-/*
-MODES:
-
-Abracadabra.ENCRYPT = "ENCRYPT";
-强制加密
-
-Abracadabra.DECRYPT = "DECRYPT";
-强制解密
-
-*/
-Abra.Input_Next(input, mode, key, q, r, p, l);
-```
-
-第一个参数 `input` 接受两种类型的输入，分别是 `String` 和 `Uint8Array`，这是此前在实例化的时候指定的输入类型。
-
-如果你指定了 `UINT8` 却传入 `String`，将抛出错误，反之亦然。
-
-第二个参数 `mode` 接受上文中特定字符串的输入，任何其他输入都将被忽略，不会输出任何结果。
-
-第三个参数 `key` 接受字符串类型的密钥输入，如果不提供，则默认使用内置密钥 `ABRACADABRA`。
-
-如果指定了错误的密码，那么在解码/解密数据校验过程中会抛出错误。
-
-第四个参数 `q` 接受布尔值的输入，默认为 `true`。如果传入 `false`，则加密结果中将不含标点符号，解密时可以忽略这个参数。
-
-第五个参数 `r` 接受整数值的输入，默认为`50`，最小值`0`，最大值`100`，超过 100 的输入将会报错。输入值越大，载荷量选择算法的随机性越大；输入值为 0 时，句式选择步骤将只选择载荷字较多的那个。解密时可以忽略这个参数。
-
-第六个参数 `p` 接受布尔值的输入，默认为 `false`。如果传入 `true`，则加密结果会优先使用骈文句式，呈现四字到五字一组的对仗格律，这有助于减少密文的总体长度。解密时可以忽略这个参数。
-
-第七个参数 `l` 接受布尔值的输入，默认为 `false`。如果传入 `true`，则加密结果会优先使用逻辑句式，呈现强论述类逻辑风格。解密时可以忽略这个参数。
-
-`p` 和 `l` 不能同时指定为 `true`，否则会抛出错误。
-
-在无错误的情况下， `Input_Next()` 函数的返回值通常是 `0`。
+在无错误的情况下， `OldInput()` 函数的返回值通常是 `0`。
 
 ### Output()
 
@@ -126,12 +162,12 @@ import { Abracadabra } from "abracadabra-cn";
 
 let Abra = new Abracadabra(); //不附带参数，
 
-Abra.Input(input, mode, key, q);
+Abra.OldInput(input, mode, key, q);
 
 let Result = Abra.Output(); //获取输出
 ```
 
-在调用 `Output()` 之前，你需要至少调用过一次 `Input()`，否则将会抛出错误。
+在调用 `Output()` 之前，你需要至少调用过一次 `WenyanInput()` 或者 `OldInput()`，否则将会抛出错误。
 
 调用 `Output()` 将获得此前输入的处理结果，其返回类型可能是 `String` 或 `Uint8Array`，取决于对象实例化时指定了何种输出模式。
 
@@ -176,10 +212,10 @@ npm run build
 ```
 
 如果你对密码映射表做出了修改，那么请确保将 JSON 压缩成一行，转义成字符串。  
-然后修改 `utils.js`(传统加密) 或者 `utils_next.js`(文言加密)：
+然后修改 `ChineseMappingHelper.js` 中的 `OldMapper` 类(传统加密) 或者 `WenyanSimulator` 类(文言加密)：
 
 ```js
-const Map = "...."; // 字符串内填密码映射表
+this.Map = "...."; // 字符串内填密码映射表
 ```
 
 在执行编译时，会自动对文言文密本中的句式语法执行检查，如果有问题，则会报错并提示编译失败。  

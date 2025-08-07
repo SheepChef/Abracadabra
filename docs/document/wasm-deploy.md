@@ -10,19 +10,25 @@
 
 本模块的合法输入为一个 JSON 字符串，输入时请勿附带注释，遵循以下格式：
 
+::: warning 兼容性提示
+注意，V3.2 修改了接口标准，WASM 未对旧版本留有兼容，请参照新版接口来编写调用方式。
+:::
+
 ```json
 {
-  "method":"", // NEXT | OLD
+  "method":"", // WENYAN | OLD
   "inputType":"", // TEXT | UINT8
   "outputType":"", // TEXT | UINT8
-  "input":"",  //输入的数据，如果是TEXT请直接输入纯文本，如果是任意字节，请输入Base64编码字符串
+  "input":"",  // 输入的数据，如果是TEXT请直接输入纯文本，如果是任意字节，请输入Base64编码字符串
   "mode":"",   // ENCRYPT | DECRYPT | AUTO   // AUTO 仅在 method 指定 OLD 时合法
-  "key":"",    //加密密钥，一个字符串 //如果缺省，自动使用默认值
-  "q":bool,    //OLD模式下，决定是否添加标志位 | NEXT模式下，决定输出密文是否有标点符号
-  "r":number,  //仅NEXT模式下需要：算法的随机程度，越大随机性越强，默认 50，最大100，超过100将会出错;
-  "p":bool,    //仅NEXT模式下需要：尽可能使用对仗的骈文句式; 与逻辑句式冲突
-  "l":bool,    //仅NEXT模式下需要：尽可能使用逻辑句式; 与骈文句式冲突
-
+  "key":"",    // 加密密钥，一个字符串 //如果缺省，自动使用默认值
+  "q":bool,    // OLD模式下，决定是否添加标志位
+  "WenyanConfig":{ //文言文生成配置，可以缺省，缺省自动使用默认值。
+    "PunctuationMark": bool, // 指定是否为密文添加标点符号，默认 true/添加;
+    "RandomIndex": number,  // 仅WENYAN模式下需要：算法的随机程度，越大随机性越强，默认 50，最大100，超过100将会出错;
+    "PianwenMode":bool,    // 仅WENYAN模式下需要：尽可能使用对仗的骈文句式; 与逻辑句式冲突
+    "LogicMode":bool,    // 仅WENYAN模式下需要：尽可能使用逻辑句式; 与骈文句式冲突
+  },
 }
 ```
 
@@ -33,7 +39,7 @@
 注意在 Windows CMD 中，输入的字符串**不需要**用单引号囊括。
 
 ```sh
-echo '{"method":"NEXT","mode":"ENCRYPT","inputType":"TEXT","outputType":"TEXT","input":"愿青空的祝福，与我的羽翼同在","key":"ABRACADABRA","q":true,"r":50,"p":false,"l":false}' | wasmtime abracadabra-cn.wasm
+echo '{"method":"WENYAN","mode":"ENCRYPT","inputType":"TEXT","outputType":"TEXT","input":"愿青空的祝福，与我的羽翼同在","key":"ABRACADABRA","WenyanConfig":{"PianwenMode":true}}' | wasmtime abracadabra-cn.wasm
 ```
 
 对于其他语言，你需要使用 Wasmtime WASI 的 `stdin` 和 `stdout` 接口来操作本模块的输入输出，调用 `_start` 方法来启动本模块。

@@ -27,10 +27,8 @@
  *
  */
 
-import { Base64 } from "js-base64";
-import * as Util from "./utils.js";
-import * as Util_Next from "./utils_next.js";
-
+import * as Core from "./CoreHandler.js";
+import { preCheck_OLD, PreCheckResult, stringToUint8Array } from "./Misc.js";
 export class Abracadabra {
   //主类
 
@@ -64,6 +62,52 @@ export class Abracadabra {
     this.#output = outputType;
   }
   /**
+   * 魔曰 文言文加密模式
+   *
+   * @param{string | Uint8Array}input 输入的数据，根据此前指定的输入类型，可能是字符串或字节数组
+   * @param{string}mode 指定模式，可以是 ENCRYPT DECRYPT 中的一种;
+   * @param{string}key 指定密钥，默认是 ABRACADABRA;
+   * @param{WenyanConfig}WenyanConfigObj 文言文的生成配置;
+   */
+  WenyanInput(
+    input,
+    mode,
+    key = "ABRACADABRA",
+    WenyanConfigObj = new Core.WenyanConfig(true, 50, false, false)
+  ) {
+    if (this.#input == Abracadabra.UINT8) {
+      //如果指定输入类型是UINT8
+      if (Object.prototype.toString.call(input) != "[object Uint8Array]") {
+        throw "Unexpected Input Type";
+      }
+      if (mode == Abracadabra.ENCRYPT) {
+        let Nextinput = new Object();
+        Nextinput.output = input;
+        this.#res = Core.Enc(Nextinput, key, WenyanConfigObj);
+      } else if (mode == Abracadabra.DECRYPT) {
+        let Nextinput = new Object();
+        Nextinput.output = input;
+        this.#res = Core.Dec(Nextinput, key);
+      }
+      return 0;
+    } else if (this.#input == Abracadabra.TEXT) {
+      //如果指定输入类型是TEXT
+      if (Object.prototype.toString.call(input) != "[object String]") {
+        throw "Unexpected Input Type";
+      }
+      let Nextinput = new Object();
+      Nextinput.output = stringToUint8Array(input);
+      if (mode == Abracadabra.ENCRYPT) {
+        this.#res = Core.Enc(Nextinput, key, WenyanConfigObj);
+      } else if (mode == Abracadabra.DECRYPT) {
+        this.#res = Core.Dec(Nextinput, key);
+      }
+      return 0;
+    }
+    return 0;
+  }
+
+  /**
    * 魔曰 传统加密模式
    *
    * @param{string | Uint8Array}input 输入的数据，根据此前指定的输入类型，可能是字符串或字节数组
@@ -71,7 +115,7 @@ export class Abracadabra {
    * @param{string}key 指定密钥，默认是 ABRACADABRA;
    * @param{bool}q 指定是否在加密后省略标志位，默认 false/不省略;
    */
-  Input(input, mode, key = "ABRACADABRA", q = false) {
+  OldInput(input, mode, key = "ABRACADABRA", q = false) {
     if (this.#input == Abracadabra.UINT8) {
       //如果指定输入类型是UINT8
       if (Object.prototype.toString.call(input) != "[object Uint8Array]") {
@@ -91,7 +135,7 @@ export class Abracadabra {
       if (!NoNeedtoPreCheck) {
         //如果给定的数据是一个可解码的字符串，那么解码预检
         //此时参照预检结果和指定的模式进行判断
-        preCheckRes = Util.preCheck(inputString);
+        preCheckRes = preCheck_OLD(inputString);
 
         if (
           (preCheckRes.isEncrypted && mode != Abracadabra.ENCRYPT) ||
@@ -99,34 +143,35 @@ export class Abracadabra {
         ) {
           //如果是加密的字符串且没有强制指定要再次加密，或者强制执行解密,自动执行解密
           //如果是加密的字符串,指定AUTO在此处会自动解密
-          this.#res = Util.deMap(preCheckRes, key);
+          this.#res = Core.Dec_OLD(preCheckRes, key);
         } else {
-          this.#res = Util.enMap(preCheckRes, key, q); //在字符串可解码的情况下，加密时不采用文件模式
+          this.#res = Core.Enc_OLD(preCheckRes, key, q); //在字符串可解码的情况下，加密时不采用文件模式
         }
       } else {
         //如果给定的数据不可预检(不可能是密文，此时强制解密无效)，直接对数据传递给加密函数
-        preCheckRes = new Util.PreCheckResult(input, true, false);
-        this.#res = Util.enMap(preCheckRes, key, q);
+        preCheckRes = new PreCheckResult(input, true);
+        this.#res = Core.Enc_OLD(preCheckRes, key, q);
       }
     } else if (this.#input == Abracadabra.TEXT) {
       //如果指定输入类型是TEXT
       if (Object.prototype.toString.call(input) != "[object String]") {
         throw "Unexpected Input Type";
       }
-      let preCheckRes = Util.preCheck(input);
+      let preCheckRes = preCheck_OLD(input);
       if (
         (preCheckRes.isEncrypted && mode != Abracadabra.ENCRYPT) ||
         mode == Abracadabra.DECRYPT
       ) {
         //如果是加密的字符串且没有强制指定要再次加密，或者强制执行解密,自动执行解密
         //如果是加密的字符串,指定AUTO在此处会自动解密
-        this.#res = Util.deMap(preCheckRes, key);
+        this.#res = Core.Dec_OLD(preCheckRes, key);
       } else {
-        this.#res = Util.enMap(preCheckRes, key, q); //在字符串可解码的情况下，加密时不采用文件模式
+        this.#res = Core.Enc_OLD(preCheckRes, key, q); //在字符串可解码的情况下，加密时不采用文件模式
       }
     }
     return 0;
   }
+
   /**
    * 魔曰 获取加密/解密后的结果
    */
@@ -163,8 +208,27 @@ export class Abracadabra {
       }
     }
   }
+
+  /**
+   * 魔曰 传统加密模式
+   *
+   * **这是一个过时的接口，请尽可能切换到新接口 OldInput()**
+   *
+   * @param{string | Uint8Array}input 输入的数据，根据此前指定的输入类型，可能是字符串或字节数组
+   * @param{string}mode 指定模式，可以是 ENCRYPT DECRYPT AUTO 中的一种;
+   * @param{string}key 指定密钥，默认是 ABRACADABRA;
+   * @param{bool}q 指定是否在加密后省略标志位，默认 false/不省略;
+   */
+  /* v8 ignore next 4 */
+  get Input() {
+    // 使用 getter 属性
+    return this.OldInput;
+  }
+
   /**
    * 魔曰 文言文加密模式
+   *
+   * **这是一个过时的接口，请尽可能切换到新接口 WenyanInput()**
    *
    * @param{string | Uint8Array}input 输入的数据，根据此前指定的输入类型，可能是字符串或字节数组
    * @param{string}mode 指定模式，可以是 ENCRYPT DECRYPT 中的一种;
@@ -174,6 +238,7 @@ export class Abracadabra {
    * @param{bool}p 指定是否强制生成骈文密文，默认 false;
    * @param{bool}l 指定是否强制生成逻辑密文，默认 false;
    */
+  /* v8 ignore next 12 */
   Input_Next(
     input,
     mode,
@@ -183,35 +248,7 @@ export class Abracadabra {
     p = false,
     l = false
   ) {
-    if (this.#input == Abracadabra.UINT8) {
-      //如果指定输入类型是UINT8
-      if (Object.prototype.toString.call(input) != "[object Uint8Array]") {
-        throw "Unexpected Input Type";
-      }
-      if (mode == Abracadabra.ENCRYPT) {
-        let Nextinput = new Object();
-        Nextinput.output = input;
-        this.#res = Util_Next.enMap(Nextinput, key, q, r, p, l);
-      } else if (mode == Abracadabra.DECRYPT) {
-        let Nextinput = new Object();
-        Nextinput.output = input;
-        this.#res = Util_Next.deMap(Nextinput, key);
-      }
-      return 0;
-    } else if (this.#input == Abracadabra.TEXT) {
-      //如果指定输入类型是TEXT
-      if (Object.prototype.toString.call(input) != "[object String]") {
-        throw "Unexpected Input Type";
-      }
-      let Nextinput = new Object();
-      Nextinput.output = Util.stringToUint8Array(input);
-      if (mode == Abracadabra.ENCRYPT) {
-        this.#res = Util_Next.enMap(Nextinput, key, q, r, p, l);
-      } else if (mode == Abracadabra.DECRYPT) {
-        this.#res = Util_Next.deMap(Nextinput, key);
-      }
-      return 0;
-    }
-    return 0;
+    let conf = new Core.WenyanConfig(q, r, p, l);
+    return this.WenyanInput(input, mode, key, conf);
   }
 }

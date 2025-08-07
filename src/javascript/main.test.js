@@ -56,31 +56,28 @@ test("加/解密测试", { timeout: 15000 }, () => {
 
   //将随机字符串用仿真加密循环加/解密6次，判断一致性和中途是否出错。
   for (let i = 0; i <= 6; i++) {
-    Abra.Input_Next(
-      TestTemp,
-      "ENCRYPT",
-      "ABRACADABRA",
-      i % 2 == 0,
-      50,
-      i % 2 == 0,
-      i % 2 != 0
-    );
+    Abra.WenyanInput(TestTemp, "ENCRYPT", "ABRACADABRA", {
+      PunctuationMark: i % 2 == 0,
+      RandomIndex: 50,
+      PianwenMode: i % 2 == 0,
+      LogicMode: i % 2 != 0,
+    });
     TestTemp = Abra.Output();
   }
 
   for (let i = 0; i <= 6; i++) {
-    Abra.Input_Next(TestTemp, "DECRYPT", "ABRACADABRA");
+    Abra.WenyanInput(TestTemp, "DECRYPT", "ABRACADABRA");
     TestTemp = Abra.Output();
   }
 
   //将随机字符串用传统加密循环加/解密6次，判断一致性和中途是否出错。
   for (let i = 0; i <= 6; i++) {
-    Abra.Input(TestTemp2, "ENCRYPT", "ABRACADABRA", true);
+    Abra.OldInput(TestTemp2, "ENCRYPT", "ABRACADABRA", true);
     TestTemp2 = Abra.Output();
   }
 
   for (let i = 0; i <= 6; i++) {
-    Abra.Input(TestTemp2, "DECRYPT", "ABRACADABRA");
+    Abra.OldInput(TestTemp2, "DECRYPT", "ABRACADABRA");
     TestTemp2 = Abra.Output();
   }
   expect(TestTemp).toBe(TestString);
@@ -88,9 +85,9 @@ test("加/解密测试", { timeout: 15000 }, () => {
 
   //测试传统加密标志位
 
-  Abra.Input(TestTemp3, "AUTO", "ABRACADABRA");
+  Abra.OldInput(TestTemp3, "AUTO", "ABRACADABRA");
   TestTemp3 = Abra.Output();
-  Abra.Input(TestTemp3, "AUTO", "ABRACADABRA");
+  Abra.OldInput(TestTemp3, "AUTO", "ABRACADABRA");
   TestTemp3 = Abra.Output();
 
   expect(TestTemp3).toBe(TestString);
@@ -104,14 +101,16 @@ test("链接压缩测试", { timeout: 15000 }, () => {
     //测试不同链接的加解密一致性
     let TestTemp = "";
     let TestTemp2 = "";
-    Abra.Input_Next(item, "ENCRYPT", "ABRACADABRA", true, 100);
+    Abra.WenyanInput(item, "ENCRYPT", "ABRACADABRA", {
+      RandomIndex: 100,
+    });
     TestTemp = Abra.Output();
-    Abra.Input_Next(TestTemp, "DECRYPT", "ABRACADABRA");
+    Abra.WenyanInput(TestTemp, "DECRYPT", "ABRACADABRA");
     TestTemp = Abra.Output();
 
-    Abra.Input(item, "ENCRYPT", "ABRACADABRA", true);
+    Abra.OldInput(item, "ENCRYPT", "ABRACADABRA", true);
     TestTemp2 = Abra.Output();
-    Abra.Input(TestTemp2, "DECRYPT", "ABRACADABRA");
+    Abra.OldInput(TestTemp2, "DECRYPT", "ABRACADABRA");
     TestTemp2 = Abra.Output();
 
     expect(TestTemp).toBe(item);
@@ -127,20 +126,22 @@ test("随机数据加密测试", { timeout: 15000 }, () => {
     let TestTemp;
     let TestTemp2;
     let TestTemp3;
-    Abra.Input_Next(data, "ENCRYPT", "ABRACADABRA", true, 100);
+    Abra.WenyanInput(data, "ENCRYPT", "ABRACADABRA", {
+      RandomIndex: 100,
+    });
     TestTemp = Abra.Output();
-    Abra.Input_Next(TestTemp, "DECRYPT", "ABRACADABRA");
+    Abra.WenyanInput(TestTemp, "DECRYPT", "ABRACADABRA");
     TestTemp = Abra.Output();
 
-    Abra.Input(data, "ENCRYPT", "ABRACADABRA", true);
+    Abra.OldInput(data, "ENCRYPT", "ABRACADABRA", true);
     TestTemp2 = Abra.Output();
-    Abra.Input(TestTemp2, "DECRYPT", "ABRACADABRA");
+    Abra.OldInput(TestTemp2, "DECRYPT", "ABRACADABRA");
     TestTemp2 = Abra.Output();
 
     //传统模式，自动判别
-    Abra.Input(data, "AUTO", "ABRACADABRA");
+    Abra.OldInput(data, "AUTO", "ABRACADABRA");
     TestTemp3 = Abra.Output();
-    Abra.Input(TestTemp3, "AUTO", "ABRACADABRA");
+    Abra.OldInput(TestTemp3, "AUTO", "ABRACADABRA");
     TestTemp3 = Abra.Output();
 
     expect(TestTemp).toStrictEqual(data);

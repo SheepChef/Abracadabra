@@ -7,11 +7,47 @@ export default withMermaid({
   title: "Abracadabra 魔曰",
   description:
     "Abracadabra 魔曰是安全，高效的文本加密工具，可以将数据加密为汉字构成的文言文。",
-  head: [["link", { rel: "icon", href: "/logo.png" }]],
+  head: [
+    ["link", { rel: "icon", href: "/logo.png" }],
+    [
+      "meta",
+      {
+        name: "keywords",
+        content:
+          "加密, 文本加密, 链接加密, 隐私工具, 数据安全, 安全, 网络安全, 密码, 汉字编码, 中文",
+      },
+    ],
+    ["meta", { name: "author", content: "SheepChef" }],
+    [
+      "meta",
+      {
+        property: "og:title",
+        content: "魔曰 — 古文风文本加密工具",
+      },
+    ],
+    [
+      "meta",
+      {
+        property: "og:description",
+        content:
+          "Abracadabra 魔曰，是安全高效的文本加密工具，可以将数据加密为汉字构成的文言文",
+      },
+    ],
+    ["meta", { property: "og:url", content: "https://abracadabra.js.org" }],
+    [
+      "meta",
+      { property: "og:image", content: "https://abracadabra.js.org/logo.png" },
+    ],
+    [
+      "meta",
+      {
+        name: "google-site-verification",
+        content: "NDhYJs2rXcRRZ4pfZBJxmshD0CQ8iYWc6p7YHT0ArG4",
+      },
+    ],
+  ],
 
   themeConfig: {
-    // https://vitepress.dev/reference/default-theme-config
-
     nav: [
       { text: "主页", link: "/" },
       { text: "文档", link: "/document/quick-start.md" },

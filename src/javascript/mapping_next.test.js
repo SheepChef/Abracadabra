@@ -11,8 +11,9 @@
  */
 
 import { expect, test } from "vitest";
+import { WenyanSimulator } from "./ChineseMappingHelper";
 
-import { Map } from "./utils_next.js";
+const Map = new WenyanSimulator(" ").Map;
 
 function Check(Map2) {
   const Map_Obj = JSON.parse(Map2);
