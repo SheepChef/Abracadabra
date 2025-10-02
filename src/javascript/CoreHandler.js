@@ -44,13 +44,40 @@ export class WenyanConfig {
     this.Traditional = Traditional;
   }
 }
+
+export class CallbackObj {
+  /**
+   * 魔曰 Debug 回调位点对象
+   *
+   * ENC/DEC_BASE64 (Base64字符串)
+   *
+   * ROUNDS (转轮状态)
+   *
+   * ENC_MAPTEMP (映射过程变量)
+   *
+   * ENC_SENTENCES (组句步骤变量)
+   *
+   * ENC_PAYLOADS (加密的载荷分配数组)
+   *
+   * DEC_PAYLOAD (解密提取的有效载荷)
+   *
+   *
+   * @param{string}Type 指定回调参数的Tag
+   * @param{string}Value 回调参数的值
+   */
+  constructor(Type = "NORMAL", Value = null) {
+    this.Type = Type;
+    this.Value = Value;
+  }
+}
+
 /**
  * @param{WenyanConfig}WenyanConfigObj 文言文的生成配置;
  */
-export function Enc(input, key, WenyanConfigObj) {
+export function Enc(input, key, WenyanConfigObj, callback = null) {
   //初始化
   //input.output Uint8Array
-  let WenyanSimulatorObj = new WenyanSimulator(key);
+  let WenyanSimulatorObj = new WenyanSimulator(key, callback);
 
   let OriginalData = new Uint8Array();
   OriginalData = input.output;
@@ -62,13 +89,16 @@ export function Enc(input, key, WenyanConfigObj) {
 
   //对未处理的数据计算校验和，放在末尾
   TempArray.set([GetLuhnBit(OriginalData)], OriginalData.byteLength);
+
   //压缩
   OriginalData = Compress(TempArray);
   //加密
   OriginalData = Encrypt(OriginalData, key);
 
   let OriginStr = RemovePadding(Base64.fromUint8Array(OriginalData));
-
+  try {
+    if (callback != null) callback(new CallbackObj("ENC_BASE64", OriginStr));
+  } catch (err) {}
   //映射
   let Res = WenyanSimulatorObj.enMap(
     OriginStr,
@@ -90,10 +120,10 @@ export function Enc(input, key, WenyanConfigObj) {
   return Res;
 }
 
-export function Dec(input, key) {
+export function Dec(input, key, callback) {
   //初始化
   //input.output Uint8Array
-  let WenyanSimulatorObj = new WenyanSimulator(key);
+  let WenyanSimulatorObj = new WenyanSimulator(key, callback);
   let OriginStr = Uint8ArrayTostring(input.output);
 
   //解映射

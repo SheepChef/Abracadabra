@@ -68,12 +68,14 @@ export class Abracadabra {
    * @param{string}mode 指定模式，可以是 ENCRYPT DECRYPT 中的一种;
    * @param{string}key 指定密钥，默认是 ABRACADABRA;
    * @param{WenyanConfig}WenyanConfigObj 文言文的生成配置;
+   * @param{function}callback 文言文的生成配置;
    */
   WenyanInput(
     input,
     mode,
     key = "ABRACADABRA",
-    WenyanConfigObj = new Core.WenyanConfig(true, 50, false, false)
+    WenyanConfigObj = new Core.WenyanConfig(true, 50, false, false),
+    callback
   ) {
     if (this.#input == Abracadabra.UINT8) {
       //如果指定输入类型是UINT8
@@ -83,7 +85,7 @@ export class Abracadabra {
       if (mode == Abracadabra.ENCRYPT) {
         let Nextinput = new Object();
         Nextinput.output = input;
-        this.#res = Core.Enc(Nextinput, key, WenyanConfigObj);
+        this.#res = Core.Enc(Nextinput, key, WenyanConfigObj, callback);
       } else if (mode == Abracadabra.DECRYPT) {
         let Nextinput = new Object();
         Nextinput.output = input;
@@ -98,7 +100,7 @@ export class Abracadabra {
       let Nextinput = new Object();
       Nextinput.output = stringToUint8Array(input);
       if (mode == Abracadabra.ENCRYPT) {
-        this.#res = Core.Enc(Nextinput, key, WenyanConfigObj);
+        this.#res = Core.Enc(Nextinput, key, WenyanConfigObj, callback);
       } else if (mode == Abracadabra.DECRYPT) {
         this.#res = Core.Dec(Nextinput, key);
       }
