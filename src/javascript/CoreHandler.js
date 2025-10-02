@@ -34,12 +34,14 @@ export class WenyanConfig {
     PunctuationMark = true,
     RandomIndex = 50,
     PianwenMode = false,
-    LogicMode = false
+    LogicMode = false,
+    Traditional = false
   ) {
     this.PunctuationMark = PunctuationMark;
     this.RandomIndex = RandomIndex;
     this.PianwenMode = PianwenMode;
     this.LogicMode = LogicMode;
+    this.Traditional = Traditional;
   }
 }
 /**
@@ -79,7 +81,10 @@ export function Enc(input, key, WenyanConfigObj) {
     WenyanConfigObj.PianwenMode !== undefined
       ? WenyanConfigObj.PianwenMode
       : false,
-    WenyanConfigObj.LogicMode !== undefined ? WenyanConfigObj.LogicMode : false
+    WenyanConfigObj.LogicMode !== undefined ? WenyanConfigObj.LogicMode : false,
+    WenyanConfigObj.Traditional !== undefined
+      ? WenyanConfigObj.Traditional
+      : false
   );
 
   return Res;

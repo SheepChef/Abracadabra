@@ -61,6 +61,7 @@ test("加/解密测试", { timeout: 15000 }, () => {
       RandomIndex: 50,
       PianwenMode: i % 2 == 0,
       LogicMode: i % 2 != 0,
+      Traditional: i % 2 != 0,
     });
     TestTemp = Abra.Output();
   }

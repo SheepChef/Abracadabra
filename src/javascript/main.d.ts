@@ -9,6 +9,8 @@ export interface WenyanConfig {
   PianwenMode?: boolean;
   /** 指定是否强制生成逻辑密文，默认 false; */
   LogicMode?: boolean;
+  /** 指定输出文本是否为繁体中文，默认 false; */
+  Traditional?: boolean;
 }
 export class Abracadabra {
   static TEXT: "TEXT";
