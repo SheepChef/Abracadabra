@@ -662,10 +662,6 @@ export class WenyanSimulator {
 
     this.RoundKey(); //首次对表前，先转动一次转轮
     for (let j = 0; j < Sentence.length; j++) {
-      try {
-        if (this.callback != null)
-          this.callback(new CallbackObj("ENC_MAPTEMP", TempStr1));
-      } catch (err) {}
       hasSpecialEndSymbol = false;
       CommaNumInSentence = 0;
       for (let k = 0; k < Sentence[j].length; k++) {
@@ -758,6 +754,10 @@ export class WenyanSimulator {
           //如果已填充的有效载荷满足了预计添加的载荷，那么标记已完成。
           Finished = true;
         }
+        try {
+          if (this.callback != null)
+            this.callback(new CallbackObj("ENC_MAPTEMP", TempStr1));
+        } catch (err) {}
       }
       //这里是句式和句式的外层控制循环
       if (Finished) {
@@ -772,6 +772,11 @@ export class WenyanSimulator {
           LastQuoteMark = false;
         }
         NoAutoSymbol = false;
+        try {
+          if (this.callback != null)
+            this.callback(new CallbackObj("ENC_MAPTEMP", TempStr1));
+        } catch (err) {}
+
         break;
       } else {
         if (q && !hasSpecialEndSymbol && !NoAutoSymbol) {

@@ -34,13 +34,15 @@ export class Abracadabra {
    * @param {string} mode 指定模式，可以是 ENCRYPT DECRYPT 中的一种;
    * @param {string} key 指定密钥，默认是 ABRACADABRA;
    * @param {WenyanConfig} WenyanConfigObj 文言文的生成配置;
+   * @param {any}callback 回调函数，获取执行过程中特定位置的结果
    * @return {number} 成功则返回 0（失败不会返回，会抛出异常）
    */
   WenyanInput(
     input: string | Uint8Array,
     mode: "ENCRYPT" | "DECRYPT",
     key?: string,
-    WenyanConfigObj?: WenyanConfig
+    WenyanConfigObj?: WenyanConfig,
+    callback?: any
   ): number;
 
   /**

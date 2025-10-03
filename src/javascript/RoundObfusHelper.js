@@ -12,6 +12,7 @@
 
 import CryptoJS from "crypto-js";
 import { wordArrayToUint8Array } from "./Misc.js";
+import { CallbackObj } from "./CoreHandler.js";
 
 export class RoundObfus {
   constructor(key, callback = null) {

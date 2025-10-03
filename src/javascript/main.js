@@ -89,7 +89,7 @@ export class Abracadabra {
       } else if (mode == Abracadabra.DECRYPT) {
         let Nextinput = new Object();
         Nextinput.output = input;
-        this.#res = Core.Dec(Nextinput, key);
+        this.#res = Core.Dec(Nextinput, key, callback);
       }
       return 0;
     } else if (this.#input == Abracadabra.TEXT) {
@@ -102,7 +102,7 @@ export class Abracadabra {
       if (mode == Abracadabra.ENCRYPT) {
         this.#res = Core.Enc(Nextinput, key, WenyanConfigObj, callback);
       } else if (mode == Abracadabra.DECRYPT) {
-        this.#res = Core.Dec(Nextinput, key);
+        this.#res = Core.Dec(Nextinput, key, callback);
       }
       return 0;
     }
