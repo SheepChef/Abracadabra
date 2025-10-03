@@ -17,13 +17,14 @@ const SIG_DECRYPT_CN = "玚俟玊欤瞐珏";
 
 const NULL_STR = "孎"; //默认忽略的占位字符，一个生僻字。
 
-var array = new Uint32Array(1);
+let array = new Uint32Array(1);
+let seed = 0;
 
 try {
   window.crypto.getRandomValues(array);
-  var seed = array[0];
+  seed = array[0];
 } catch (err) {
-  var seed = Date.now();
+  seed = Date.now();
 }
 
 var MT = new MersenneTwister(seed);
