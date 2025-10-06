@@ -30,6 +30,7 @@
     "RandomIndex":number,  // 仅WENYAN模式下需要：算法的随机程度，越大随机性越强，默认 50，最大100，超过100将会出错;
     "PianwenMode":bool,    // 仅WENYAN模式下需要：尽可能使用对仗的骈文句式; 与逻辑句式冲突
     "LogicMode":bool,    // 仅WENYAN模式下需要：尽可能使用逻辑句式; 与骈文句式冲突
+    "Traditional":bool,    // 仅WENYAN模式下需要：输出繁体中文。
   },
 }
 

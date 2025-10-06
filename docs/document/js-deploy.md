@@ -76,7 +76,7 @@ Abra.WenyanInput(input, mode, key, {...}, callback);
 
 如果指定了错误的密码，那么在解码/解密数据校验过程中会抛出错误。
 
-第五个参数接受一个 callback 函数，程序会在执行中关键位置多次调用此函数，以便调试，无特殊用途可忽略此项。
+第五个参数 `callback` 接受一个回调函数，缺省时为 `null`。程序会在执行中关键位置多次调用此函数，以便调试，无调试需求可忽略此项。
 
 第四个参数接受一个`WenyanConfig`配置对象的输入，仅在加密的时候需要：
 
@@ -90,6 +90,8 @@ export interface WenyanConfig {
   PianwenMode?: boolean;
   /** 指定是否强制生成逻辑密文，默认 false; */
   LogicMode?: boolean;
+  /** 指定输出文本是否为繁体中文，默认 false; */
+  Traditional?: boolean;
 }
 ```
 
@@ -100,6 +102,8 @@ export interface WenyanConfig {
 `PianwenMode` 是布尔值，不指定则默认为 `false`。如果传入 `true`，则加密结果会优先使用骈文句式，呈现四字到五字一组的对仗格律，这有助于减少密文的总体长度。解密时可以忽略这个参数。
 
 `LogicMode` 是布尔值，默认为 `false`。如果传入 `true`，则加密结果会优先使用逻辑句式，呈现强论述类逻辑风格。解密时可以忽略这个参数。
+
+`Traditional` 是布尔值，默认为 `false`。如果传入 `true`，则加密结果会自动转换为繁体中文(香港)。解密时可以忽略这个参数。
 
 `PianwenMode` 和 `LogicMode` 不能同时指定为 `true`，否则会抛出错误。
 
