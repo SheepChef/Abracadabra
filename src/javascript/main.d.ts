@@ -9,7 +9,18 @@ export interface WenyanConfig {
   PianwenMode?: boolean;
   /** 指定是否强制生成逻辑密文，默认 false; */
   LogicMode?: boolean;
+  /** 指定输出文本是否为繁体中文，默认 false; */
+  Traditional?: boolean;
 }
+
+export interface CallbackObj {
+  /** 回调数据的标签 */
+  Type?: string;
+  /** 回调数据的值 */
+  Value?: any;
+}
+
+type Callback = (Data: CallbackObj) => any;
 export class Abracadabra {
   static TEXT: "TEXT";
   static UINT8: "UINT8";
@@ -32,13 +43,15 @@ export class Abracadabra {
    * @param {string} mode 指定模式，可以是 ENCRYPT DECRYPT 中的一种;
    * @param {string} key 指定密钥，默认是 ABRACADABRA;
    * @param {WenyanConfig} WenyanConfigObj 文言文的生成配置;
+   * @param {Callback}callback 回调函数，获取执行过程中特定位置的结果数据，调试时使用
    * @return {number} 成功则返回 0（失败不会返回，会抛出异常）
    */
   WenyanInput(
     input: string | Uint8Array,
     mode: "ENCRYPT" | "DECRYPT",
     key?: string,
-    WenyanConfigObj?: WenyanConfig
+    WenyanConfigObj?: WenyanConfig,
+    callback?: Callback
   ): number;
 
   /**

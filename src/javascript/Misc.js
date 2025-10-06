@@ -17,8 +17,18 @@ const SIG_DECRYPT_CN = "玚俟玊欤瞐珏";
 
 const NULL_STR = "孎"; //默认忽略的占位字符，一个生僻字。
 
-var MT = new MersenneTwister(Date.now());
-//待办：获取密码学安全随机数
+let array = new Uint32Array(1);
+let seed = 0;
+
+try {
+  window.crypto.getRandomValues(array);
+  seed = array[0];
+} catch (err) {
+  seed = Date.now();
+}
+
+var MT = new MersenneTwister(seed);
+//获取密码学安全随机数，如果不支持WebCrypto API，回落到日期和时间。
 
 export class PreCheckResult {
   constructor(output, isEncrypted = false) {

@@ -60,9 +60,10 @@ let Abra = new Abracadabra(); //不附带参数，
  * @param {string} mode 指定模式，可以是 ENCRYPT DECRYPT 中的一种;
  * @param {string} key 指定密钥，默认是 ABRACADABRA;
  * @param {WenyanConfig} WenyanConfigObj 文言文的生成配置;
+ * @param {any}callback 回调函数，获取执行过程中特定位置的结果
  * @return {number} 成功则返回 0（失败不会返回，会抛出异常）
  */
-Abra.WenyanInput(input, mode, key, {...});
+Abra.WenyanInput(input, mode, key, {...}, callback);
 ```
 
 第一个参数 `input` 接受两种类型的输入，分别是 `String` 和 `Uint8Array`，这是此前在实例化的时候指定的输入类型。
@@ -74,6 +75,8 @@ Abra.WenyanInput(input, mode, key, {...});
 第三个参数 `key` 接受字符串类型的密钥输入，如果不提供，则默认使用内置密钥 `ABRACADABRA`。
 
 如果指定了错误的密码，那么在解码/解密数据校验过程中会抛出错误。
+
+第五个参数 `callback` 接受一个回调函数，缺省时为 `null`。程序会在执行中关键位置多次调用此函数，以便调试，无调试需求可忽略此项。
 
 第四个参数接受一个`WenyanConfig`配置对象的输入，仅在加密的时候需要：
 
@@ -87,6 +90,8 @@ export interface WenyanConfig {
   PianwenMode?: boolean;
   /** 指定是否强制生成逻辑密文，默认 false; */
   LogicMode?: boolean;
+  /** 指定输出文本是否为繁体中文，默认 false; */
+  Traditional?: boolean;
 }
 ```
 
@@ -97,6 +102,8 @@ export interface WenyanConfig {
 `PianwenMode` 是布尔值，不指定则默认为 `false`。如果传入 `true`，则加密结果会优先使用骈文句式，呈现四字到五字一组的对仗格律，这有助于减少密文的总体长度。解密时可以忽略这个参数。
 
 `LogicMode` 是布尔值，默认为 `false`。如果传入 `true`，则加密结果会优先使用逻辑句式，呈现强论述类逻辑风格。解密时可以忽略这个参数。
+
+`Traditional` 是布尔值，默认为 `false`。如果传入 `true`，则加密结果会自动转换为繁体中文(香港)。解密时可以忽略这个参数。
 
 `PianwenMode` 和 `LogicMode` 不能同时指定为 `true`，否则会抛出错误。
 
