@@ -12,9 +12,10 @@
 
 import CryptoJS from "crypto-js";
 import { wordArrayToUint8Array } from "./Misc.js";
+import { CallbackObj } from "./CoreHandler.js";
 
 export class RoundObfus {
-  constructor(key) {
+  constructor(key, callback = null) {
     this.RoundFlip = 0; //标志现在到哪了
     this.RoundControl = new Uint8Array(32); //一个数组，用密钥哈希来控制轮转的行为
     this.LETTERS_ROUND_1 =
@@ -37,6 +38,8 @@ export class RoundObfus {
     this.NUMBERSYMBOL = "0123456789+/=";
 
     this.NULL_STR = "孎"; //默认忽略的占位字符，一个生僻字。
+
+    this.callback = callback;
 
     //初始化转轮操作的数组
     let KeyHash = CryptoJS.SHA256(key);
@@ -165,6 +168,19 @@ export class RoundObfus {
       );
     }
     this.RoundFlip++;
+    try {
+      if (this.callback != null)
+        this.callback(
+          new CallbackObj("ROUNDS", [
+            this.LETTERS_ROUND_1,
+            this.LETTERS_ROUND_2,
+            this.LETTERS_ROUND_3,
+            this.NUMBERSYMBOL_ROUND_1,
+            this.NUMBERSYMBOL_ROUND_2,
+            this.NUMBERSYMBOL_ROUND_3,
+          ])
+        );
+    } catch (err) {}
   }
 }
 
