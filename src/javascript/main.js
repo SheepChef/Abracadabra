@@ -68,13 +68,15 @@ export class Abracadabra {
    * @param{string}mode 指定模式，可以是 ENCRYPT DECRYPT 中的一种;
    * @param{string}key 指定密钥，默认是 ABRACADABRA;
    * @param{WenyanConfig}WenyanConfigObj 文言文的生成配置;
-   * @param{function}callback 文言文的生成配置;
+   * @param{bool} AdvancedEnc 指定是否启用安全加密特性;
+   * @param{function}callback 回调函数，获取执行过程中特定位置的结果数据，调试时使用;
    */
   WenyanInput(
     input,
     mode,
     key = "ABRACADABRA",
     WenyanConfigObj = new Core.WenyanConfig(true, 50, false, false),
+    AdvancedEnc = false,
     callback
   ) {
     if (this.#input == Abracadabra.UINT8) {

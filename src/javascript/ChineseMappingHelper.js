@@ -67,138 +67,43 @@ export class WenyanSimulator {
     idx3 = this.NUMBERS.indexOf(letter); //是否是数字
     idx4 = this.SYMBOLS.indexOf(letter); //是否是符号
 
-    //判断给定字符的类型
+    if (["N", "V", "A", "AD"].indexOf(type) === -1) {
+      /* v8 ignore next 2 */
+      return this.NULL_STR;
+    }
+
+    //判断并查表
     if (idx != -1 || idx2 != -1) {
-      if (type == "N") {
-        for (let key in this.Map_Obj["Actual"]["N"]["alphabet"]) {
-          if (this.Map_Obj["Actual"]["N"]["alphabet"].hasOwnProperty(key)) {
-            if (key == letter) {
-              let s2 =
-                this.Map_Obj["Actual"]["N"]["alphabet"][
-                  this.RoundKeyMatch(key)
-                ];
-              return s2;
-            } else if (key.toUpperCase() == letter) {
-              let s2 = String(
-                this.Map_Obj["Actual"]["N"]["alphabet"][
-                  this.RoundKeyMatch(key.toUpperCase())
-                ]
-              );
-              return s2;
-            }
-          }
-        }
-      } else if (type == "V") {
-        for (let key in this.Map_Obj["Actual"]["V"]["alphabet"]) {
-          if (this.Map_Obj["Actual"]["V"]["alphabet"].hasOwnProperty(key)) {
-            if (key == letter) {
-              let s2 =
-                this.Map_Obj["Actual"]["V"]["alphabet"][
-                  this.RoundKeyMatch(key)
-                ];
-              return s2;
-            } else if (key.toUpperCase() == letter) {
-              let s2 = String(
-                this.Map_Obj["Actual"]["V"]["alphabet"][
-                  this.RoundKeyMatch(key.toUpperCase())
-                ]
-              );
-              return s2;
-            }
-          }
-        }
-      } else if (type == "A") {
-        for (let key in this.Map_Obj["Actual"]["A"]["alphabet"]) {
-          if (this.Map_Obj["Actual"]["A"]["alphabet"].hasOwnProperty(key)) {
-            if (key == letter) {
-              let s2 =
-                this.Map_Obj["Actual"]["A"]["alphabet"][
-                  this.RoundKeyMatch(key)
-                ];
-              return s2;
-            } else if (key.toUpperCase() == letter) {
-              let s2 = String(
-                this.Map_Obj["Actual"]["A"]["alphabet"][
-                  this.RoundKeyMatch(key.toUpperCase())
-                ]
-              );
-              return s2;
-            }
-          }
-        }
-      } else if (type == "AD") {
-        for (let key in this.Map_Obj["Actual"]["AD"]["alphabet"]) {
-          if (this.Map_Obj["Actual"]["AD"]["alphabet"].hasOwnProperty(key)) {
-            if (key == letter) {
-              let s2 =
-                this.Map_Obj["Actual"]["AD"]["alphabet"][
-                  this.RoundKeyMatch(key)
-                ];
-              return s2;
-            } else if (key.toUpperCase() == letter) {
-              let s2 = String(
-                this.Map_Obj["Actual"]["AD"]["alphabet"][
-                  this.RoundKeyMatch(key.toUpperCase())
-                ]
-              );
-              return s2;
-            }
+      for (let key in this.Map_Obj["Actual"][type]["alphabet"]) {
+        if (this.Map_Obj["Actual"][type]["alphabet"].hasOwnProperty(key)) {
+          if (key == letter) {
+            let s2 =
+              this.Map_Obj["Actual"][type]["alphabet"][this.RoundKeyMatch(key)];
+            return s2;
+          } else if (key.toUpperCase() == letter) {
+            let s2 = String(
+              this.Map_Obj["Actual"][type]["alphabet"][
+                this.RoundKeyMatch(key.toUpperCase())
+              ]
+            );
+            return s2;
           }
         }
       }
     } else if (idx3 != -1 || idx4 != -1) {
-      if (type == "N") {
-        for (let key in this.Map_Obj["Actual"]["N"]["numbersymbol"]) {
-          if (this.Map_Obj["Actual"]["N"]["numbersymbol"].hasOwnProperty(key)) {
-            if (key == letter) {
-              let s2 =
-                this.Map_Obj["Actual"]["N"]["numbersymbol"][
-                  this.RoundKeyMatch(key)
-                ];
-              return s2;
-            }
-          }
-        }
-      } else if (type == "V") {
-        for (let key in this.Map_Obj["Actual"]["V"]["numbersymbol"]) {
-          if (this.Map_Obj["Actual"]["V"]["numbersymbol"].hasOwnProperty(key)) {
-            if (key == letter) {
-              let s2 =
-                this.Map_Obj["Actual"]["V"]["numbersymbol"][
-                  this.RoundKeyMatch(key)
-                ];
-              return s2;
-            }
-          }
-        }
-      } else if (type == "A") {
-        for (let key in this.Map_Obj["Actual"]["A"]["numbersymbol"]) {
-          if (this.Map_Obj["Actual"]["A"]["numbersymbol"].hasOwnProperty(key)) {
-            if (key == letter) {
-              let s2 =
-                this.Map_Obj["Actual"]["A"]["numbersymbol"][
-                  this.RoundKeyMatch(key)
-                ];
-              return s2;
-            }
-          }
-        }
-      } else if (type == "AD") {
-        for (let key in this.Map_Obj["Actual"]["AD"]["numbersymbol"]) {
-          if (
-            this.Map_Obj["Actual"]["AD"]["numbersymbol"].hasOwnProperty(key)
-          ) {
-            if (key == letter) {
-              let s2 =
-                this.Map_Obj["Actual"]["AD"]["numbersymbol"][
-                  this.RoundKeyMatch(key)
-                ];
-              return s2;
-            }
+      for (let key in this.Map_Obj["Actual"][type]["numbersymbol"]) {
+        if (this.Map_Obj["Actual"][type]["numbersymbol"].hasOwnProperty(key)) {
+          if (key == letter) {
+            let s2 =
+              this.Map_Obj["Actual"][type]["numbersymbol"][
+                this.RoundKeyMatch(key)
+              ];
+            return s2;
           }
         }
       }
     }
+
     /* v8 ignore next 2 */
     return this.NULL_STR;
   }

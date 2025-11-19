@@ -46,8 +46,12 @@ function AES_256_CTR_E(Uint8attr, key, RandomBytes) {
   return wordArrayToUint8Array(Enc.ciphertext);
 }
 
+function AES_256_GCM_E(Uint8attr, key, RandomBytes) {}
+
+function AES_256_GCM_D(Uint8attr, key, RandomBytes) {}
+
 //执行AES加密，返回UINT8数组
-export function Encrypt(OriginalData, key) {
+export function Encrypt(OriginalData, key, AdvancedEnc = false) {
   let RandomBytes = new Array(); //取两个随机数作为AES加密的IV
   RandomBytes.push(GetRandomIndex(256));
   RandomBytes.push(GetRandomIndex(256));
@@ -61,7 +65,7 @@ export function Encrypt(OriginalData, key) {
   return OriginalData;
 }
 
-export function Decrypt(Data, key) {
+export function Decrypt(Data, key, AdvancedEnc = false) {
   //Data = Base64.toUint8Array(TempStr1);
   let RandomBytes = [null, null];
   RandomBytes[1] = Data.at(Data.byteLength - 1);
