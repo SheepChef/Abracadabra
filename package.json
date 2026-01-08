@@ -9,10 +9,10 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "prebuild": "vitest run",
+    "prebuild": "npx patch-package && vitest run",
     "preview": "vite preview",
-    "test": "vitest run",
-    "coverage": "vitest run --coverage",
+    "test": "npx patch-package && vitest run",
+    "coverage": "npx patch-package && vitest run --coverage",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs"
   },
@@ -26,11 +26,17 @@
     "vitest": "^3.1.2"
   },
   "dependencies": {
+    "@otplib/plugin-base32-enc-dec": "^12.0.1",
+    "@otplib/plugin-crypto-js": "^12.0.1",
+    "@otplib/preset-browser": "^12.0.1",
+    "buffer": "^6.0.3",
     "crypto-js": "^4.2.0",
     "js-base64": "^3.7.7",
     "mersenne-twister": "^1.1.0",
     "opencc-js": "^1.0.5",
-    "pako": "^2.1.0"
+    "otplib": "^12.0.1",
+    "pako": "^2.1.0",
+    "patch-package": "^8.0.1"
   },
   "files": [
     "dist"

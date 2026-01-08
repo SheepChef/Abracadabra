@@ -56,19 +56,13 @@ test("加/解密测试", { timeout: 15000 }, () => {
 
   //将随机字符串用仿真加密循环加/解密6次，判断一致性和中途是否出错。
   for (let i = 0; i <= 6; i++) {
-    Abra.WenyanInput(
-      TestTemp,
-      "ENCRYPT",
-      "ABRACADABRA",
-      {
-        PunctuationMark: i % 2 == 0,
-        RandomIndex: 50,
-        PianwenMode: i % 2 == 0,
-        LogicMode: i % 2 != 0,
-        Traditional: i % 2 != 0,
-      },
-      i % 2 != 0
-    );
+    Abra.WenyanInput(TestTemp, "ENCRYPT", "ABRACADABRA", {
+      PunctuationMark: i % 2 == 0,
+      RandomIndex: 50,
+      PianwenMode: i % 2 == 0,
+      LogicMode: i % 2 != 0,
+      Traditional: i % 2 != 0,
+    });
     TestTemp = Abra.Output();
   }
 
@@ -154,5 +148,145 @@ test("随机数据加密测试", { timeout: 15000 }, () => {
     expect(TestTemp).toStrictEqual(data);
     expect(TestTemp2).toStrictEqual(data);
     expect(TestTemp3).toStrictEqual(data);
+  });
+});
+
+test("高级加密测试", { timeout: 40000 }, () => {
+  //测试随机数据的高级加密。
+  const Abra = new Abracadabra("UINT8", "UINT8");
+
+  TestData.forEach((data) => {
+    let TestTemp;
+    let TestTemp2;
+    let TestTemp3;
+    Abra.WenyanInput(
+      data,
+      "ENCRYPT",
+      "ABRACADABRA",
+      {
+        RandomIndex: 100,
+      },
+      {
+        Enable: true,
+        UseStrongIV: true,
+        UseHMAC: true,
+        UsePBKDF2: true,
+        UseTOTP: true,
+      }
+    );
+    TestTemp = Abra.Output();
+    Abra.WenyanInput(TestTemp, "DECRYPT", "ABRACADABRA");
+    TestTemp = Abra.Output();
+
+    Abra.WenyanInput(
+      data,
+      "ENCRYPT",
+      "ABRACADABRA",
+      {
+        RandomIndex: 100,
+      },
+      {
+        Enable: true,
+        UseStrongIV: true,
+        UseHMAC: true,
+        UsePBKDF2: true,
+        UseTOTP: false,
+      }
+    );
+    TestTemp = Abra.Output();
+    Abra.WenyanInput(TestTemp, "DECRYPT", "ABRACADABRA");
+    TestTemp = Abra.Output();
+    Abra.WenyanInput(
+      data,
+      "ENCRYPT",
+      "ABRACADABRA",
+      {
+        RandomIndex: 100,
+      },
+      {
+        Enable: true,
+        UseStrongIV: true,
+        UseHMAC: true,
+        UsePBKDF2: false,
+        UseTOTP: false,
+      }
+    );
+    TestTemp = Abra.Output();
+    Abra.WenyanInput(TestTemp, "DECRYPT", "ABRACADABRA");
+    TestTemp = Abra.Output();
+    Abra.WenyanInput(
+      data,
+      "ENCRYPT",
+      "ABRACADABRA",
+      {
+        RandomIndex: 100,
+      },
+      {
+        Enable: true,
+        UseStrongIV: true,
+        UseHMAC: false,
+        UsePBKDF2: false,
+        UseTOTP: false,
+      }
+    );
+    TestTemp = Abra.Output();
+    Abra.WenyanInput(TestTemp, "DECRYPT", "ABRACADABRA");
+    TestTemp = Abra.Output();
+    Abra.WenyanInput(
+      data,
+      "ENCRYPT",
+      "ABRACADABRA",
+      {
+        RandomIndex: 100,
+      },
+      {
+        Enable: true,
+        UseStrongIV: false,
+        UseHMAC: false,
+        UsePBKDF2: false,
+        UseTOTP: false,
+      }
+    );
+    TestTemp = Abra.Output();
+    Abra.WenyanInput(TestTemp, "DECRYPT", "ABRACADABRA");
+    TestTemp = Abra.Output();
+    Abra.WenyanInput(
+      data,
+      "ENCRYPT",
+      "ABRACADABRA",
+      {
+        RandomIndex: 100,
+      },
+      {
+        Enable: true,
+        UseStrongIV: true,
+        UseHMAC: false,
+        UsePBKDF2: true,
+        UseTOTP: true,
+      }
+    );
+    TestTemp = Abra.Output();
+    Abra.WenyanInput(TestTemp, "DECRYPT", "ABRACADABRA");
+    TestTemp = Abra.Output();
+    Abra.WenyanInput(
+      data,
+      "ENCRYPT",
+      "ABRACADABRA",
+      {
+        RandomIndex: 100,
+      },
+      {
+        Enable: true,
+        UseStrongIV: false,
+        UseHMAC: true,
+        UsePBKDF2: true,
+        UseTOTP: true,
+      }
+    );
+    TestTemp = Abra.Output();
+    Abra.WenyanInput(TestTemp, "DECRYPT", "ABRACADABRA");
+    TestTemp = Abra.Output();
+
+    expect(TestTemp).toStrictEqual(data);
   });
 });

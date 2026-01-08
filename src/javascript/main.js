@@ -29,6 +29,7 @@
 
 import * as Core from "./CoreHandler.js";
 import { preCheck_OLD, PreCheckResult, stringToUint8Array } from "./Misc.js";
+import { AdvancedEncConfig } from "./CoreHandler.js";
 export class Abracadabra {
   //主类
 
@@ -68,7 +69,7 @@ export class Abracadabra {
    * @param{string}mode 指定模式，可以是 ENCRYPT DECRYPT 中的一种;
    * @param{string}key 指定密钥，默认是 ABRACADABRA;
    * @param{WenyanConfig}WenyanConfigObj 文言文的生成配置;
-   * @param{bool} AdvancedEnc 指定是否启用安全加密特性;
+   * @param{AdvancedEncConfig}AdvancedEncObj 指定安全加密特性;
    * @param{function}callback 回调函数，获取执行过程中特定位置的结果数据，调试时使用;
    */
   WenyanInput(
@@ -76,9 +77,10 @@ export class Abracadabra {
     mode,
     key = "ABRACADABRA",
     WenyanConfigObj = new Core.WenyanConfig(true, 50, false, false),
-    AdvancedEnc = false,
+    AdvancedEncObj = new Core.AdvancedEncConfig(),
     callback
   ) {
+    //开始处理
     if (this.#input == Abracadabra.UINT8) {
       //如果指定输入类型是UINT8
       if (Object.prototype.toString.call(input) != "[object Uint8Array]") {
@@ -87,11 +89,22 @@ export class Abracadabra {
       if (mode == Abracadabra.ENCRYPT) {
         let Nextinput = new Object();
         Nextinput.output = input;
-        this.#res = Core.Enc(Nextinput, key, WenyanConfigObj, callback);
+        this.#res = Core.Enc(
+          Nextinput,
+          key,
+          WenyanConfigObj,
+          AdvancedEncObj,
+          callback
+        );
       } else if (mode == Abracadabra.DECRYPT) {
         let Nextinput = new Object();
         Nextinput.output = input;
-        this.#res = Core.Dec(Nextinput, key, callback);
+        this.#res = Core.Dec(
+          Nextinput,
+          key,
+          AdvancedEncObj.TOTPEpoch,
+          callback
+        );
       }
       return 0;
     } else if (this.#input == Abracadabra.TEXT) {
@@ -102,9 +115,20 @@ export class Abracadabra {
       let Nextinput = new Object();
       Nextinput.output = stringToUint8Array(input);
       if (mode == Abracadabra.ENCRYPT) {
-        this.#res = Core.Enc(Nextinput, key, WenyanConfigObj, callback);
+        this.#res = Core.Enc(
+          Nextinput,
+          key,
+          WenyanConfigObj,
+          AdvancedEncObj,
+          callback
+        );
       } else if (mode == Abracadabra.DECRYPT) {
-        this.#res = Core.Dec(Nextinput, key, callback);
+        this.#res = Core.Dec(
+          Nextinput,
+          key,
+          AdvancedEncObj.TOTPEpoch,
+          callback
+        );
       }
       return 0;
     }

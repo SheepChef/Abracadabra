@@ -1,0 +1,28 @@
+diff --git a/node_modules/@otplib/core/index.js b/node_modules/@otplib/core/index.js
+index 38517b9..d5702cb 100644
+--- a/node_modules/@otplib/core/index.js
++++ b/node_modules/@otplib/core/index.js
+@@ -146,11 +146,21 @@ function hotpCounter(counter) {
+   return padStart(hexCounter, 16, '0');
+ }
+ function hotpDigestToToken(hexDigest, digits) {
+-  const digest = Buffer.from(hexDigest, 'hex');
++  
++  /*const digest = Buffer.from(hexDigest, 'hex');
+   const offset = digest[digest.length - 1] & 0xf;
+   const binary = (digest[offset] & 0x7f) << 24 | (digest[offset + 1] & 0xff) << 16 | (digest[offset + 2] & 0xff) << 8 | digest[offset + 3] & 0xff;
+   const token = binary % Math.pow(10, digits);
+-  return padStart(String(token), digits, '0');
++  return padStart(String(token), digits, '0');*/
++
++  const digest = Buffer.from(hexDigest, 'hex');
++  const offset = digest[digest.length - 1] & 0x0f;
++  const slice = digest.slice(offset, offset + 8);
++  let val = 0n;
++  for (const b of slice) val = (val << 8n) | BigInt(b);
++  val &= (1n << BigInt(slice.length * 8 - 1)) - 1n;
++  return padStart(String(val % (10n ** BigInt(digits))), digits, '0');
++
+ }
+ function hotpDigest(secret, counter, options) {
+   const hexCounter = hotpCounter(counter);

@@ -147,6 +147,108 @@ export function shuffle(array) {
   return array;
 }
 
+/**
+ * 将四个 0/1（或 true/false）和一个 0..15 整数打包成一个 0..255 的字节值
+ * @param {number|boolean} b0 - 最低位（bit0）
+ * @param {number|boolean} b1 - bit1
+ * @param {number|boolean} b2 - bit2
+ * @param {number|boolean} b3 - bit3
+ * @param {number} size - 0..15，存放在高 4 位
+ * @returns {number} 0..255 的字节（Number）。如果需要 Uint8Array，可用 Uint8Array.of(byte)[0] 或 new Uint8Array([byte])
+ */
+export function packByte(b0, b1, b2, b3, size) {
+  // 规范化为 0 或 1
+  const bits = [b0, b1, b2, b3].map((x) => (x ? 1 : 0));
+  if (!Number.isInteger(size) || size < 0 || size > 15) {
+    throw new RangeError("size 必须是整数且在 0..15 范围内");
+  }
+  const byte =
+    (size << 4) | // 高 4 位
+    (bits[3] << 3) |
+    (bits[2] << 2) |
+    (bits[1] << 1) |
+    (bits[0] << 0);
+  // 确保返回 0..255
+  return byte & 0xff;
+}
+
+/**
+ * 将字节解包回原始的四个 bit 与 size
+ * @param {number} byte - 0..255
+ * @returns {object} { byte, size, bits: [b0,b1,b2,b3] (数字 0/1), flags: {b0,b1,b2,b3} (布尔值) }
+ */
+export function unpackByte(byte) {
+  if (!Number.isInteger(byte) || byte < 0 || byte > 255) {
+    throw new RangeError("byte 必须是 0..255 的整数");
+  }
+  const size = (byte >> 4) & 0x0f; // 高 4 位
+  const b0 = (byte >> 0) & 1;
+  const b1 = (byte >> 1) & 1;
+  const b2 = (byte >> 2) & 1;
+  const b3 = (byte >> 3) & 1;
+  return {
+    byte: byte & 0xff,
+    size,
+    bits: [b0, b1, b2, b3],
+    flags: { b0: !!b0, b1: !!b1, b2: !!b2, b3: !!b3 }, // 方便需要布尔值时使用
+  };
+}
+
+export function getStep(key) {
+  let second = 0;
+  switch (key) {
+    case 0:
+      second = 180;
+      break;
+    case 1:
+      second = 300;
+      break;
+    case 2:
+      second = 600;
+      break;
+    case 3:
+      second = 1800;
+      break;
+    case 4:
+      second = 7200;
+      break;
+    case 5:
+      second = 21600;
+      break;
+    case 6:
+      second = 43200;
+      break;
+    case 7:
+      second = 86400;
+      break;
+    case 8:
+      second = 259200;
+      break;
+    case 9:
+      second = 432000;
+      break;
+    case 10:
+      second = 604800;
+      break;
+    case 11:
+      second = 1814400;
+      break;
+    case 12:
+      second = 2419200;
+      break;
+    case 13:
+      second = 4838400;
+      break;
+    case 14:
+      second = 14515200;
+      break;
+    case 15:
+      second = 31557600;
+      break;
+  }
+  return second;
+}
+
 export function preCheck_OLD(inp) {
   let input = String(inp);
   let size = input.length; //第一次遍历字符数组的函数，负责判断给定的输入类型。
