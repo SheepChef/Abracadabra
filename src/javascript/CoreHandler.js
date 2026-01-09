@@ -266,9 +266,13 @@ export function Dec(
     //解压缩
     TempStr2Int = Decompress(TempStr2Int);
   } catch (err) {
-    /* v8 ignore next 3 */
     //解压缩/解密失败，丢出错误。
-    throw "Error Decoding. Bad Input or Incorrect Key.";
+    /* v8 ignore next 6 */
+    if (typeof err == "string") {
+      throw err;
+    } else {
+      throw "Error Decoding. Bad Input or Incorrect Key.";
+    }
   }
 
   if (!CheckLuhnBit(TempStr2Int)) {

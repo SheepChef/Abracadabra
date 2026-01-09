@@ -68,7 +68,13 @@ function index(input) {
   if (input.method == "WENYAN") {
     if (input.inputType == "TEXT") {
       let Abra = new Abracadabra(input.inputType, input.outputType);
-      Abra.WenyanInput(input.input, input.mode, input.key, input.WenyanConfig);
+      Abra.WenyanInput(
+        input.input,
+        input.mode,
+        input.key,
+        input.WenyanConfig,
+        input.AdvancedEncConfig
+      );
       let Output = Abra.Output();
       if (input.outputType == "UINT8") {
         Output = uint8ArrayToBase64(Output);
@@ -77,7 +83,13 @@ function index(input) {
     } else if (input.inputType == "UINT8") {
       let Abra = new Abracadabra(input.inputType, input.outputType);
       let UINT8In = base64ToUint8Array(input.input);
-      Abra.WenyanInput(UINT8In, input.mode, input.key, input.WenyanConfig);
+      Abra.WenyanInput(
+        UINT8In,
+        input.mode,
+        input.key,
+        input.WenyanConfig,
+        input.AdvancedEncConfig
+      );
       let Output = Abra.Output();
       if (input.outputType == "UINT8") {
         Output = uint8ArrayToBase64(Output);
