@@ -12,5 +12,6 @@ dist
 demo.zip
 text.html
 coverage
+src/javascript/mapping_v4.json
 
 /docs/.vitepress/cache
