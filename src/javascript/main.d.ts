@@ -32,6 +32,11 @@ export interface AdvancedEncConfig {
    * 指定用于TOTP加密的Unix时间戳记，以毫秒为单位(JS标准)，默认为系统时间；
    */
   TOTPEpoch?: number;
+  /**
+   * 指定用于TOTP加密的预共享密钥，默认为加密主密钥，推荐使用网站域名作为此项密钥以提升安全性;
+   * 注意，TOTP的安全性主要依赖于此BaseKey
+   */
+  TOTPBaseKey?: string;
 }
 
 export interface CallbackObj {

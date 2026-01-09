@@ -66,7 +66,8 @@ export class AdvancedEncConfig {
     UsePBKDF2 = false,
     UseTOTP = false,
     TOTPTimeStep = 4,
-    TOTPEpoch = Date.now()
+    TOTPEpoch = Date.now(),
+    TOTPBaseKey = null
   ) {
     this.Enable = Enable;
     this.UseStrongIV = UseStrongIV;
@@ -75,6 +76,7 @@ export class AdvancedEncConfig {
     this.UseTOTP = UseTOTP;
     this.TOTPTimeStep = TOTPTimeStep;
     this.TOTPEpoch = TOTPEpoch;
+    this.TOTPBaseKey = TOTPBaseKey;
   }
 }
 
@@ -148,7 +150,11 @@ export function Enc(
     AdvancedEncObj.TOTPTimeStep !== undefined ? AdvancedEncObj.TOTPTimeStep : 4,
     AdvancedEncObj.TOTPEpoch !== undefined
       ? AdvancedEncObj.TOTPEpoch
-      : Date.now()
+      : Date.now(),
+    AdvancedEncObj.TOTPBaseKey !== null &&
+    AdvancedEncObj.TOTPBaseKey !== undefined
+      ? AdvancedEncObj.TOTPBaseKey
+      : key
   );
 
   OriginalData = Encrypt(OriginalData, key, AdvancedEncObj);
@@ -170,10 +176,6 @@ export function Enc(
     TempArray.set([byte], OriginalData.byteLength);
 
     OriginalData = TempArray; //将高级加密配置位放在末尾
-
-    //TempArray = null;
-
-    //OriginalData.set([byte], OriginalData.byteLength);
   }
 
   let OriginStr = RemovePadding(Base64.fromUint8Array(OriginalData)); //转Base64
@@ -207,7 +209,13 @@ export function Enc(
   return Res;
 }
 
-export function Dec(input, key, TOTPEpoch = null, callback) {
+export function Dec(
+  input,
+  key,
+  TOTPEpoch = null,
+  TOTPBaseKey = null,
+  callback
+) {
   //初始化
   //input.output Uint8Array
   let AdvancedEncObj = null;
@@ -245,7 +253,8 @@ export function Dec(input, key, TOTPEpoch = null, callback) {
         rawconfig.flags.b2,
         rawconfig.flags.b3,
         rawconfig.size,
-        TOTPEpoch === null ? Date.now() : TOTPEpoch
+        TOTPEpoch === null ? Date.now() : TOTPEpoch,
+        TOTPBaseKey === null ? key : TOTPBaseKey
       );
 
       //解密

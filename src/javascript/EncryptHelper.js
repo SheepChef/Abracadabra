@@ -11,7 +11,7 @@
  */
 import CryptoJS from "crypto-js";
 import { Base64 } from "js-base64";
-import { authenticator, totp, hotp } from "./otplib/index.d.ts";
+import { authenticator, totp, hotp } from "./otplib.d.ts";
 import {
   wordArrayToUint8Array,
   Uint8ArrayTostring,
@@ -115,7 +115,13 @@ function AES_256_CTR_HMAC_SHA256_E(
         epoch: AdvancedEncObj.TOTPEpoch,
         step: getStep(AdvancedEncObj.TOTPTimeStep),
       };
-      salt = totp.generate(KeyHash.toString(CryptoJS.enc.Base64)); //获取totp一次性密钥
+      let BaseKeyHash = CryptoJS.SHA256(
+        AdvancedEncObj.TOTPBaseKey !== null &&
+          AdvancedEncObj.TOTPBaseKey !== undefined
+          ? AdvancedEncObj.TOTPBaseKey
+          : key
+      );
+      salt = totp.generate(BaseKeyHash.toString(CryptoJS.enc.Base64)); //获取totp一次性密钥
       let key256Bits = CryptoJS.PBKDF2(key, salt, {
         keySize: 256 / 32,
         iterations: 100000, //十万次迭代
@@ -234,7 +240,13 @@ function AES_256_CTR_HMAC_SHA256_D(
       epoch: AdvancedEncObj.TOTPEpoch,
       step: getStep(AdvancedEncObj.TOTPTimeStep),
     };
-    salt = totp.generate(KeyHash.toString(CryptoJS.enc.Base64)); //获取totp一次性密钥
+    let BaseKeyHash = CryptoJS.SHA256(
+      AdvancedEncObj.TOTPBaseKey !== null &&
+        AdvancedEncObj.TOTPBaseKey !== undefined
+        ? AdvancedEncObj.TOTPBaseKey
+        : key
+    );
+    salt = totp.generate(BaseKeyHash.toString(CryptoJS.enc.Base64)); //获取totp一次性密钥
     let key256Bits = CryptoJS.PBKDF2(key, salt, {
       keySize: 256 / 32,
       iterations: 100000, //十万次迭代

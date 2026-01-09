@@ -103,6 +103,7 @@ export class Abracadabra {
           Nextinput,
           key,
           AdvancedEncObj.TOTPEpoch,
+          AdvancedEncObj.TOTPBaseKey,
           callback
         );
       }
@@ -127,6 +128,7 @@ export class Abracadabra {
           Nextinput,
           key,
           AdvancedEncObj.TOTPEpoch,
+          AdvancedEncObj.TOTPBaseKey,
           callback
         );
       }

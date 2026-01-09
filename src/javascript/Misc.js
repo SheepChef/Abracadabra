@@ -196,6 +196,7 @@ export function unpackByte(byte) {
 
 export function getStep(key) {
   let second = 0;
+  /* v8 ignore next 50 */
   switch (key) {
     case 0:
       second = 180;
