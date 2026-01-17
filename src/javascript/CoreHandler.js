@@ -139,23 +139,30 @@ export function Enc(
   OriginalData = Compress(TempArray);
   //加密
 
-  AdvancedEncObj = new AdvancedEncConfig(
-    AdvancedEncObj.Enable !== undefined ? AdvancedEncObj.Enable : false,
-    AdvancedEncObj.UseStrongIV !== undefined
-      ? AdvancedEncObj.UseStrongIV
-      : true,
-    AdvancedEncObj.UseHMAC !== undefined ? AdvancedEncObj.UseHMAC : false,
-    AdvancedEncObj.UsePBKDF2 !== undefined ? AdvancedEncObj.UsePBKDF2 : false,
-    AdvancedEncObj.UseTOTP !== undefined ? AdvancedEncObj.UseTOTP : false,
-    AdvancedEncObj.TOTPTimeStep !== undefined ? AdvancedEncObj.TOTPTimeStep : 4,
-    AdvancedEncObj.TOTPEpoch !== undefined
-      ? AdvancedEncObj.TOTPEpoch
-      : Date.now(),
-    AdvancedEncObj.TOTPBaseKey !== null &&
-    AdvancedEncObj.TOTPBaseKey !== undefined
-      ? AdvancedEncObj.TOTPBaseKey
-      : key
-  );
+  try {
+    AdvancedEncObj = new AdvancedEncConfig(
+      AdvancedEncObj.Enable !== undefined ? AdvancedEncObj.Enable : false,
+      AdvancedEncObj.UseStrongIV !== undefined
+        ? AdvancedEncObj.UseStrongIV
+        : true,
+      AdvancedEncObj.UseHMAC !== undefined ? AdvancedEncObj.UseHMAC : false,
+      AdvancedEncObj.UsePBKDF2 !== undefined ? AdvancedEncObj.UsePBKDF2 : false,
+      AdvancedEncObj.UseTOTP !== undefined ? AdvancedEncObj.UseTOTP : false,
+      AdvancedEncObj.TOTPTimeStep !== undefined
+        ? AdvancedEncObj.TOTPTimeStep
+        : 4,
+      AdvancedEncObj.TOTPEpoch !== undefined
+        ? AdvancedEncObj.TOTPEpoch
+        : Date.now(),
+      AdvancedEncObj.TOTPBaseKey !== null &&
+      AdvancedEncObj.TOTPBaseKey !== undefined
+        ? AdvancedEncObj.TOTPBaseKey
+        : key
+    );
+  } catch (err) {
+    //遇到错误即AdvancedEncObj是一个null或者某个不可读取属性的非法值，自动缺省
+    AdvancedEncObj = new AdvancedEncConfig();
+  }
 
   OriginalData = Encrypt(OriginalData, key, AdvancedEncObj);
 
