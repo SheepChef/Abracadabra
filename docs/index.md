@@ -22,7 +22,7 @@ features:
     details: 魔曰的密文看起来像逼真的古文，用算法构造字面意义，使加密具有文学色彩。
   - icon: 🔐
     title: 固若金汤
-    details: 魔曰重视数据安全，明文数据经过 AES-256 加密。所有代码完全在本地离线执行。
+    details: 魔曰重视数据安全，标配 AES 加密，可选高级加密套件，完全在本地离线执行。
   - icon: 🌈
     title: 不拘一格
     details: 魔曰允许你调整加密参数，使用不同的模式，生成高度随机化，不同风格的密文。
@@ -76,7 +76,7 @@ Abracadabra(魔曰) 是开源，安全，高效的文本加密工具。
 
 - **仿真，使用文言语法句式**。
 - 开源，所有源代码公开可查。
-- 安全，完全离线的 AES 加密。
+- 安全，标配 AES，可选高级加密套件。
 - 可靠，代码经过严格单元测试。
 - 便捷，易于本地部署和使用。
 
@@ -103,11 +103,12 @@ Abracadabra(魔曰) 是开源，安全，高效的文本加密工具。
 以下是本项目的依赖项：
 
 - [**Unishox2**](https://github.com/siara-cc/Unishox2) 短字符串压缩实现 _©Siara-cc_, **Apache-2.0** License.
-- [**crypto-js**](https://github.com/brix/crypto-js) AES 加密实现 _©Jeff Mott/Evan Vosberg_, **MIT** License.
+- [**crypto-js**](https://github.com/brix/crypto-js) 加密算法实现 _©Jeff Mott/Evan Vosberg_, **MIT** License.
 - [**pako**](https://github.com/nodeca/pako) GZIP 压缩实现 _©Vitaly Puzrin/Andrei Tuputcyn_, **MIT** License.
 - [**js-base64**](https://github.com/dankogai/js-base64) Base64 编码工具实现 _©Dan Kogai_, **BSD-3-Clause** License.
 - [**mersenne-twister**](https://github.com/boo1ean/mersenne-twister) 梅森旋转算法实现 _©Makoto Matsumoto/Takuji Nishimura_, **BSD-3-Clause** License.
 - [**opencc-js**](https://github.com/nk2028/opencc-js) 简繁体转换实现 _©nk2028_, **MIT** License.
+- [**otplib**](https://github.com/yeojz/otplib) TOTP 实现 _©Gerald Yeo_, **MIT** License.
 
 本项目许可证与所有依赖项的许可证兼容。
 
