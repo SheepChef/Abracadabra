@@ -25,13 +25,8 @@
   "mode":"",   // ENCRYPT | DECRYPT | AUTO   // AUTO 仅在 method 指定 OLD 时合法 
   "key":"",    // 加密密钥，一个字符串 //如果缺省，自动使用默认值
   "q":bool,    // OLD模式下，决定是否添加标志位
-  "WenyanConfig":{ //文言文生成配置，解密时可以缺省。
-    "PunctuationMark": bool;// 指定是否为密文添加标点符号，默认 true/添加;
-    "RandomIndex":number,  // 仅WENYAN模式下需要：算法的随机程度，越大随机性越强，默认 50，最大100，超过100将会出错;
-    "PianwenMode":bool,    // 仅WENYAN模式下需要：尽可能使用对仗的骈文句式; 与逻辑句式冲突
-    "LogicMode":bool,    // 仅WENYAN模式下需要：尽可能使用逻辑句式; 与骈文句式冲突
-    "Traditional":bool,    // 仅WENYAN模式下需要：输出繁体中文。
-  },
+  "WenyanConfig":{...}, //文言文生成配置，详情见JavaScript接口定义。
+  "AdvancedEncConfig":{...} //高级加密配置，详情见JavaScript接口定义。
 }
 
 */
@@ -68,7 +63,13 @@ function index(input) {
   if (input.method == "WENYAN") {
     if (input.inputType == "TEXT") {
       let Abra = new Abracadabra(input.inputType, input.outputType);
-      Abra.WenyanInput(input.input, input.mode, input.key, input.WenyanConfig);
+      Abra.WenyanInput(
+        input.input,
+        input.mode,
+        input.key,
+        input.WenyanConfig,
+        input.AdvancedEncConfig
+      );
       let Output = Abra.Output();
       if (input.outputType == "UINT8") {
         Output = uint8ArrayToBase64(Output);
@@ -77,7 +78,13 @@ function index(input) {
     } else if (input.inputType == "UINT8") {
       let Abra = new Abracadabra(input.inputType, input.outputType);
       let UINT8In = base64ToUint8Array(input.input);
-      Abra.WenyanInput(UINT8In, input.mode, input.key, input.WenyanConfig);
+      Abra.WenyanInput(
+        UINT8In,
+        input.mode,
+        input.key,
+        input.WenyanConfig,
+        input.AdvancedEncConfig
+      );
       let Output = Abra.Output();
       if (input.outputType == "UINT8") {
         Output = uint8ArrayToBase64(Output);

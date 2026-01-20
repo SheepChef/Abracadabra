@@ -15,6 +15,7 @@ export default defineConfig({
         "dist",
         "JavyInputAppendix.js",
         "src/javascript/unishox2.js",
+        "src/javascript/otplib.d.ts",
         "docs",
         "src/javascript/main.d.ts",
         "src/javascript/utils.js",

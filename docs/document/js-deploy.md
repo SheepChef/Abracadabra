@@ -44,9 +44,9 @@ let Abra = new Abracadabra(InputMode, OutputMode);
 使用`Uint8Array`作为输入/输出方式，魔曰可以加解密任意二进制(图片/视频/任何文件)，但是不推荐这么做。
 :::
 
-### WenyanInput() 文言仿真加密函数
+### WenyanInput() 文言仿真加解密函数
 
-`WenyanInput()` 函数用来对数据执行文言文仿真加密。
+`WenyanInput()` 函数用来对数据执行文言文仿真加解密。
 
 ```js
 import { Abracadabra } from "abracadabra-cn";
@@ -60,10 +60,11 @@ let Abra = new Abracadabra(); //不附带参数，
  * @param {string} mode 指定模式，可以是 ENCRYPT DECRYPT 中的一种;
  * @param {string} key 指定密钥，默认是 ABRACADABRA;
  * @param {WenyanConfig} WenyanConfigObj 文言文的生成配置;
+ * @param {AdvancedEncConfig}AdvancedEncObj 指定安全加密特性;
  * @param {any}callback 回调函数，获取执行过程中特定位置的结果
  * @return {number} 成功则返回 0（失败不会返回，会抛出异常）
  */
-Abra.WenyanInput(input, mode, key, {...}, callback);
+Abra.WenyanInput(input, mode, key, {...}, {...}, callback);
 ```
 
 第一个参数 `input` 接受两种类型的输入，分别是 `String` 和 `Uint8Array`，这是此前在实例化的时候指定的输入类型。
@@ -76,7 +77,9 @@ Abra.WenyanInput(input, mode, key, {...}, callback);
 
 如果指定了错误的密码，那么在解码/解密数据校验过程中会抛出错误。
 
-第五个参数 `callback` 接受一个回调函数，缺省时为 `null`。程序会在执行中关键位置多次调用此函数，以便调试，无调试需求可忽略此项。
+第六个参数 `callback` 接受一个回调函数，缺省时为 `null`。程序会在执行中关键位置多次调用此函数，以便调试，无调试需求可忽略此项。
+
+---
 
 第四个参数接受一个`WenyanConfig`配置对象的输入，仅在加密的时候需要：
 
@@ -107,18 +110,90 @@ export interface WenyanConfig {
 
 `PianwenMode` 和 `LogicMode` 不能同时指定为 `true`，否则会抛出错误。
 
+---
+
+第五个参数接受一个`AdvancedEncConfig`配置对象的输入，仅在高级加密的时候需要：
+
+```javascript
+export interface AdvancedEncConfig {
+  /** 指定是否打开高级加密功能，默认 false/不开启; */
+  Enable?: boolean;
+  /** 指定是否使用完整16字节IV，默认 true/开启*/
+  UseStrongIV?: boolean;
+  /** 指定是否使用HMAC对消息签名，默认 false/不开启; */
+  UseHMAC?: boolean;
+  /** 指定是否对密钥加盐并使用密钥衍生函数 false/不开启;*/
+  UsePBKDF2?: boolean;
+  /** 指定是否使用TOTP作为密钥衍生的盐值，默认 false/不开启，若不使用密钥衍生函数，则不生效;*/
+  UseTOTP?: boolean;
+  /** 指定TOTP时间窗口，取值范围 0~15
+   *  对应 [3 5 10 30 min] [2 6 12 h] [1 3 5 d] [1 3 Week] [1 2 6 Month] [1 yr], 默认4;
+   **/
+  TOTPTimeStep?: number;
+  /** 指定用于TOTP加密的Unix时间戳记，以毫秒为单位(JS标准)，默认为系统时间；*/
+
+  TOTPEpoch?: number;
+  /**
+   * 指定用于TOTP加密的预共享密钥，默认为加密主密钥，推荐使用网站域名作为此项密钥以提升安全性;
+   * 注意，TOTP的安全性主要依赖于此BaseKey
+   **/
+  TOTPBaseKey?: string;
+}
+```
+
+::: tip 提示
+
+注意高级加密参数在解密时无需传递，除非需要指定 TOTP BaseKey 和 TOTP Epoch。
+
+:::
+
+`Enable` 是布尔值，默认为 `false`。如果传入 `true`，则将启用高级加密，解密时可以忽略这个参数。
+
+`UseStrongIV` 是布尔值，默认为 `true`，如果传入 `true`，则高级加密时将使用完整 16 字节 IV。解密时可以忽略这个参数。
+
+`UseHMAC` 是布尔值，默认为 `false`。如果传入 `true`，则高级加密时将使用 HMAC 对消息签名。解密时可以忽略这个参数。
+
+`UsePBKDF2` 是布尔值，默认为 `false`。如果传入 `true`，则高级加密时将对密钥加盐并使用密钥衍生函数。解密时可以忽略这个参数。
+
+`UseTOTP` 是布尔值，默认为 `false`。如果传入 `true`，则高级加密时将使用 TOTP 作为密钥衍生的盐值，若 `UsePBKDF2` 传入 `false`，则不生效。解密时可以忽略这个参数。
+
+`TOTPTimeStep` 是整数值，默认为`4`，最小值`0`，最大值`15`，超过范围的输入将会报错。用于指定 TOTP 每步时长，每个值代表的时间见上方注释。解密时可以忽略这个参数。
+
+`TOTPEpoch` 是整数值，默认为系统当前 Unix 时间戳，用于指定 TOTP 加密的 Unix 时间戳记，以毫秒为单位(JS 标准)。解密时可以携带这个参数，以指定用于解密的时间戳。
+
+`TOTPBaseKey` 是字符串，默认为加密主密钥，用于指定 TOTP 加密的预共享密钥。解密时可以携带这个参数，以指定用于解密的 TOTP Basekey。
+
+---
+
 ```javascript
 //正确调用方式：
 
 import { Abracadabra } from "abracadabra-cn";
 let Abra = new Abracadabra(); //不附带参数，
 
-Abra.WenyanInput(TestTemp, "ENCRYPT", "ABRACADABRA", {
-  RandomIndex: 25,
-  PianwenMode: true,
-}); //指定随机指数为25，并使用骈文模式，缺省项自动使用默认值
+Abra.WenyanInput(
+  TestTemp,
+  "ENCRYPT",
+  "ABRACADABRA",
+  {
+    RandomIndex: 25,
+    PianwenMode: true,
+  },
+  {
+    Enable: true,
+    UseStrongIV: true,
+    UseHMAC: true,
+    UsePBKDF2: true,
+    UseTOTP: true,
+  }
+); //指定随机指数为25，并使用骈文模式，启用高级加密，缺省项自动使用默认值
 
-Abra.WenyanInput(TestTemp, "DECRYPT", "ABRACADABRA"); //解密不需要传入配置
+Abra.WenyanInput(TestTemp, "DECRYPT", "ABRACADABRA"); //解密一般不需要传入配置
+
+Abra.WenyanInput(TestTemp, "DECRYPT", "ABRACADABRA", null, {
+  TOTPBaseKey: "Basekey",
+  TOTPEpoch: 12345678,
+}); //可额外传入TOTP参数用于解密。
 ```
 
 在无错误的情况下， `WenyanInput()` 函数的返回值通常是 `0`。

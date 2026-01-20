@@ -11,10 +11,15 @@
 本模块的合法输入为一个 JSON 字符串，输入时请勿附带注释，遵循以下格式：
 
 ::: warning 兼容性提示
+
 注意，V3.2 修改了接口标准，WASM 未对旧版本留有兼容，请参照新版接口来编写调用方式。
+
+WASM 不是魔曰的主线开发任务，依赖库未经积极更新，如果遇到问题，请提 Issue。
+
 :::
 
 ```json
+
 {
   "method":"", // WENYAN | OLD
   "inputType":"", // TEXT | UINT8
@@ -23,14 +28,10 @@
   "mode":"",   // ENCRYPT | DECRYPT | AUTO   // AUTO 仅在 method 指定 OLD 时合法
   "key":"",    // 加密密钥，一个字符串 //如果缺省，自动使用默认值
   "q":bool,    // OLD模式下，决定是否添加标志位
-  "WenyanConfig":{ //文言文生成配置，可以缺省，缺省自动使用默认值。
-    "PunctuationMark": bool, // 指定是否为密文添加标点符号，默认 true/添加;
-    "RandomIndex": number,  // 仅WENYAN模式下需要：算法的随机程度，越大随机性越强，默认 50，最大100，超过100将会出错;
-    "PianwenMode":bool,    // 仅WENYAN模式下需要：尽可能使用对仗的骈文句式; 与逻辑句式冲突
-    "LogicMode":bool,    // 仅WENYAN模式下需要：尽可能使用逻辑句式; 与骈文句式冲突
-    "Traditional":bool,    // 仅WENYAN模式下需要：输出繁体中文。
-  },
+  "WenyanConfig":{...}, //文言文生成配置，详情见JavaScript接口定义。
+  "AdvancedEncConfig":{...} //高级加密配置，详情见JavaScript接口定义。
 }
+
 ```
 
 用 wasmtime CLI 调用，在不同的命令行里有不同的方式，大多数时候是输入字符串的字符集的区别，以及是否需要在字符串外面加单引号的区别。

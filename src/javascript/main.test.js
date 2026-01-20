@@ -150,3 +150,188 @@ test("随机数据加密测试", { timeout: 15000 }, () => {
     expect(TestTemp3).toStrictEqual(data);
   });
 });
+
+test("高级加密测试", { timeout: 40000 }, () => {
+  //测试随机数据的高级加密。
+  const Abra = new Abracadabra("UINT8", "UINT8");
+
+  TestData.forEach((data) => {
+    let TestTemp;
+    let TOTPEpochFreeze = Date.now();
+    Abra.WenyanInput(
+      data,
+      "ENCRYPT",
+      "ABRACADABRA",
+      {
+        RandomIndex: 100,
+      },
+      {
+        Enable: true,
+        UseStrongIV: true,
+        UseHMAC: true,
+        UsePBKDF2: true,
+        UseTOTP: true,
+        TOTPEpoch: TOTPEpochFreeze,
+      }
+    );
+    TestTemp = Abra.Output();
+    Abra.WenyanInput(TestTemp, "DECRYPT", "ABRACADABRA", ...[,], {
+      TOTPEpoch: TOTPEpochFreeze,
+    });
+    TestTemp = Abra.Output();
+
+    Abra.WenyanInput(
+      TestTemp,
+      "ENCRYPT",
+      "ABRACADABRA",
+      {
+        RandomIndex: 100,
+      },
+      {
+        Enable: true,
+        UseStrongIV: true,
+        UseHMAC: true,
+        UsePBKDF2: true,
+        UseTOTP: false,
+        TOTPEpoch: TOTPEpochFreeze,
+      }
+    );
+    TestTemp = Abra.Output();
+    Abra.WenyanInput(TestTemp, "DECRYPT", "ABRACADABRA", ...[,], {
+      TOTPEpoch: TOTPEpochFreeze,
+    });
+    TestTemp = Abra.Output();
+    Abra.WenyanInput(
+      TestTemp,
+      "ENCRYPT",
+      "ABRACADABRA",
+      {
+        RandomIndex: 100,
+      },
+      {
+        Enable: true,
+        UseStrongIV: true,
+        UseHMAC: true,
+        UsePBKDF2: false,
+        UseTOTP: false,
+        TOTPEpoch: TOTPEpochFreeze,
+      }
+    );
+    TestTemp = Abra.Output();
+    Abra.WenyanInput(TestTemp, "DECRYPT", "ABRACADABRA", ...[,], {
+      TOTPEpoch: TOTPEpochFreeze,
+    });
+    TestTemp = Abra.Output();
+    Abra.WenyanInput(
+      TestTemp,
+      "ENCRYPT",
+      "ABRACADABRA",
+      {
+        RandomIndex: 100,
+      },
+      {
+        Enable: true,
+        UseStrongIV: true,
+        UseHMAC: false,
+        UsePBKDF2: false,
+        UseTOTP: false,
+        TOTPEpoch: TOTPEpochFreeze,
+      }
+    );
+    TestTemp = Abra.Output();
+    Abra.WenyanInput(TestTemp, "DECRYPT", "ABRACADABRA", ...[,], {
+      TOTPEpoch: TOTPEpochFreeze,
+    });
+    TestTemp = Abra.Output();
+    Abra.WenyanInput(
+      TestTemp,
+      "ENCRYPT",
+      "ABRACADABRA",
+      {
+        RandomIndex: 100,
+      },
+      {
+        Enable: true,
+        UseStrongIV: false,
+        UseHMAC: false,
+        UsePBKDF2: false,
+        UseTOTP: false,
+        TOTPEpoch: TOTPEpochFreeze,
+      }
+    );
+    TestTemp = Abra.Output();
+    Abra.WenyanInput(TestTemp, "DECRYPT", "ABRACADABRA", ...[,], {
+      TOTPEpoch: TOTPEpochFreeze,
+    });
+    TestTemp = Abra.Output();
+    Abra.WenyanInput(
+      TestTemp,
+      "ENCRYPT",
+      "ABRACADABRA",
+      {
+        RandomIndex: 100,
+      },
+      {
+        Enable: true,
+        UseStrongIV: true,
+        UseHMAC: false,
+        UsePBKDF2: true,
+        UseTOTP: true,
+        TOTPEpoch: TOTPEpochFreeze,
+      }
+    );
+    TestTemp = Abra.Output();
+    Abra.WenyanInput(TestTemp, "DECRYPT", "ABRACADABRA", ...[,], {
+      TOTPEpoch: TOTPEpochFreeze,
+    });
+    TestTemp = Abra.Output();
+    Abra.WenyanInput(
+      TestTemp,
+      "ENCRYPT",
+      "ABRACADABRA",
+      {
+        RandomIndex: 100,
+      },
+      {
+        Enable: true,
+        UseStrongIV: true,
+        UseHMAC: false,
+        UsePBKDF2: true,
+        UseTOTP: false,
+        TOTPEpoch: TOTPEpochFreeze,
+      }
+    );
+    TestTemp = Abra.Output();
+    Abra.WenyanInput(TestTemp, "DECRYPT", "ABRACADABRA", ...[,], {
+      TOTPEpoch: TOTPEpochFreeze,
+    });
+    TestTemp = Abra.Output();
+    Abra.WenyanInput(
+      TestTemp,
+      "ENCRYPT",
+      "ABRACADABRA",
+      {
+        RandomIndex: 100,
+      },
+      {
+        Enable: true,
+        UseStrongIV: false,
+        UseHMAC: true,
+        UsePBKDF2: true,
+        UseTOTP: true,
+        TOTPBaseKey: "https://pixiv.net",
+        TOTPEpoch: 1767928233717,
+        TOTPTimeStep: 0,
+      }
+    );
+    TestTemp = Abra.Output();
+    Abra.WenyanInput(TestTemp, "DECRYPT", "ABRACADABRA", ...[,], {
+      TOTPBaseKey: "https://pixiv.net",
+      TOTPEpoch: 1767928319717,
+      TOTPTimeStep: 0,
+    });
+    TestTemp = Abra.Output();
+
+    expect(TestTemp).toStrictEqual(data);
+  });
+});

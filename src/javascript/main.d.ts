@@ -13,6 +13,32 @@ export interface WenyanConfig {
   Traditional?: boolean;
 }
 
+export interface AdvancedEncConfig {
+  /** 指定是否打开高级加密功能，默认 false/不开启; */
+  Enable?: boolean;
+  /** 指定是否使用完整16字节IV，默认 true/开启*/
+  UseStrongIV?: boolean;
+  /** 指定是否使用HMAC对消息签名，默认 false/不开启; */
+  UseHMAC?: boolean;
+  /** 指定是否对密钥加盐并使用密钥衍生函数 false/不开启;*/
+  UsePBKDF2?: boolean;
+  /** 指定是否使用TOTP作为密钥衍生的盐值，默认 false/不开启，若不使用密钥衍生函数，则不生效;*/
+  UseTOTP?: boolean;
+  /** 指定TOTP时间窗口，取值范围 0~15
+   *  对应 [3 5 10 30 min] [2 6 12 h] [1 3 5 d] [1 3 Week] [1 2 6 Month] [1 yr], 默认4;
+   * **/
+  TOTPTimeStep?: number;
+  /**
+   * 指定用于TOTP加密的Unix时间戳记，以毫秒为单位(JS标准)，默认为系统时间；
+   */
+  TOTPEpoch?: number;
+  /**
+   * 指定用于TOTP加密的预共享密钥，默认为加密主密钥，推荐使用网站域名作为此项密钥以提升安全性;
+   * 注意，TOTP的安全性主要依赖于此BaseKey
+   */
+  TOTPBaseKey?: string;
+}
+
 export interface CallbackObj {
   /** 回调数据的标签 */
   Type?: string;
@@ -43,6 +69,7 @@ export class Abracadabra {
    * @param {string} mode 指定模式，可以是 ENCRYPT DECRYPT 中的一种;
    * @param {string} key 指定密钥，默认是 ABRACADABRA;
    * @param {WenyanConfig} WenyanConfigObj 文言文的生成配置;
+   * @param {AdvancedEncConfig} AdvancedEncObj 指定是否启用安全加密特性;
    * @param {Callback}callback 回调函数，获取执行过程中特定位置的结果数据，调试时使用
    * @return {number} 成功则返回 0（失败不会返回，会抛出异常）
    */
@@ -51,6 +78,7 @@ export class Abracadabra {
     mode: "ENCRYPT" | "DECRYPT",
     key?: string,
     WenyanConfigObj?: WenyanConfig,
+    AdvancedEncObj?: AdvancedEncConfig,
     callback?: Callback
   ): number;
 

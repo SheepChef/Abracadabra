@@ -19,6 +19,8 @@ import {
   GetLuhnBit,
   RemovePadding,
   CheckLuhnBit,
+  packByte,
+  unpackByte,
 } from "./Misc.js";
 
 export class WenyanConfig {
@@ -44,6 +46,42 @@ export class WenyanConfig {
     this.Traditional = Traditional;
   }
 }
+
+export class AdvancedEncConfig {
+  /**
+   * 魔曰 高级加密参数
+   *
+   * @param{bool}Enable 指定是否打开高级加密功能，默认 false/不开启;
+   * @param{bool}UseStrongIV 指定是否使用完整16字节IV，默认 true/开启;
+   * @param{bool}UseHMAC 指定是否使用HMAC对消息签名，默认 false/不开启;
+   * @param{bool}UsePBKDF2 指定是否对密钥加盐并使用密钥衍生函数 false/不开启;
+   * @param{bool}UseTOTP 指定是否使用TOTP作为密钥衍生的盐值，默认 false/不开启，若不使用密钥衍生函数，则不生效;
+   * @param{number}TOTPTimeStep 指定TOTP时间窗口，取值范围 0~15 对应 [3 5 10 30 min] [2 6 12 h] [1 3 5 d] [1 3 Week] [1 2 6 Month] [1 yr], 默认4;
+   * @param{number}TOTPEpoch 指定用于TOTP加密的Unix时间戳记，以毫秒为单位(JS标准)，默认为系统时间；
+   */
+  constructor(
+    Enable = false,
+    UseStrongIV = true,
+    UseHMAC = false,
+    UsePBKDF2 = false,
+    UseTOTP = false,
+    TOTPTimeStep = 4,
+    TOTPEpoch = Date.now(),
+    TOTPBaseKey = null
+  ) {
+    this.Enable = Enable;
+    this.UseStrongIV = UseStrongIV;
+    this.UseHMAC = UseHMAC;
+    this.UsePBKDF2 = UsePBKDF2;
+    this.UseTOTP = UseTOTP;
+    this.TOTPTimeStep = TOTPTimeStep;
+    this.TOTPEpoch = TOTPEpoch;
+    this.TOTPBaseKey = TOTPBaseKey;
+  }
+}
+
+//魔数，用于自动识别高级加密数据，理论上需要附加正常加密/解密时绝不可能在开头出现的Base64编码范围内字符
+const ADVANCED_ENC_MAGIC = "+=";
 
 export class CallbackObj {
   /**
@@ -73,8 +111,15 @@ export class CallbackObj {
 
 /**
  * @param{WenyanConfig}WenyanConfigObj 文言文的生成配置;
+ * @param{AdvancedEncConfig}AdvancedEncObj 高级加密配置;
  */
-export function Enc(input, key, WenyanConfigObj, callback = null) {
+export function Enc(
+  input,
+  key,
+  WenyanConfigObj,
+  AdvancedEncObj,
+  callback = null
+) {
   //初始化
   //input.output Uint8Array
   let WenyanSimulatorObj = new WenyanSimulator(key, callback);
@@ -93,9 +138,60 @@ export function Enc(input, key, WenyanConfigObj, callback = null) {
   //压缩
   OriginalData = Compress(TempArray);
   //加密
-  OriginalData = Encrypt(OriginalData, key);
 
-  let OriginStr = RemovePadding(Base64.fromUint8Array(OriginalData));
+  try {
+    AdvancedEncObj = new AdvancedEncConfig(
+      AdvancedEncObj.Enable !== undefined ? AdvancedEncObj.Enable : false,
+      AdvancedEncObj.UseStrongIV !== undefined
+        ? AdvancedEncObj.UseStrongIV
+        : true,
+      AdvancedEncObj.UseHMAC !== undefined ? AdvancedEncObj.UseHMAC : false,
+      AdvancedEncObj.UsePBKDF2 !== undefined ? AdvancedEncObj.UsePBKDF2 : false,
+      AdvancedEncObj.UseTOTP !== undefined ? AdvancedEncObj.UseTOTP : false,
+      AdvancedEncObj.TOTPTimeStep !== undefined
+        ? AdvancedEncObj.TOTPTimeStep
+        : 4,
+      AdvancedEncObj.TOTPEpoch !== undefined
+        ? AdvancedEncObj.TOTPEpoch
+        : Date.now(),
+      AdvancedEncObj.TOTPBaseKey !== null &&
+      AdvancedEncObj.TOTPBaseKey !== undefined
+        ? AdvancedEncObj.TOTPBaseKey
+        : key
+    );
+  } catch (err) {
+    //遇到错误即AdvancedEncObj是一个null或者某个不可读取属性的非法值，自动缺省
+    AdvancedEncObj = new AdvancedEncConfig();
+  }
+
+  OriginalData = Encrypt(OriginalData, key, AdvancedEncObj);
+
+  if (AdvancedEncObj.Enable) {
+    //加上高级加密配置位
+    if (AdvancedEncObj.UseTOTP && AdvancedEncObj.TOTPTimeStep > 15) {
+      throw "Error Encrypting. Invalid TOTP Timestep.";
+    }
+    let byte = packByte(
+      AdvancedEncObj.UseStrongIV,
+      AdvancedEncObj.UseHMAC,
+      AdvancedEncObj.UsePBKDF2,
+      AdvancedEncObj.UseTOTP,
+      AdvancedEncObj.TOTPTimeStep
+    );
+    let TempArray = new Uint8Array(OriginalData.byteLength + 1);
+    TempArray.set(OriginalData, 0);
+    TempArray.set([byte], OriginalData.byteLength);
+
+    OriginalData = TempArray; //将高级加密配置位放在末尾
+  }
+
+  let OriginStr = RemovePadding(Base64.fromUint8Array(OriginalData)); //转Base64
+
+  if (AdvancedEncObj.Enable) {
+    //加上高级加密标头
+    OriginStr = ADVANCED_ENC_MAGIC + OriginStr;
+  }
+
   try {
     if (callback != null) callback(new CallbackObj("ENC_BASE64", OriginStr));
   } catch (err) {}
@@ -120,9 +216,17 @@ export function Enc(input, key, WenyanConfigObj, callback = null) {
   return Res;
 }
 
-export function Dec(input, key, callback) {
+export function Dec(
+  input,
+  key,
+  TOTPEpoch = null,
+  TOTPBaseKey = null,
+  callback
+) {
   //初始化
   //input.output Uint8Array
+  let AdvancedEncObj = null;
+  let AdvancedMarker = false;
   let WenyanSimulatorObj = new WenyanSimulator(key, callback);
   let OriginStr = Uint8ArrayTostring(input.output);
 
@@ -130,24 +234,52 @@ export function Dec(input, key, callback) {
   let TempStr1 = WenyanSimulatorObj.deMap(OriginStr);
 
   let TempStr2Int = new Uint8Array();
+
+  if (TempStr1.slice(0, 2) === ADVANCED_ENC_MAGIC) {
+    //检测高级加密标志
+    TempStr1 = TempStr1.slice(2);
+    AdvancedMarker = true;
+  }
+
   if (!Base64.isValid(TempStr1)) {
     /* v8 ignore next 3 */
     //检查Base64是否合法，如果不合法，那么就没有必要继续处理下去
     throw "Error Decoding. Bad Input or Incorrect Key.";
   }
   try {
-    //取到两个字节的IV，然后对AES加密后的数据执行解密。
+    //取到IV，然后对AES加密后的数据执行解密。
     TempStr2Int = Base64.toUint8Array(TempStr1);
 
-    //解密
-    TempStr2Int = Decrypt(TempStr2Int, key);
+    if (AdvancedMarker) {
+      //读取高级加密配置
+      let rawconfig = unpackByte(TempStr2Int.at(TempStr2Int.byteLength - 1));
+      AdvancedEncObj = new AdvancedEncConfig(
+        true,
+        rawconfig.flags.b0,
+        rawconfig.flags.b1,
+        rawconfig.flags.b2,
+        rawconfig.flags.b3,
+        rawconfig.size,
+        TOTPEpoch === null ? Date.now() : TOTPEpoch,
+        TOTPBaseKey === null ? key : TOTPBaseKey
+      );
+
+      //解密
+      TempStr2Int = Decrypt(TempStr2Int.slice(0, -1), key, AdvancedEncObj);
+    } else {
+      TempStr2Int = Decrypt(TempStr2Int, key, AdvancedEncObj);
+    }
 
     //解压缩
     TempStr2Int = Decompress(TempStr2Int);
   } catch (err) {
-    /* v8 ignore next 3 */
     //解压缩/解密失败，丢出错误。
-    throw "Error Decoding. Bad Input or Incorrect Key.";
+    /* v8 ignore next 6 */
+    if (typeof err == "string") {
+      throw err;
+    } else {
+      throw "Error Decoding. Bad Input or Incorrect Key.";
+    }
   }
 
   if (!CheckLuhnBit(TempStr2Int)) {
