@@ -216,11 +216,12 @@ AES 加密密钥和转轮密钥是同一个，均采用哈希值。
 以下是本项目的依赖项：
 
 - [**Unishox2**](https://github.com/siara-cc/Unishox2) 短字符串压缩实现 _©Siara-cc_, **Apache-2.0** License.
-- [**crypto-js**](https://github.com/brix/crypto-js) AES加密实现 _©Jeff Mott/Evan Vosberg_, **MIT** License.
+- [**crypto-js**](https://github.com/brix/crypto-js) 加密算法实现 _©Jeff Mott/Evan Vosberg_, **MIT** License.
 - [**pako**](https://github.com/nodeca/pako) GZIP压缩实现 _©Vitaly Puzrin/Andrei Tuputcyn_, **MIT** License.
 - [**js-base64**](https://github.com/dankogai/js-base64) Base64编码工具实现 _©Dan Kogai_, **BSD-3-Clause** License.
 - [**mersenne-twister**](https://github.com/boo1ean/mersenne-twister) 梅森旋转算法实现 _©Makoto Matsumoto/Takuji Nishimura_, **BSD-3-Clause** License.
 - [**opencc-js**](https://github.com/nk2028/opencc-js) 简繁体转换实现 _©nk2028_, **MIT** License.
+- [**otplib**](https://github.com/yeojz/otplib) TOTP 实现 _©Gerald Yeo_, **MIT** License.
 
 本项目许可证与所有依赖项的许可证兼容。
 

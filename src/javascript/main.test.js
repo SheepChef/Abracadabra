@@ -157,8 +157,6 @@ test("高级加密测试", { timeout: 40000 }, () => {
 
   TestData.forEach((data) => {
     let TestTemp;
-    let TestTemp2;
-    let TestTemp3;
     let TOTPEpochFreeze = Date.now();
     Abra.WenyanInput(
       data,
@@ -183,7 +181,7 @@ test("高级加密测试", { timeout: 40000 }, () => {
     TestTemp = Abra.Output();
 
     Abra.WenyanInput(
-      data,
+      TestTemp,
       "ENCRYPT",
       "ABRACADABRA",
       {
@@ -204,7 +202,7 @@ test("高级加密测试", { timeout: 40000 }, () => {
     });
     TestTemp = Abra.Output();
     Abra.WenyanInput(
-      data,
+      TestTemp,
       "ENCRYPT",
       "ABRACADABRA",
       {
@@ -225,7 +223,7 @@ test("高级加密测试", { timeout: 40000 }, () => {
     });
     TestTemp = Abra.Output();
     Abra.WenyanInput(
-      data,
+      TestTemp,
       "ENCRYPT",
       "ABRACADABRA",
       {
@@ -246,7 +244,7 @@ test("高级加密测试", { timeout: 40000 }, () => {
     });
     TestTemp = Abra.Output();
     Abra.WenyanInput(
-      data,
+      TestTemp,
       "ENCRYPT",
       "ABRACADABRA",
       {
@@ -267,7 +265,7 @@ test("高级加密测试", { timeout: 40000 }, () => {
     });
     TestTemp = Abra.Output();
     Abra.WenyanInput(
-      data,
+      TestTemp,
       "ENCRYPT",
       "ABRACADABRA",
       {
@@ -288,7 +286,28 @@ test("高级加密测试", { timeout: 40000 }, () => {
     });
     TestTemp = Abra.Output();
     Abra.WenyanInput(
-      data,
+      TestTemp,
+      "ENCRYPT",
+      "ABRACADABRA",
+      {
+        RandomIndex: 100,
+      },
+      {
+        Enable: true,
+        UseStrongIV: true,
+        UseHMAC: false,
+        UsePBKDF2: true,
+        UseTOTP: false,
+        TOTPEpoch: TOTPEpochFreeze,
+      }
+    );
+    TestTemp = Abra.Output();
+    Abra.WenyanInput(TestTemp, "DECRYPT", "ABRACADABRA", ...[,], {
+      TOTPEpoch: TOTPEpochFreeze,
+    });
+    TestTemp = Abra.Output();
+    Abra.WenyanInput(
+      TestTemp,
       "ENCRYPT",
       "ABRACADABRA",
       {
