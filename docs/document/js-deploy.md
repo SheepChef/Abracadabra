@@ -200,6 +200,14 @@ Abra.WenyanInput(TestTemp, "DECRYPT", "ABRACADABRA", null, {
 
 ### OldInput() 传统加密函数
 
+::: warning 已终止支持
+
+传统加密已终止支持，相关代码不会被移除，但也不会接受进一步更新。
+
+传统加密模式下，不可启用高级加密功能。
+
+:::
+
 `OldInput()` 用传统模式加密密文。
 
 ```js
