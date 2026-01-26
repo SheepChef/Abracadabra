@@ -376,7 +376,9 @@ export class WenyanSimulator {
         try {
           if (this.callback != null)
             this.callback(new CallbackObj("ENC_SENTENCES", Result));
-        } catch (err) {}
+        } catch (err) {
+          // continue regardless of error
+        }
       });
       return Result;
     }
@@ -538,7 +540,9 @@ export class WenyanSimulator {
         try {
           if (this.callback != null)
             this.callback(new CallbackObj("ENC_SENTENCES", ElementResult));
-        } catch (err) {}
+        } catch (err) {
+          // continue regardless of error
+        }
       }
     }
 
@@ -662,7 +666,9 @@ export class WenyanSimulator {
         try {
           if (this.callback != null)
             this.callback(new CallbackObj("ENC_MAPTEMP", TempStr1));
-        } catch (err) {}
+        } catch (err) {
+          // continue regardless of error
+        }
       }
       //这里是句式和句式的外层控制循环
       if (Finished) {
@@ -680,7 +686,9 @@ export class WenyanSimulator {
         try {
           if (this.callback != null)
             this.callback(new CallbackObj("ENC_MAPTEMP", TempStr1));
-        } catch (err) {}
+        } catch (err) {
+          // continue regardless of error
+        }
 
         break;
       } else {
@@ -820,7 +828,9 @@ export class WenyanSimulator {
         try {
           if (this.callback != null)
             this.callback(new CallbackObj("DEC_PAYLOAD", TempStrz));
-        } catch (err) {}
+        } catch (err) {
+          // continue regardless of error
+        }
         continue;
       }
     }
@@ -841,7 +851,9 @@ export class WenyanSimulator {
       try {
         if (this.callback != null)
           this.callback(new CallbackObj("DEC_BASE64", TempStr1));
-      } catch (err) {}
+      } catch (err) {
+        // continue regardless of error
+      }
     }
     TempStr1 = AddPadding(TempStr1); //轮转完成之后，为Base64字符串添加Padding
     return TempStr1;

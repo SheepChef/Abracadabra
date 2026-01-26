@@ -194,7 +194,9 @@ export function Enc(
 
   try {
     if (callback != null) callback(new CallbackObj("ENC_BASE64", OriginStr));
-  } catch (err) {}
+  } catch (err) {
+    // continue regardless of error
+  }
   //映射
   let Res = WenyanSimulatorObj.enMap(
     OriginStr,
@@ -221,7 +223,7 @@ export function Dec(
   key,
   TOTPEpoch = null,
   TOTPBaseKey = null,
-  callback
+  callback = null
 ) {
   //初始化
   //input.output Uint8Array

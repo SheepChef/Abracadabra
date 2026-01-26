@@ -43,7 +43,7 @@ function AES_256_CTR_E(Uint8attr, key, RandomBytes) {
 
   let ivArray = new Uint8Array(16);
 
-  for (var i = 0; i < 16; i++) {
+  for (let i = 0; i < 16; i++) {
     ivArray[i] = HashHashArray[i];
   }
 
@@ -82,7 +82,7 @@ function AES_256_CTR_HMAC_SHA256_E(
   if (AdvancedEncObj.UseStrongIV) {
     ivArray = new Uint8Array(16);
 
-    for (var i = 0; i < 16; i++) {
+    for (let i = 0; i < 16; i++) {
       //加载IV
       ivArray[i] = RandomBytes[i];
     }
@@ -98,7 +98,7 @@ function AES_256_CTR_HMAC_SHA256_E(
 
     ivArray = new Uint8Array(16);
 
-    for (var i = 0; i < 16; i++) {
+    for (let i = 0; i < 16; i++) {
       ivArray[i] = HashHashArray[i];
     }
   }
@@ -196,7 +196,7 @@ function AES_256_CTR_HMAC_SHA256_D(
   if (AdvancedEncObj.UseStrongIV) {
     //加载强IV或弱IV
     ivArray = new Uint8Array(16);
-    for (var i = 0; i < 16; i++) {
+    for (let i = 0; i < 16; i++) {
       ivArray[i] = RandomBytes[i];
     }
   } else {
@@ -211,7 +211,7 @@ function AES_256_CTR_HMAC_SHA256_D(
 
     ivArray = new Uint8Array(16);
 
-    for (var i = 0; i < 16; i++) {
+    for (let i = 0; i < 16; i++) {
       ivArray[i] = HashHashArray[i];
     }
   }
