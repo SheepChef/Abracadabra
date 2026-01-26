@@ -132,10 +132,7 @@ export function CheckLuhnBit(Data) {
   let DCheck = Data[Data.byteLength - 1];
   let Check = GetLuhnBit(Data.subarray(0, Data.byteLength - 1));
 
-  if (Check == DCheck) {
-    return true;
-  }
-  return false;
+  return Check == DCheck;
 }
 
 export function shuffle(array) {
