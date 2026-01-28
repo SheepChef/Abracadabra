@@ -78,7 +78,7 @@ export class Abracadabra {
     key = "ABRACADABRA",
     WenyanConfigObj = new Core.WenyanConfig(true, 50, false, false),
     AdvancedEncObj = new Core.AdvancedEncConfig(),
-    callback
+    callback = null
   ) {
     //开始处理
     if (this.#input == Abracadabra.UINT8) {
@@ -237,6 +237,7 @@ export class Abracadabra {
         return encodedData;
       }
     }
+    return undefined;
   }
 
   /**

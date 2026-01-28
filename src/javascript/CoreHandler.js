@@ -21,6 +21,7 @@ import {
   CheckLuhnBit,
   packByte,
   unpackByte,
+  GetRandomIndex,
 } from "./Misc.js";
 
 export class WenyanConfig {
@@ -189,12 +190,23 @@ export function Enc(
 
   if (AdvancedEncObj.Enable) {
     //加上高级加密标头
-    OriginStr = ADVANCED_ENC_MAGIC + OriginStr;
+    //OriginStr = ADVANCED_ENC_MAGIC + OriginStr;
+
+    let InsertRange = OriginStr.length > 10 ? 10 : OriginStr.length - 1;
+
+    let InsertIndex = GetRandomIndex(InsertRange);
+
+    OriginStr =
+      OriginStr.slice(0, InsertIndex) +
+      ADVANCED_ENC_MAGIC +
+      OriginStr.slice(InsertIndex);
   }
 
   try {
     if (callback != null) callback(new CallbackObj("ENC_BASE64", OriginStr));
-  } catch (err) {}
+  } catch (err) {
+    // continue regardless of error
+  }
   //映射
   let Res = WenyanSimulatorObj.enMap(
     OriginStr,
@@ -221,7 +233,7 @@ export function Dec(
   key,
   TOTPEpoch = null,
   TOTPBaseKey = null,
-  callback
+  callback = null
 ) {
   //初始化
   //input.output Uint8Array
@@ -235,9 +247,13 @@ export function Dec(
 
   let TempStr2Int = new Uint8Array();
 
-  if (TempStr1.slice(0, 2) === ADVANCED_ENC_MAGIC) {
+  if (TempStr1.slice(0, 13).indexOf(ADVANCED_ENC_MAGIC) !== -1) {
     //检测高级加密标志
-    TempStr1 = TempStr1.slice(2);
+
+    TempStr1 =
+      TempStr1.slice(0, TempStr1.slice(0, 13).indexOf(ADVANCED_ENC_MAGIC)) +
+      TempStr1.slice(TempStr1.slice(0, 13).indexOf(ADVANCED_ENC_MAGIC) + 2); //移除高级加密标志
+
     AdvancedMarker = true;
   }
 

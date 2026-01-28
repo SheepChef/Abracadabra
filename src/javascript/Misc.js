@@ -132,11 +132,7 @@ export function CheckLuhnBit(Data) {
   let DCheck = Data[Data.byteLength - 1];
   let Check = GetLuhnBit(Data.subarray(0, Data.byteLength - 1));
 
-  if (Check == DCheck) {
-    return true;
-  } else {
-    return false;
-  }
+  return Check == DCheck;
 }
 
 export function shuffle(array) {
@@ -190,7 +186,12 @@ export function unpackByte(byte) {
     byte: byte & 0xff,
     size,
     bits: [b0, b1, b2, b3],
-    flags: { b0: !!b0, b1: !!b1, b2: !!b2, b3: !!b3 }, // 方便需要布尔值时使用
+    flags: {
+      b0: Boolean(b0),
+      b1: Boolean(b1),
+      b2: Boolean(b2),
+      b3: Boolean(b3),
+    }, // 方便需要布尔值时使用
   };
 }
 

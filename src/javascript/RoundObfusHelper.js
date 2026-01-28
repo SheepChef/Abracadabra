@@ -180,7 +180,9 @@ export class RoundObfus {
             this.NUMBERSYMBOL_ROUND_3,
           ])
         );
-    } catch (err) {}
+    } catch (err) {
+      // continue regardless of error
+    }
   }
 }
 
