@@ -213,7 +213,7 @@ export class Abracadabra {
    */
 
   BearDecode(input) {
-    this.#res.output = decryptXiongyueSync(input);
+    this.#res = { output: decryptXiongyueSync(input) };
     return 0;
   }
 
