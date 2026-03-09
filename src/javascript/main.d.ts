@@ -141,6 +141,17 @@ export class Abracadabra {
   ): number;
 
   /**
+   * 魔曰 解密熊曰加密密文
+   *
+   * @param {string} input 输入的数据，只能是字符串
+   * @return {number} 成功则返回 0（失败不会返回，会抛出异常）
+   *
+   * 解密与熊论道(熊曰加密)2020年算法更新后的密文。
+   *
+   */
+  BearDecode(input: string): number;
+
+  /**
    * 魔曰 获取加密/解密后的结果
    * @returns {string | Uint8Array} 根据此前指定的输出类型，可能是字符串或字节数组
    */

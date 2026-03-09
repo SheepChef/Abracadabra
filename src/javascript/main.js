@@ -30,6 +30,7 @@
 import * as Core from "./CoreHandler.js";
 import { preCheck_OLD, PreCheckResult, stringToUint8Array } from "./Misc.js";
 import { AdvancedEncConfig } from "./CoreHandler.js";
+import { decryptXiongyueSync } from "./XiongyueDecHelper.js";
 export class Abracadabra {
   //主类
 
@@ -199,6 +200,20 @@ export class Abracadabra {
         this.#res = Core.Enc_OLD(preCheckRes, key, q); //在字符串可解码的情况下，加密时不采用文件模式
       }
     }
+    return 0;
+  }
+
+  /**
+   * 魔曰 解密熊曰加密密文
+   *
+   * @param{string}input 输入的数据，只能是字符串
+   *
+   * 解密与熊论道(熊曰加密)2020年算法更新后的密文。
+   *
+   */
+
+  BearDecode(input) {
+    this.#res = { output: decryptXiongyueSync(input) };
     return 0;
   }
 

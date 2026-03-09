@@ -245,6 +245,33 @@ Abra.OldInput(input, mode, key, q);
 
 在无错误的情况下， `OldInput()` 函数的返回值通常是 `0`。
 
+### BearDecode() 熊曰解密函数
+
+::: warning 致敬
+
+在此致敬算法原开发者坑晨，以及萌研社。
+
+:::
+
+`BearDecode()` 允许用户解密熊曰密文。
+
+```js
+import { Abracadabra } from "abracadabra-cn";
+
+let Abra = new Abracadabra(); //不附带参数。
+
+//只允许输入字符串(UTF-8)
+Abra.BearDecode(
+  "呋擊眠魚堅笨唬咬呱洞物沒呦山誒註歡動笨意非覺呆誘嘿吖盜噗嗥溫沒洞魚啽和現現很哞呦蜜呱和出偶人嗷誒訴偶冬果果很森喜嗅噤很覺家森類雜拙呆意雜常吃"
+);
+
+let Result = Abra.Output(); //获取输出，输出只会是字符串
+```
+
+熊曰密文之解密，是本项目的原创逆向研究，基于对熊曰密文的已知明文攻击。
+
+适用于萌研社与熊论道(熊曰加密)2020 年算法更新后的密文。
+
 ### Output()
 
 ```js
