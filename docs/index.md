@@ -80,7 +80,13 @@ Abracadabra(魔曰) 是开源，安全，高效的文本加密工具。
 - 可靠，代码经过严格单元测试。
 - 便捷，易于本地部署和使用。
 
+---
+
 > 原创逆向研究，特别支持解密熊曰(与熊论道)密文。
+>
+> 详情请见 [**使用提示**](/document/demo-usage.md#熊曰解密-与熊论道) 和 [**Issue #123**](https://github.com/SheepChef/Abracadabra/issues/123)
+>
+> 有关本项目中内置的熊曰解密函数，请见 [**JavaScript 部署**](/document/js-deploy.md#beardecode-熊曰解密函数) 。
 
 ### **熔古铸今：文言文仿真加密**
 
