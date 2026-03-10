@@ -12,6 +12,16 @@
 
 <h3>百闻不如一见，现在就试试看吧！</h3>
 
+::: tip 提示
+
+原创逆向研究，特别支持解密熊曰(与熊论道)密文。
+
+详情请见 [**使用提示**](/document/demo-usage.md#熊曰解密-与熊论道) 和 [**Issue #123**](https://github.com/SheepChef/Abracadabra/issues/123)
+
+有关本项目中内置的熊曰解密函数，请见 [**JavaScript 部署**](/document/js-deploy.md#beardecode-熊曰解密函数) 。
+
+:::
+
 ## 直接使用
 
 ### Demo
