@@ -10,24 +10,17 @@
  *
  */
 import { Base64 } from "js-base64";
-import MersenneTwister from "mersenne-twister";
+import MersenneTwister from "mersenne-twister"; //兼容性
+import { random } from "@lukeed/csprng"; //密码学安全随机数的封装
 
 const SIG_DECRYPT_JP = "桜込凪雫実沢";
 const SIG_DECRYPT_CN = "玚俟玊欤瞐珏";
 
 const NULL_STR = "孎"; //默认忽略的占位字符，一个生僻字。
 
-let array = new Uint32Array(1);
-let seed = 0;
+let MTseed = Date.now();
 
-try {
-  window.crypto.getRandomValues(array);
-  seed = array[0];
-} catch (err) {
-  seed = Date.now();
-}
-
-var MT = new MersenneTwister(seed);
+var MT = new MersenneTwister(MTseed);
 //获取密码学安全随机数，如果不支持WebCrypto API，回落到日期和时间。
 
 export class PreCheckResult {
@@ -83,7 +76,13 @@ export function Uint8ArrayTostring(fileData) {
 
 export function GetRandomIndex(length) {
   // 取随机数
-  let Rand = Math.floor(MT.random() * length);
+  let Rand;
+
+  try {
+    Rand = Math.floor((random(1).at(0) / 256) * length);
+  } catch (err) {
+    Rand = Math.floor(MT.random() * length);
+  }
 
   return Rand;
 }
