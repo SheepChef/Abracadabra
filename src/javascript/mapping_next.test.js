@@ -290,6 +290,89 @@ function Check(Map2) {
   }
 }
 
+function CheckVirtual(Map2) {
+  const Map_Obj = JSON.parse(Map2);
+  const NUMBERSYMBOL = "0123456789+/=";
+  let ErrorOccur = false;
+  const LETTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  let DecodeTable = {};
+  let PayloadLetter = "";
+  for (let i = 0; i < 52; i++) {
+    DecodeTable[LETTERS[i]] = [];
+    DecodeTable[LETTERS[i]].push(
+      Map_Obj["Actual"]["N"]["alphabet"][LETTERS[i]]
+    );
+    DecodeTable[LETTERS[i]].push(
+      Map_Obj["Actual"]["A"]["alphabet"][LETTERS[i]]
+    );
+    DecodeTable[LETTERS[i]].push(
+      Map_Obj["Actual"]["V"]["alphabet"][LETTERS[i]]
+    );
+    PayloadLetter =
+      PayloadLetter + Map_Obj["Actual"]["N"]["alphabet"][LETTERS[i]];
+    PayloadLetter =
+      PayloadLetter + Map_Obj["Actual"]["A"]["alphabet"][LETTERS[i]];
+    PayloadLetter =
+      PayloadLetter + Map_Obj["Actual"]["V"]["alphabet"][LETTERS[i]];
+    if (
+      Map_Obj["Actual"]["A"]["alphabet"][LETTERS[i]] !=
+      Map_Obj["Actual"]["AD"]["alphabet"][LETTERS[i]]
+    ) {
+      DecodeTable[LETTERS[i]].push(
+        Map_Obj["Actual"]["AD"]["alphabet"][LETTERS[i]]
+      );
+      PayloadLetter =
+        PayloadLetter + Map_Obj["Actual"]["AD"]["alphabet"][LETTERS[i]];
+    }
+  }
+  for (let i = 0; i < 13; i++) {
+    DecodeTable[NUMBERSYMBOL[i]] = [];
+    DecodeTable[NUMBERSYMBOL[i]].push(
+      Map_Obj["Actual"]["N"]["numbersymbol"][NUMBERSYMBOL[i]]
+    );
+    DecodeTable[NUMBERSYMBOL[i]].push(
+      Map_Obj["Actual"]["A"]["numbersymbol"][NUMBERSYMBOL[i]]
+    );
+    DecodeTable[NUMBERSYMBOL[i]].push(
+      Map_Obj["Actual"]["V"]["numbersymbol"][NUMBERSYMBOL[i]]
+    );
+    PayloadLetter =
+      PayloadLetter + Map_Obj["Actual"]["N"]["numbersymbol"][NUMBERSYMBOL[i]];
+    PayloadLetter =
+      PayloadLetter + Map_Obj["Actual"]["A"]["numbersymbol"][NUMBERSYMBOL[i]];
+    PayloadLetter =
+      PayloadLetter + Map_Obj["Actual"]["V"]["numbersymbol"][NUMBERSYMBOL[i]];
+    if (
+      Map_Obj["Actual"]["A"]["numbersymbol"][NUMBERSYMBOL[i]] !=
+      Map_Obj["Actual"]["AD"]["numbersymbol"][NUMBERSYMBOL[i]]
+    ) {
+      DecodeTable[NUMBERSYMBOL[i]].push(
+        Map_Obj["Actual"]["AD"]["numbersymbol"][NUMBERSYMBOL[i]]
+      );
+      PayloadLetter =
+        PayloadLetter +
+        Map_Obj["Actual"]["AD"]["numbersymbol"][NUMBERSYMBOL[i]];
+    }
+  }
+
+  let VirtualLetters = [];
+  for (const [key, value] of Object.entries(Map_Obj["Virtual"])) {
+    VirtualLetters = VirtualLetters.concat(value);
+  }
+  VirtualLetters.forEach((letter) => {
+    if (PayloadLetter.indexOf(letter) !== -1) {
+      throw new Error(
+        "Virtual Character " + letter + " is conflicted with payload."
+      );
+    }
+  });
+  return "Virtual Letters Verified";
+}
+
 test("句式合法性", () => {
   expect(Check(Map)).toBe("Sentence Verified");
+});
+
+test("虚词合法性", () => {
+  expect(CheckVirtual(Map)).toBe("Virtual Letters Verified");
 });
