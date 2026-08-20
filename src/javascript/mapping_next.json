@@ -490,6 +490,8 @@
     "Main": [
       "1B/非/N/ye",
       "1B/N/曰/R",
+      "1Z/zi/曰/R",
+      "1Z/gentlemen/zi/曰/R",
       "1C/anti/MV/V/ye",
       "2C/N/make/N/zhi",
       "2C/MV/N/zhe/A",
@@ -497,6 +499,8 @@
       "2E/不/入/于/N/、/则/入/于/N/P",
       "2C/V/zhe/V/zhi",
       "2C/but/MV/A/zhe/A",
+      "2Z/HeavenStems/SignBranch/年",
+      "2Z/ReignTitle/number/年",
       "3C/N/with/N/V",
       "3B/N/曰，何/A/zhi/V/Q",
       "3D/有/所/V/N/，/则/不/得/其/V/P",
@@ -700,12 +704,7 @@
     ]
   },
   "VirtualSentences": {
-    "Begin": [
-      "1Z/zi/曰/R",
-      "1Z/gentlemen/zi/曰/R",
-      "2Z/HeavenStems/SignBranch/年",
-      "2Z/ReignTitle/number/年"
-    ],
+    "Begin": [],
     "Main": [],
     "End": []
   }

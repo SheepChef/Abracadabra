@@ -104,7 +104,8 @@ function Check(Map2) {
           Sentence[0][1] != "B" &&
           Sentence[0][1] != "C" &&
           Sentence[0][1] != "D" &&
-          Sentence[0][1] != "E"
+          Sentence[0][1] != "E" &&
+          Sentence[0][1] != "Z"
         ) {
           ErrorOccur = true;
           console.warn(
@@ -166,7 +167,8 @@ function Check(Map2) {
           Sentence[0][1] != "B" &&
           Sentence[0][1] != "C" &&
           Sentence[0][1] != "D" &&
-          Sentence[0][1] != "E"
+          Sentence[0][1] != "E" &&
+          Sentence[0][1] != "Z"
         ) {
           ErrorOccur = true;
           console.warn(
@@ -212,7 +214,7 @@ function Check(Map2) {
           }
         }
 
-        if (ActualPayload != CorrectPayload) {
+        if (ActualPayload != CorrectPayload && Sentence[0][1] != "Z") {
           ErrorOccur = true;
           console.warn(
             "Incorrect Main Sentence:" + Map_Obj["Sentences"]["Main"][c]
@@ -230,7 +232,8 @@ function Check(Map2) {
           Sentence[0][1] != "B" &&
           Sentence[0][1] != "C" &&
           Sentence[0][1] != "D" &&
-          Sentence[0][1] != "E"
+          Sentence[0][1] != "E" &&
+          Sentence[0][1] != "Z"
         ) {
           ErrorOccur = true;
           console.warn(

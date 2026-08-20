@@ -618,18 +618,24 @@ export class WenyanSimulator {
         let PossibleSentences = []; // 所有挑选出来的可能句式，选择时任选其一。
         let PossiblePianSentences = []; // 所有可能的骈文句式。
         let PossibleLogicSentences = []; // 所有可能的逻辑句式
+        let PossibleNonPayloadSentences = []; // 所有可能的非载荷句式
 
         let TargetPayload = SegmentedPayload[i][a]; //目标负载
         for (let c = 0; c < this.Map_Obj["Sentences"][Lib].length; c++) {
           //开始选择句式
           let Sentence = this.Map_Obj["Sentences"][Lib][c].split("/"); //Sentence是列表，按照/分割的句式
           if (parseInt(Sentence[0]) == TargetPayload) {
-            PossibleSentences.push(Sentence.slice(1));
+            if (Sentence[0][1] != "Z") {
+              PossibleSentences.push(Sentence.slice(1));
+            }
             if (Sentence[0][1] == "C" || Sentence[0][1] == "E") {
               PossiblePianSentences.push(Sentence.slice(1));
             }
             if (Sentence[0][1] == "D" || Sentence[0][1] == "E") {
               PossibleLogicSentences.push(Sentence.slice(1));
+            }
+            if (Sentence[0][1] == "Z") {
+              PossibleNonPayloadSentences.push(Sentence.slice(1));
             }
           }
         }
