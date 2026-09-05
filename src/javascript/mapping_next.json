@@ -1,12 +1,12 @@
 /*
  * Copyright (C) 2025-2026 SheepChef (a.k.a. Haruka Hokuto)
  *
- * 这是一个自由软件。
- * 在遵守AIPL-1.1许可证的前提下，
+ * 这是一个源代码公开的软件。
+ * 在遵守AIPL-1.2许可证的前提下，
  * 你可以自由复制，修改，分发，使用它。
  *
  * 查阅 Academic Innovation Protection License(AIPL) 来了解更多 .
- * 本作品应随附一份完整的 AIPL-1.1 许可证全文。
+ * 本作品应随附一份完整的 AIPL-1.2 许可证全文。
  *
  */
 
@@ -373,6 +373,20 @@
       "戌",
       "亥"
     ],
+    "SignBranchAnimal": [
+      "子鼠",
+      "丑牛",
+      "寅虎",
+      "卯兔",
+      "辰龙",
+      "巳蛇",
+      "午马",
+      "未羊",
+      "申猴",
+      "酉鸡",
+      "戌狗",
+      "亥猪"
+    ],
     "HeavenStems": ["甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"],
     "ReignTitle": [
       "建元",
@@ -392,6 +406,8 @@
       "1B/N/曰/R",
       "1B/若夫/N",
       "1C/anti/MV/V/ye/P",
+      "1Z/zi/曰/R",
+      "1Z/gentlemen/zi/曰/R",
       "2B/A/N/曰/R",
       "2B/N/以/A",
       "2C/N/anti/在/A",
@@ -401,6 +417,9 @@
       "2E/不/入/于/N/、/则/入/于/N/P",
       "2C/V/zhe/V/zhi",
       "2D/but/MV/A/zhe/A",
+      "2Z/HeavenStems/SignBranch/年",
+      "2Z/HeavenStems/SignBranchAnimal/年",
+      "2Z/ReignTitle/number/年",
       "3C/N/V/by/N",
       "3B/初，/N/V/by/N",
       "3B/夫/N/anti/V/by/N",
@@ -413,6 +432,8 @@
       "4D/非/N/不/A/，/V/不/A",
       "4C/A/N/AD/V",
       "4C/V/N/以/V/N",
+      "4C/有/number/magnitude/A/N/，/number/magnitude/A/N/P",
+      "4C/number/number/个/A/N/外/，/number/number/点/A/N/前/P",
       "4D/A/者/自/V/也/，/而/N/自/V/也/P",
       "4E/N/不在/A/，/有/N/则/A/P",
       "4E/上/不/V/N/，/下/不/V/N/P",
@@ -500,12 +521,15 @@
       "2C/V/zhe/V/zhi",
       "2C/but/MV/A/zhe/A",
       "2Z/HeavenStems/SignBranch/年",
+      "2Z/HeavenStems/SignBranchAnimal/年",
       "2Z/ReignTitle/number/年",
       "3C/N/with/N/V",
       "3B/N/曰，何/A/zhi/V/Q",
       "3D/有/所/V/N/，/则/不/得/其/V/P",
       "4C/A/N/AD/V",
       "4C/V/N/以/V/N",
+      "4C/有/number/magnitude/A/N/，/number/magnitude/A/N/P",
+      "4C/number/number/个/A/N/外/，/number/number/点/A/N/前/P",
       "4D/N/无/N/，/无以/V/N/P",
       "4D/此/谓/V/N/在/V/其/N/P",
       "4D/今/夫/N/，/一/N/之/多/，/及/其/A/A/P",
