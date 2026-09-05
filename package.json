@@ -1,6 +1,7 @@
 {
   "name": "abracadabra-cn",
   "description": "Use Chinese to Encode Everything",
+  "license": "SEE LICENSE IN LICENSE.md",
   "private": false,
   "version": "3.5.0",
   "main": "./dist/abracadabra-cn.js",
@@ -44,7 +45,8 @@
     "vitest": "^4.1.10"
   },
   "files": [
-    "dist"
+    "dist",
+    "THIRD_PARTY_LICENSES.md"
   ],
   "repository": {
     "type": "git",
