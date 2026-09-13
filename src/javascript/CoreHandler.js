@@ -135,7 +135,7 @@ export class FlexibleTransferDataObj {
    * @param{bool}UseAONT 是否启用全有或全无转换(AONT)
    * @param{number}MessageID 消息ID
    * @param{string}DataInBase64 Base64编码后的加密Data
-   * @param{string}SerialNumber 消息序号
+   * @param{number}SerialNumber 消息序号
    */
   constructor(UseAONT, MessageID, DataInBase64, SerialNumber) {
     this.UseAONT = UseAONT;

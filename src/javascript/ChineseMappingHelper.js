@@ -34,8 +34,8 @@ export class WenyanSimulator {
    * 文言文仿真器(V3)的主类
    * 初始化时传入明文密钥和可选的调试用回调函数
    *
-   * @param{string}key 明文密钥，哈希后用于转轮混淆
-   * @param{any}callback 回调函数，用于调试
+   * @param {string}key 明文密钥，哈希后用于转轮混淆
+   * @param {any}callback 回调函数，用于调试
    * @constructor
    */
   constructor(key, callback = null) {
@@ -67,8 +67,8 @@ export class WenyanSimulator {
    *
    * 给定一个键(key)，返回混淆后的对应字母
    *
-   * @param{string}keyIn 要传入混淆层的字母
-   * @returns{string} 返回混淆后的字母
+   * @param {string}keyIn 要传入混淆层的字母
+   * @returns {string} 返回混淆后的字母
    */
   RoundKeyMatch(keyIn) {
     return this.RoundObufsHelper.RoundKeyMatch(keyIn);
@@ -91,7 +91,7 @@ export class WenyanSimulator {
    *
    * 控制转轮的轮转，调用此函数即执行一次轮转操作
    *
-   * @returns{null} 不返回任何值
+   * @returns {undefined} 不返回任何值
    */
   RoundKey() {
     this.RoundObufsHelper.RoundKey();
@@ -103,9 +103,9 @@ export class WenyanSimulator {
    *
    * 传入一个待混淆的字母，以及其词类，返回一个混淆之后映射的汉字
    *
-   * @param{string}text 要传入混淆层的字母
-   * @param{string}type 词性，决定了混淆后采用的汉字映射表(应该为N/V/A/AD)
-   * @returns{string} 返回一个汉字
+   * @param {string}text 要传入混淆层的字母
+   * @param {string}type 词性，决定了混淆后采用的汉字映射表(应该为N/V/A/AD)
+   * @returns {string} 返回一个汉字
    */
   getCryptText(text, type) {
     //查表函数
@@ -144,8 +144,8 @@ export class WenyanSimulator {
    *
    * 传入一个汉字，返回一个反向查表和逆混淆之后的字母
    *
-   * @param{string}text 要传入混淆层的汉字
-   * @returns{string} 返回一个逆混淆后的字母
+   * @param {string}text 要传入混淆层的汉字
+   * @returns {string} 返回一个逆混淆后的字母
    */
   findOriginText(text) {
     //反向查表函数
@@ -163,7 +163,7 @@ export class WenyanSimulator {
    *
    * 将四个汉字映射表合并，生成一个汉字逆映射表
    *
-   * @returns{null} 无返回值
+   * @returns {undefined} 无返回值
    */
   InitDecodeTable() {
     for (let i = 0; i < 52; i++) {
@@ -241,7 +241,9 @@ export class WenyanSimulator {
     this.InverseDecodeTable = {};
     for (let key in this.DecodeTable) {
       this.DecodeTable[key].forEach((item) => {
-        this.InverseDecodeTable[item] = key;
+        if (this.InverseDecodeTable !== undefined) {
+          this.InverseDecodeTable[item] = key;
+        }
       });
     }
   }
@@ -377,9 +379,9 @@ export class WenyanSimulator {
    *
    * 传入一个二维数组(各个段落的载荷数组)和因子，返回一个处理后的二维数组
    *
-   * @param{twoDArray}arr 传入待处理的数组
-   * @param{number}factor 传入一个因子，决定保留多少比例的杂碎数字(越大越少)
-   * @returns{Array} 返回处理后的二维数组
+   * @param {Array}twoDArray 传入待处理的数组
+   * @param {number}factor 传入一个因子，决定保留多少比例的杂碎数字(越大越少)
+   * @returns {Array} 返回处理后的二维数组
    */
   processArray(twoDArray, factor) {
     return twoDArray.map((subArray) => {
@@ -401,8 +403,8 @@ export class WenyanSimulator {
    * 工具函数
    * 使用一个简单的算法，把一段文言文密文的总载荷根据一定比例分成三部分(对应开头，主体，和结尾)，返回一个数组
    *
-   * @param{number}num 传入一段密文的总载荷
-   * @returns{Array} 返回处理后的数组
+   * @param {number}num 传入一段密文的总载荷
+   * @returns {Array} 返回处理后的数组
    */
   distributeInteger(num) {
     //把文言文密文的载荷根据一定比例分成三份(一段)
@@ -419,30 +421,14 @@ export class WenyanSimulator {
     return result;
   }
 
-  /*distributePayload(n, min = 20, max = 100) {
-    // 如果载荷量太大，那么自动把载荷分为部分(段落)，然后分别处理
-    if (n === 0) return [0];
-    const k = Math.ceil(n / 100);
-    const base = Math.floor(n / k);
-    const remainder = n % k;
-    const parts = [];
-    for (let i = 0; i < remainder; i++) {
-      parts.push(base + 1);
-    }
-    for (let i = remainder; i < k; i++) {
-      parts.push(base);
-    }
-    return parts;
-  }*/
-
   /**
    * 工具函数
    * 使用一个简单的算法，把过长的文言文密文总载荷分成多个段，返回一个数组
    *
-   * @param{number}totalLength 传入一段密文的总载荷
-   * @param{number}minLen 指定一段密文的最低载荷量
-   * @param{number}maxLen 指定一段密文的最高载荷量
-   * @returns{Array} 返回处理后的数组
+   * @param {number}totalLength 传入一段密文的总载荷
+   * @param {number}minLen 指定一段密文的最低载荷量
+   * @param {number}maxLen 指定一段密文的最高载荷量
+   * @returns {Array} 返回处理后的数组
    */
   distributePayload(totalLength, minLen = 20, maxLen = 80) {
     //传入非法的值将直接抛出错误
@@ -484,11 +470,12 @@ export class WenyanSimulator {
    * 关键流程函数
    * 使用算法选择句式，用户可指定一律使用何种句式(骈文/逻辑)
    *
-   * @param{number}PayloadLength 一段密文的载荷数
-   * @param{number}RandomIndex 随机因子(0~100)，越大，给出的句式越随机
-   * @param{boolean}p 是否强制用对仗骈文
-   * @param{boolean}l 是否强制用逻辑句式
-   * @returns{Array} 返回处理后的数组
+   * @param {number}PayloadLength 一段密文的载荷数
+   * @param {number}RandomIndex 随机因子(0~100)，越大，给出的句式越随机
+   * @param {number[]|boolean}RandomParagraphing 随机分段范围参数
+   * @param {boolean}p 是否强制用对仗骈文
+   * @param {boolean}l 是否强制用逻辑句式
+   * @returns {Array} 返回处理后的数组
    */
   selectSentence(
     PayloadLength,
@@ -517,7 +504,7 @@ export class WenyanSimulator {
     ) {
       throw new Error("Invalid Payload Distribution Argument.");
     }
-    if (PayloadLength > RandomParagraphing[1]) {
+    if (PayloadLength > RandomParagraphing[1] && RandomParagraphing !== false) {
       //如果密文太长了，那么自动分段
       let distributedPayload = this.distributePayload(
         PayloadLength,
@@ -526,11 +513,13 @@ export class WenyanSimulator {
       );
       let Result = [];
       distributedPayload.forEach((Payload) => {
-        Result = Result.concat(this.selectSentence(Payload, RandomIndex, p, l));
+        Result = Result.concat(
+          this.selectSentence(Payload, RandomIndex, false, p, l)
+        );
         Result[Result.length - 1].push("Z");
         try {
           if (this.callback != null)
-            this.callback(new CallbackObj("ENC_SENTENCES", Result));
+            this.callback(new CallbackObj("ENC_SENTENCES", Result.toString()));
         } catch (err) {
           // continue regardless of error
         }
@@ -566,7 +555,7 @@ export class WenyanSimulator {
           PossiblePayload.push(b);
         }
         //这里给出的可能载荷数组应当是从小到大的。
-        let TargetPayload;
+        let TargetPayload = 0;
         if (selectRand <= 100) {
           //选择贪心最优解之一
           if (PossiblePayload[PossiblePayload.length - 1] > 6) {
@@ -580,12 +569,16 @@ export class WenyanSimulator {
               TargetPayload = PossiblePayload[PossiblePayload.length - 1];
             }
           } else {
-            TargetPayload = PossiblePayload.pop(); //目标Payload，参照这个去库里寻句式。
+            TargetPayload = PossiblePayload.pop() ?? 0; //目标Payload，参照这个去库里寻句式。
           }
         } else if (selectRand > 100 && selectRand <= 200) {
           //随机选择一个，不一定是最优解
           TargetPayload =
             PossiblePayload[GetRandomIndex(PossiblePayload.length)];
+        }
+
+        if (TargetPayload == 0) {
+          throw new Error("No Available Target Payload.");
         }
 
         SegmentedPayload[i].push(TargetPayload);
@@ -700,7 +693,9 @@ export class WenyanSimulator {
         ElementResult.push(TargetSentence);
         try {
           if (this.callback != null)
-            this.callback(new CallbackObj("ENC_SENTENCES", ElementResult));
+            this.callback(
+              new CallbackObj("ENC_SENTENCES", ElementResult.toString())
+            );
         } catch (err) {
           // continue regardless of error
         }
@@ -712,14 +707,14 @@ export class WenyanSimulator {
   /**
    * 汉字映射总流程函数(加密)
    *
-   * @param{string}OriginStr 需要映射的字符串(Base64字符串)
-   * @param{boolean}q 是否保留标点，传入真值即保留
-   * @param{number}r 随机因子(0~100)，越大，给出的句式越随机
-   * @param{Array}rp 超长密文所使用的分段函数每段载荷上下限。传入 min 和 max，默认 35/80。min 小于 35 或者 max < min 将会出错
-   * @param{boolean}p 是否强制用对仗骈文
-   * @param{boolean}l 是否强制用逻辑句式
-   * @param{boolean}t 是否使用繁体输出
-   * @returns{string} 返回汉字字符串(加密结果)
+   * @param {string}OriginStr 需要映射的字符串(Base64字符串)
+   * @param {boolean}q 是否保留标点，传入真值即保留
+   * @param {number}r 随机因子(0~100)，越大，给出的句式越随机
+   * @param {Array}rp 超长密文所使用的分段函数每段载荷上下限。传入 min 和 max，默认 35/80。min 小于 35 或者 max < min 将会出错
+   * @param {boolean}p 是否强制用对仗骈文
+   * @param {boolean}l 是否强制用逻辑句式
+   * @param {boolean}t 是否使用繁体输出
+   * @returns {string} 返回汉字字符串(加密结果)
    */
   enMap(OriginStr, q, r, rp, p, l, t) {
     let TempStr1 = "",
@@ -957,9 +952,9 @@ export class WenyanSimulator {
   /**
    * 汉字逆映射总流程函数(解密)
    *
-   * @param{string}OriginStr 需要逆映射的字符串(一串汉字)
-   * @param{string}key 明文密钥，用于解密灵活传输标头
-   * @returns{string|FlexibleTransferDataObj[]} 返回Base64字符串(逆映射结果)
+   * @param {string}OriginStr 需要逆映射的字符串(一串汉字)
+   * @param {string}key 明文密钥，用于解密灵活传输标头
+   * @returns {string|FlexibleTransferDataObj[]} 返回Base64字符串(逆映射结果)
    */
   deMap(OriginStr, key) {
     let TempStr1 = "",
