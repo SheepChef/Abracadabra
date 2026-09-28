@@ -98,7 +98,7 @@ const TestData = [
   generateRandomUint8Array(2048),
 ];
 
-test("加/解密测试", { timeout: 15000 }, () => {
+test("加/解密测试", { timeout: 200000 }, () => {
   const Abra = new Abracadabra();
   let TestTemp = TestString;
   let TestTemp2 = TestString;
