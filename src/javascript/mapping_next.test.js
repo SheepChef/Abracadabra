@@ -1,12 +1,12 @@
 /*
  * Copyright (C) 2025-2026 SheepChef (a.k.a. Haruka Hokuto)
  *
- * 这是一个自由软件。
- * 在遵守AIPL-1.1许可证的前提下，
+ * 这是一个源代码公开的软件。
+ * 在遵守AIPL-1.2许可证的前提下，
  * 你可以自由复制，修改，分发，使用它。
  *
  * 查阅 Academic Innovation Protection License(AIPL) 来了解更多 .
- * 本作品应随附一份完整的 AIPL-1.1 许可证全文。
+ * 本作品应随附一份完整的 AIPL-1.2 许可证全文。
  *
  */
 
@@ -104,7 +104,8 @@ function Check(Map2) {
           Sentence[0][1] != "B" &&
           Sentence[0][1] != "C" &&
           Sentence[0][1] != "D" &&
-          Sentence[0][1] != "E"
+          Sentence[0][1] != "E" &&
+          Sentence[0][1] != "Z"
         ) {
           ErrorOccur = true;
           console.warn(
@@ -148,7 +149,7 @@ function Check(Map2) {
             }
           }
         }
-        if (ActualPayload != CorrectPayload) {
+        if (ActualPayload != CorrectPayload && Sentence[0][1] != "Z") {
           ErrorOccur = true;
           console.warn(
             "Incorrect Begin Sentence:" + Map_Obj["Sentences"]["Begin"][c]
@@ -166,7 +167,8 @@ function Check(Map2) {
           Sentence[0][1] != "B" &&
           Sentence[0][1] != "C" &&
           Sentence[0][1] != "D" &&
-          Sentence[0][1] != "E"
+          Sentence[0][1] != "E" &&
+          Sentence[0][1] != "Z"
         ) {
           ErrorOccur = true;
           console.warn(
@@ -212,7 +214,7 @@ function Check(Map2) {
           }
         }
 
-        if (ActualPayload != CorrectPayload) {
+        if (ActualPayload != CorrectPayload && Sentence[0][1] != "Z") {
           ErrorOccur = true;
           console.warn(
             "Incorrect Main Sentence:" + Map_Obj["Sentences"]["Main"][c]
@@ -230,7 +232,8 @@ function Check(Map2) {
           Sentence[0][1] != "B" &&
           Sentence[0][1] != "C" &&
           Sentence[0][1] != "D" &&
-          Sentence[0][1] != "E"
+          Sentence[0][1] != "E" &&
+          Sentence[0][1] != "Z"
         ) {
           ErrorOccur = true;
           console.warn(
@@ -274,7 +277,7 @@ function Check(Map2) {
             }
           }
         }
-        if (ActualPayload != CorrectPayload) {
+        if (ActualPayload != CorrectPayload && Sentence[0][1] != "Z") {
           ErrorOccur = true;
           console.warn(
             "Incorrect End Sentence:" + Map_Obj["Sentences"]["End"][c]
@@ -290,6 +293,89 @@ function Check(Map2) {
   }
 }
 
+function CheckVirtual(Map2) {
+  const Map_Obj = JSON.parse(Map2);
+  const NUMBERSYMBOL = "0123456789+/=";
+  let ErrorOccur = false;
+  const LETTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  let DecodeTable = {};
+  let PayloadLetter = "";
+  for (let i = 0; i < 52; i++) {
+    DecodeTable[LETTERS[i]] = [];
+    DecodeTable[LETTERS[i]].push(
+      Map_Obj["Actual"]["N"]["alphabet"][LETTERS[i]]
+    );
+    DecodeTable[LETTERS[i]].push(
+      Map_Obj["Actual"]["A"]["alphabet"][LETTERS[i]]
+    );
+    DecodeTable[LETTERS[i]].push(
+      Map_Obj["Actual"]["V"]["alphabet"][LETTERS[i]]
+    );
+    PayloadLetter =
+      PayloadLetter + Map_Obj["Actual"]["N"]["alphabet"][LETTERS[i]];
+    PayloadLetter =
+      PayloadLetter + Map_Obj["Actual"]["A"]["alphabet"][LETTERS[i]];
+    PayloadLetter =
+      PayloadLetter + Map_Obj["Actual"]["V"]["alphabet"][LETTERS[i]];
+    if (
+      Map_Obj["Actual"]["A"]["alphabet"][LETTERS[i]] !=
+      Map_Obj["Actual"]["AD"]["alphabet"][LETTERS[i]]
+    ) {
+      DecodeTable[LETTERS[i]].push(
+        Map_Obj["Actual"]["AD"]["alphabet"][LETTERS[i]]
+      );
+      PayloadLetter =
+        PayloadLetter + Map_Obj["Actual"]["AD"]["alphabet"][LETTERS[i]];
+    }
+  }
+  for (let i = 0; i < 13; i++) {
+    DecodeTable[NUMBERSYMBOL[i]] = [];
+    DecodeTable[NUMBERSYMBOL[i]].push(
+      Map_Obj["Actual"]["N"]["numbersymbol"][NUMBERSYMBOL[i]]
+    );
+    DecodeTable[NUMBERSYMBOL[i]].push(
+      Map_Obj["Actual"]["A"]["numbersymbol"][NUMBERSYMBOL[i]]
+    );
+    DecodeTable[NUMBERSYMBOL[i]].push(
+      Map_Obj["Actual"]["V"]["numbersymbol"][NUMBERSYMBOL[i]]
+    );
+    PayloadLetter =
+      PayloadLetter + Map_Obj["Actual"]["N"]["numbersymbol"][NUMBERSYMBOL[i]];
+    PayloadLetter =
+      PayloadLetter + Map_Obj["Actual"]["A"]["numbersymbol"][NUMBERSYMBOL[i]];
+    PayloadLetter =
+      PayloadLetter + Map_Obj["Actual"]["V"]["numbersymbol"][NUMBERSYMBOL[i]];
+    if (
+      Map_Obj["Actual"]["A"]["numbersymbol"][NUMBERSYMBOL[i]] !=
+      Map_Obj["Actual"]["AD"]["numbersymbol"][NUMBERSYMBOL[i]]
+    ) {
+      DecodeTable[NUMBERSYMBOL[i]].push(
+        Map_Obj["Actual"]["AD"]["numbersymbol"][NUMBERSYMBOL[i]]
+      );
+      PayloadLetter =
+        PayloadLetter +
+        Map_Obj["Actual"]["AD"]["numbersymbol"][NUMBERSYMBOL[i]];
+    }
+  }
+
+  let VirtualLetters = [];
+  for (const [key, value] of Object.entries(Map_Obj["Virtual"])) {
+    VirtualLetters = VirtualLetters.concat(value);
+  }
+  VirtualLetters.forEach((letter) => {
+    if (PayloadLetter.indexOf(letter) !== -1) {
+      throw new Error(
+        "Virtual Character " + letter + " is conflicted with payload."
+      );
+    }
+  });
+  return "Virtual Letters Verified";
+}
+
 test("句式合法性", () => {
   expect(Check(Map)).toBe("Sentence Verified");
+});
+
+test("虚词合法性", () => {
+  expect(CheckVirtual(Map)).toBe("Virtual Letters Verified");
 });

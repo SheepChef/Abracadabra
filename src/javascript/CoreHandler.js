@@ -1,12 +1,12 @@
 /*
  * Copyright (C) 2025-2026 SheepChef (a.k.a. Haruka Hokuto)
  *
- * 这是一个自由软件。
- * 在遵守AIPL-1.1许可证的前提下，
+ * 这是一个源代码公开的软件。
+ * 在遵守AIPL-1.2许可证的前提下，
  * 你可以自由复制，修改，分发，使用它。
  *
  * 查阅 Academic Innovation Protection License(AIPL) 来了解更多 .
- * 本作品应随附一份完整的 AIPL-1.1 许可证全文。
+ * 本作品应随附一份完整的 AIPL-1.2 许可证全文。
  *
  */
 import { Base64 } from "js-base64";
@@ -135,7 +135,7 @@ export class FlexibleTransferDataObj {
    * @param{bool}UseAONT 是否启用全有或全无转换(AONT)
    * @param{number}MessageID 消息ID
    * @param{string}DataInBase64 Base64编码后的加密Data
-   * @param{string}SerialNumber 消息序号
+   * @param{number}SerialNumber 消息序号
    */
   constructor(UseAONT, MessageID, DataInBase64, SerialNumber) {
     this.UseAONT = UseAONT;

@@ -105,7 +105,7 @@ Abracadabra(魔曰) 是开源，安全，高效的文本加密工具。
 ## 开放源代码许可
 
 **⚠️ 本项目受私有许可证保护**，使用本项目则默认视为同意并遵守相关条款。禁止将本项目用于非法用途。  
-👉 查阅 [**AIPL-1.1 许可**](https://github.com/SheepChef/Abracadabra/blob/main/LICENSE.md) 来了解详细信息，也可以前往 [**#87**](https://github.com/SheepChef/Abracadabra/issues/87) 查阅简单介绍。
+👉 查阅 [**AIPL-1.2 许可**](https://github.com/SheepChef/Abracadabra/blob/main/LICENSE.md) 来了解详细信息，也可以前往 [**#87**](https://github.com/SheepChef/Abracadabra/issues/87) 查阅简单介绍。
 
 ---
 

@@ -1,12 +1,12 @@
 /*
  * Copyright (C) 2025-2026 SheepChef (a.k.a. Haruka Hokuto)
  *
- * 这是一个自由软件。
- * 在遵守AIPL-1.1许可证的前提下，
+ * 这是一个源代码公开的软件。
+ * 在遵守AIPL-1.2许可证的前提下，
  * 你可以自由复制，修改，分发，使用它。
  *
  * 查阅 Academic Innovation Protection License(AIPL) 来了解更多 .
- * 本作品应随附一份完整的 AIPL-1.1 许可证全文。
+ * 本作品应随附一份完整的 AIPL-1.2 许可证全文。
  *
  */
 
@@ -22,7 +22,7 @@
  * Special thanks to Arundale Ramanathan, the author of Unishox2,
  * who genuinely answered my enquiries and helped me to debug.
  *
- * 本作品中包含的 Unishox2 不适用 AIPL-1.1 许可证。
+ * 本作品中包含的 Unishox2 不适用 AIPL-1.2 许可证。
  * 使用 Unishox2 须遵守其原始许可证。
  *
  */
@@ -56,7 +56,7 @@ export class Abracadabra {
    *
    * @author Haruka Hokuto (SheepChef)
    * @copyright Copyright (C) 2025-2026 SheepChef (a.k.a. Haruka Hokuto)
-   * @license AIPL-1.1
+   * @license AIPL-1.2
    */
   constructor(inputType = Abracadabra.TEXT, outputType = Abracadabra.TEXT) {
     //初始化函数指定一些基本参数

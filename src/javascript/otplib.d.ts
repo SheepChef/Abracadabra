@@ -7,7 +7,7 @@
  */
 
 /*
- * 本文件不适用AIPL-1.1许可证，遵循其原有许可证。
+ * 本文件不适用AIPL-1.2许可证，遵循其原有许可证。
  */
 
 import { createDigest, createRandomBytes } from '@otplib/plugin-crypto-js';

@@ -117,7 +117,7 @@ export default withMermaid({
     // 移动端 - menu
     sidebarMenuLabel: "菜单",
     footer: {
-      message: "中国制造 • AIPL-1.1许可",
+      message: "中国制造 • AIPL-1.2许可",
       copyright:
         "Copyright © 2025-present <a href='https://shef.cc' target='_blank'>SheepChef</a>",
     },

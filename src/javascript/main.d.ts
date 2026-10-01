@@ -5,6 +5,8 @@ export interface WenyanConfig {
   PunctuationMark?: boolean;
   /** 密文算法的随机程度，越大随机性越强，默认 50，最大100，超过100将会出错; */
   RandomIndex?: number;
+  /** 密文的稀释程度，默认为0，越高将会稀释得越多; */
+  //DiluteIndex?: number;
   /** 指定超长密文所使用的分段函数每段载荷上下限。传入 min 和 max，默认 20/80。min 小于 20, max 大于 200, 或者 max < min 将会出错; */
   RandomParagraphing?: [number, number];
   /** 指定是否强制生成骈文密文，默认 false; */
@@ -91,7 +93,7 @@ export class Abracadabra {
    *
    * @author Haruka Hokuto (SheepChef)
    * @copyright Copyright (C) 2025-2026 SheepChef (a.k.a. Haruka Hokuto)
-   * @license AIPL-1.1
+   * @license AIPL-1.2
    */
   constructor(inputType?: "TEXT" | "UINT8", outputType?: "TEXT" | "UINT8");
 
