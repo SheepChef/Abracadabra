@@ -14,7 +14,7 @@
 
 <div align=center>
 
-[<img src="https://img.shields.io/badge/license-AIPL%201.1-yellow"/>](LICENSE.md)
+[<img src="https://img.shields.io/badge/license-AIPL%201.2-yellow"/>](LICENSE.md)
 ![JavaScript](https://img.shields.io/badge/lang-JavaScript-orange)
 ![WASM](https://img.shields.io/badge/binary-WASM-b33bb3)
 
