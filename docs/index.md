@@ -40,14 +40,14 @@ features:
     details: 完整且严格的代码单元测试，强制解密兼容性，确保魔曰加密安全可靠。
   - icon: 🌳
     title: 博采众议
-    details: 依AIPL 1.1许可证，你可以自由查阅，修改魔曰的源代码，参与社区，提出建议和贡献。
+    details: 依AIPL 1.2许可证，你可以自由查阅，修改魔曰的源代码，参与社区，提出建议和贡献。
 ---
 
 ## Abracadabra 魔曰
 
 <div style="display:flex;flex-flow: wrap;">
 
-<img src="https://img.shields.io/badge/license-AIPL%201.1-yellow"/>
+<img src="https://img.shields.io/badge/license-AIPL%201.2-yellow"/>
 
 <img src="https://img.shields.io/badge/lang-JavaScript-orange"/>
 
