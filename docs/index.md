@@ -47,7 +47,7 @@ features:
 
 <div style="display:flex;flex-flow: wrap;">
 
-<img src="https://img.shields.io/badge/license-AIPL%201.1-yellow"/>
+<img src="https://img.shields.io/badge/license-AIPL%201.2-yellow"/>
 
 <img src="https://img.shields.io/badge/lang-JavaScript-orange"/>
 
