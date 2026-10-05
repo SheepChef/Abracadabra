@@ -59,6 +59,7 @@ export default withMermaid({
     sidebar: [
       { text: "快速开始", link: "/document/quick-start.md" },
       { text: "功能对比", link: "/document/comparison.md" },
+      { text: "密文兼容性", link: "/document/compatibility.md" },
       {
         text: "编译和部署",
         collapsed: false,
