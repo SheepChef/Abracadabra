@@ -59,6 +59,7 @@ export default withMermaid({
     sidebar: [
       { text: "快速开始", link: "/document/quick-start.md" },
       { text: "功能对比", link: "/document/comparison.md" },
+      { text: "密文兼容性", link: "/document/compatibility.md" },
       {
         text: "编译和部署",
         collapsed: false,
@@ -91,7 +92,7 @@ export default withMermaid({
           { text: "常见问题和使用提示", link: "/document/FAQ.md" },
         ],
       },
-      { text: "AI基准测试", link: "/document/bench.md" },
+      { text: "LLM 基准测试", link: "/document/bench.md" },
       { text: "鸣谢", link: "/document/thanks.md" },
       { text: "Demo页", link: "https://abra.js.org" },
       { text: "GitHub仓库", link: "https://github.com/SheepChef/Abracadabra" },
