@@ -92,7 +92,7 @@ export default withMermaid({
           { text: "常见问题和使用提示", link: "/document/FAQ.md" },
         ],
       },
-      { text: "AI基准测试", link: "/document/bench.md" },
+      { text: "LLM 基准测试", link: "/document/bench.md" },
       { text: "鸣谢", link: "/document/thanks.md" },
       { text: "Demo页", link: "https://abra.js.org" },
       { text: "GitHub仓库", link: "https://github.com/SheepChef/Abracadabra" },
