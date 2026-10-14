@@ -87,7 +87,9 @@
 
 你可以将魔曰前端一键部署至自己的托管平台账户。
 
-魔曰支持通过 **Cloudflare Workers**、**Netlify** 和 **Vercel** 进行一键部署。点击下方按钮，按照对应平台的提示即可完成部署。
+魔曰支持通过 **Cloudflare Workers**、**Netlify** 和 **Vercel** 进行一键部署。
+
+点击下方按钮，按照对应平台的提示即可完成部署。
 
 <p align="left">
   <a href="https://deploy.workers.cloudflare.com/?url=https://github.com/SheepChef/Abracadabra_demo">
