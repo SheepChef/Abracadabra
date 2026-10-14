@@ -4,34 +4,32 @@
 
 然后，推荐使用 [**wasmtime**](https://github.com/bytecodealliance/wasmtime) 来调用它，其他 Runtime 不做特别兼容。
 
-本项目的 WebAssembly 模块使用 [**Javy**](https://github.com/bytecodealliance/javy) 编译而来，方便在 C++、Rust、Go 等语言中调用，**不推荐**在类似 Python、 Java、Node.js 的解释器中调用。
+本项目的 WebAssembly 模块使用 [**Javy**](https://github.com/bytecodealliance/javy) 编译而来，可通过支持 WASI 的宿主在不同语言环境中调用。
 
 要调用本 WebAssembly 模块，需要使用尚在预览状态的 [**WASI**](https://github.com/WebAssembly/WASI)，目前仅有 wasmtime 提供了最完整的 WASI 支持，但它在各个语言的实现并不一致。
 
 本模块的合法输入为一个 JSON 字符串，输入时请勿附带注释，遵循以下格式：
 
 ```json
-
 {
-  "method":"", // WENYAN | OLD | BEAR
-  "inputType":"", // TEXT | UINT8
-  "outputType":"", // TEXT | UINT8
-  "input":"",  // 输入的数据，如果是TEXT请直接输入纯文本，如果是任意字节，请输入Base64编码字符串
-  "mode":"",   // ENCRYPT | DECRYPT | AUTO   // AUTO 仅在 method 指定 OLD 时合法
-  "key":"",    // 加密密钥，一个字符串 //如果缺省，自动使用默认值
-  "q":bool,    // OLD模式下，决定是否添加标志位
-  "WenyanConfig":{...}, //文言文生成配置，详情见JavaScript接口定义。
-  "AdvancedEncConfig":{...} //高级加密配置，详情见JavaScript接口定义。
+  "method": "WENYAN",
+  "inputType": "TEXT",
+  "outputType": "TEXT",
+  "input": "示例文本",
+  "mode": "ENCRYPT",
+  "key": "ABRACADABRA",
+  "WenyanConfig": {},
+  "AdvancedEncConfig": {}
 }
-
 ```
 
 ::: tip 输出格式
-WASM 模块执行完毕后，结果将通过 `stdout` 以纯文本形式输出。
+WASM 模块执行完毕后，结果将通过 `stdout` 以 JSON 编码形式输出。
 
 - 如果 `outputType` 指定为 `UINT8`，则输出的是 Base64 编码字符串（或 Base64 字符串数组）。
-- 如果开启了高级加密的 `FlexibleTransfer` 灵活分段功能，输出可能是一个字符串数组（或 Base64 字符串数组）。
-  :::
+- 如果启用了 `FlexibleTransfer` 灵活分段功能，输出可能是一个字符串数组（或 Base64 字符串数组）。
+
+:::
 
 ::: warning 安全性和性能警告
 
@@ -39,7 +37,7 @@ WASM 模块执行完毕后，结果将通过 `stdout` 以纯文本形式输出�
 
 - 执行效率将显著劣于 V8 引擎环境，尤其是执行密集哈希运算的时候。`QuickJS` 是轻量化的 JS 运行时，无法和 V8 媲美。
 
-- `QuickJS` 不支持获取密码学安全随机数，因此，随机数算法将由梅森旋转作为代替。这会导致加密安全性被削弱。
+- `QuickJS` 不支持获取密码学安全随机数，因此，随机数算法将由梅森旋转作为代替。这会削弱加密安全性，不建议用于敏感数据。
 
 WASM 不是魔曰的主线开发任务，依赖库未经积极更新，如果遇到问题，请提 Issue。
 
@@ -84,8 +82,9 @@ def run_wasi(wasm_file):
     instance = linker.instantiate(store, module)
     start = instance.exports(store)["_start"]
     start(store)
+wasm_file = "<Path_to_WASM_Module_File>"
 try:
-    run_wasi("<Path_to_WASM_Module_File>")
+    run_wasi(wasm_file)
 except FileNotFoundError:
     print(f"Error: WASM file '{wasm_file}' not found.")
 except wasmtime.WasmtimeError as e:

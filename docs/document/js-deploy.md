@@ -30,7 +30,7 @@ let Abra = new Abracadabra(); //不附带参数，
 Abracadabra.TEXT = "TEXT"
 Abracadabra.UINT8 = "UINT8"
 */
-let Abra = new Abracadabra(InputMode, OutputMode);
+let AbraWithMode = new Abracadabra("TEXT", "UINT8");
 //参数必须是上述二者中的一个，传入其他值会导致错误。
 ```
 
@@ -91,9 +91,9 @@ export interface WenyanConfig {
   RandomIndex?: number;
   /** 指定超长密文所使用的分段函数每段载荷上下限。传入 min 和 max，默认 20/80。min 小于 20, max 大于 200, 或者 max < min 将会出错; */
   RandomParagraphing?: [number, number];
-  /** 指定是否强制生成骈文密文，默认 false; */
+  /** 指定是否优先生成骈文密文，默认 false; */
   PianwenMode?: boolean;
-  /** 指定是否强制生成逻辑密文，默认 false; */
+  /** 指定是否优先生成逻辑密文，默认 false; */
   LogicMode?: boolean;
   /** 指定输出文本是否为繁体中文，默认 false; */
   Traditional?: boolean;
@@ -137,7 +137,7 @@ export interface AdvancedEncConfig {
   /** 指定用于TOTP加密的Unix时间戳记，以毫秒为单位(JS标准)，默认为系统时间；*/
   TOTPEpoch?: number;
   /**
-   * 指定用于TOTP加密的预共享密钥，默认为加密主密钥，推荐使用网站域名作为此项密钥以提升安全性;
+   * 指定用于TOTP加密的预共享密钥，默认为加密主密钥，推荐使用足够随机且仅通信双方知晓的密钥;
    * 注意，TOTP的安全性主要依赖于此BaseKey
    **/
   TOTPBaseKey?: string;
@@ -196,6 +196,7 @@ export interface FlexibleTransferConfig {
 
 import { Abracadabra } from "abracadabra-cn";
 let Abra = new Abracadabra(); //不附带参数，
+const TestTemp = "示例内容";
 
 Abra.WenyanInput(
   TestTemp,
@@ -220,12 +221,10 @@ Abra.WenyanInput(
   }
 ); // 启用高级加密及灵活分段传输，缺省项自动使用默认值
 
-Abra.WenyanInput(TestTemp, "DECRYPT", "ABRACADABRA"); //解密一般不需要传入配置
+const CipherText = Abra.Output().join(""); //灵活分段加密返回密文段数组
+Abra.WenyanInput(CipherText, "DECRYPT", "ABRACADABRA"); //解密一般不需要传入配置
 
-Abra.WenyanInput(TestTemp, "DECRYPT", "ABRACADABRA", null, {
-  TOTPBaseKey: "Basekey",
-  TOTPEpoch: 12345678,
-}); //可额外传入TOTP参数用于解密。
+//若加密时自定义了 TOTPBaseKey/TOTPEpoch，解密时也需传入相应参数。
 ```
 
 在无错误的情况下， `WenyanInput()` 函数的返回值通常是 `0`。
