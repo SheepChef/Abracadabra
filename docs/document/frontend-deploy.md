@@ -70,8 +70,8 @@ npm install
 
 ### 环境准备
 
-- 安装 **Java Development Kit (JDK)**（推荐 JDK 11）。
-- 安装 **Android Studio**，并通过 SDK Manager 安装目标 API 级别（本作 target 为 API 33）的 SDK 及 Build Tools。
+- 安装 **Java Development Kit (JDK)**（Cordova Android 15 推荐 JDK 17）。
+- 安装 **Android Studio**，并通过 SDK Manager 安装与所用 Cordova Android 版本匹配的 SDK 及 Build Tools。
 - 正确配置系统环境变量 `JAVA_HOME` 和 `ANDROID_HOME`。
 - 安装 **Gradle**，并正确配置环境变量，确保编译路径无中文字符。
 - 全局安装 Cordova CLI：
