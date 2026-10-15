@@ -1,6 +1,6 @@
 # 前端 部署和编译
 
-## 快速部署
+## 自行部署
 
 前往[Release 页面](https://github.com/SheepChef/Abracadabra/releases/latest)下载 `fastdeploy_X.X.zip`
 
@@ -9,6 +9,32 @@
 配置路由，即可得到一个与[项目 Demo](https://abra.js.org/)一模一样的页面。
 
 若要自行编译或修改前端代码，请前往前端源代码仓库。
+
+## 一键部署
+
+你可以将魔曰前端一键部署至自己的托管平台账户，以增强去中心化。
+
+魔曰支持通过 **Cloudflare Workers**、**Netlify** 和 **Vercel** 进行一键部署。
+
+点击下方按钮，按照对应平台的提示即可完成部署。
+
+<div style="display: grid;
+    justify-items: left;
+    grid-template-columns: repeat(auto-fill, minmax(169px, 0.2fr));
+    grid-auto-flow: row;
+    grid-gap: 10px;">
+    <a href="https://deploy.workers.cloudflare.com/?url=https://github.com/SheepChef/Abracadabra_demo">
+      <img src="https://deploy.workers.cloudflare.com/button" alt="Deploy to Cloudflare Workers" height="36" />
+    </a>
+    <a href="https://app.netlify.com/start/deploy?repository=https://github.com/SheepChef/Abracadabra_demo">
+      <img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="36" />
+    </a>
+    <a href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FSheepChef%2FAbracadabra_demo">
+      <img src="https://vercel.com/button" alt="Deploy with Vercel" height="36" />
+    </a>
+</div>
+
+> 部署本项目时请遵守 [AIPL 1.2 许可证](LICENSE.md)，请勿移除版权声明。
 
 ## 编译源码
 
