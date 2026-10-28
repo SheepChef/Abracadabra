@@ -25,8 +25,6 @@
 | 国内网站     |       253        | `baidu.com`, `b23.tv`, `bilibili.com`, `weibo.com` 等           |
 | 国际网站 (1) |       252        | `google.com`, `youtube.com`, `x.com`, `twitter.com` 等          |
 | 国际网站 (2) |       244        | `wikipedia.org`, `github.com`, `pages.dev`, `github.io` 等      |
-| 日本网站     |       251        | `pixiv.net`, `nicovideo.jp`, `dlsite.com`, `dmm.com` 等         |
-| 资源网站     |       250        | ————                                                            |
 | 特殊协议头   |       249        | `magnet:?xt=urn:btih:`, `ed2k://`, `thunder://` 等              |
 | 通用后缀 (1) |       248        | `.cn`, `.com`, `.net`, `.org`, `.xyz`                           |
 | 通用后缀 (2) |       247        | `.info`, `.moe`, `.cc`, `.co`, `.dev`                           |

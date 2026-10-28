@@ -14,6 +14,7 @@ import structuredClone from "@ungap/structured-clone";
 import { OldMapper, WenyanSimulator } from "./ChineseMappingHelper.js";
 import { Compress, Decompress } from "./CompressionHelper.js";
 import { DeAONT, Decrypt, EnAONT, Encrypt } from "./EncryptHelper.js";
+import { DilutionCorpus } from "./ChineseDilutionHelper.js";
 
 import {
   Uint8ArrayTostring,
@@ -38,6 +39,7 @@ export class WenyanConfig {
    *
    * @param{bool}PunctuationMark 指定是否为密文添加标点符号，默认 true/添加;
    * @param{int}RandomIndex 密文算法的随机程度，越大随机性越强，默认 50，最大100，超过100将会出错;
+   * @param{DilutionConfig}DilutionConfigObj 控制文言文密文的稀释配置;
    * @param{[number, number]}RandomParagraphing 密文所使用的分段函数每段载荷上下限。传入 min 和 max，默认 20/80。min 小于 20, max 大于 200, 或者 max < min 将会出错;
    * @param{bool}PianwenMode 指定是否强制生成骈文密文，默认 false;
    * @param{bool}LogicMode 指定是否强制生成逻辑密文，默认 false;
@@ -45,6 +47,7 @@ export class WenyanConfig {
   constructor(
     PunctuationMark = true,
     RandomIndex = 50,
+    DilutionConfigObj = new DilutionConfig(),
     RandomParagraphing = [20, 80],
     PianwenMode = false,
     LogicMode = false,
@@ -52,10 +55,55 @@ export class WenyanConfig {
   ) {
     this.PunctuationMark = PunctuationMark;
     this.RandomIndex = RandomIndex;
+    this.DilutionConfig = DilutionConfigObj;
     this.RandomParagraphing = RandomParagraphing;
     this.PianwenMode = PianwenMode;
     this.LogicMode = LogicMode;
     this.Traditional = Traditional;
+  }
+}
+
+export class DilutionConfig {
+  /**
+   * 魔曰 文言文稀释配置
+   *
+   * @param{boolean}Enable 指定是否启用密文稀释功能，默认 false/不开启;
+   * @param{number}DilutionTargetRate 指定用户期望的目标密文载荷率，范围 0~1，精度为两位小数，默认 0.1。实际生成的密文载荷率允许存在必要误差;
+   * @param{"ALL" | "ESSAY" | "POEM"}FilterMode 文体过滤配置，ESSAY 为仅使用古文，POEM 为仅使用古诗，ALL 为不特别过滤，默认 ALL;
+   * @param{"ALL" | "FOUR" | "FIVE" | "SEVEN"}PoemFilterMode 古诗过滤配置，FOUR/FIVE/SEVEN 分别为四言/五言/七言，ALL 为不特别过滤，默认 ALL。若不启用古诗则此配置无效;
+   * @param{"SMART" | "RANDOM"}SampleMode 采样模式，SMART 为自适应算法采样，RANDOM 为简单随机采样，默认 SMART;
+   * @param{"UNIFORM" | "CONCENTRATE"}PayloadDistribution 段内载荷分配模式，UNIFORM 为均匀，CONCENTRATE 为集中，默认 UNIFORM;
+   * @param{DilutionCorpus | null}Corpus 指定用于稀释的语料库对象，默认 null，使用内置语料库;
+   * @constructor
+   */
+  constructor(
+    Enable = false,
+    DilutionTargetRate = 0.1,
+    FilterMode = "ALL",
+    PoemFilterMode = "ALL",
+    SampleMode = "SMART",
+    PayloadDistribution = "UNIFORM",
+    Corpus = null
+  ) {
+    if (
+      typeof DilutionTargetRate !== "number" ||
+      !Number.isFinite(DilutionTargetRate) ||
+      DilutionTargetRate < 0 ||
+      DilutionTargetRate > 1 ||
+      Math.abs(
+        DilutionTargetRate * 100 - Math.round(DilutionTargetRate * 100)
+      ) > 1e-8
+    ) {
+      throw new Error("Invalid Dilution Target Rate.");
+    }
+
+    this.Enable = Enable;
+    this.DilutionTargetRate = DilutionTargetRate;
+    this.FilterMode = FilterMode;
+    this.PoemFilterMode = PoemFilterMode;
+    this.SampleMode = SampleMode;
+    this.PayloadDistribution = PayloadDistribution;
+    this.Corpus = Corpus;
   }
 }
 

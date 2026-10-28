@@ -1,12 +1,26 @@
+/*
+ * Copyright (C) 2025-2026 SheepChef (a.k.a. Haruka Hokuto)
+ *
+ * 这是一个源代码公开的软件。
+ * 在遵守AIPL-1.2许可证的前提下，
+ * 你可以自由复制，修改，分发，使用它。
+ *
+ * 查阅 Academic Innovation Protection License(AIPL) 来了解更多 .
+ * 本作品应随附一份完整的 AIPL-1.2 许可证全文。
+ *
+ */
+
 declare module "abracadabra-cn";
+
+import { DilutionCorpus } from "./ChineseDilutionHelper.d.ts";
 
 export interface WenyanConfig {
   /** 指定是否为密文添加标点符号，默认 true/添加; */
   PunctuationMark?: boolean;
   /** 密文算法的随机程度，越大随机性越强，默认 50，最大100，超过100将会出错; */
   RandomIndex?: number;
-  /** 密文的稀释程度，默认为0，越高将会稀释得越多; */
-  //DiluteIndex?: number;
+  /** 控制文言文密文的稀释配置; */
+  DilutionConfig?: DilutionConfig;
   /** 指定超长密文所使用的分段函数每段载荷上下限。传入 min 和 max，默认 20/80。min 小于 20, max 大于 200, 或者 max < min 将会出错; */
   RandomParagraphing?: [number, number];
   /** 指定是否强制生成骈文密文，默认 false; */
@@ -66,6 +80,33 @@ export interface FlexibleTransferConfig {
    */
   RandomParagraphing?: [number, number];
 }
+
+export interface DilutionConfig {
+  /** 指定是否启用密文稀释功能，默认 false/不开启 */
+  Enable?: boolean;
+  /** 指定用户期望的目标密文载荷率，应当是 0~1 之间的两位精度的浮点数。目标载荷率不代表实际密文的精确载荷率，将允许有必要误差。默认为 0.1*/
+  DilutionTargetRate?: number;
+  /** 文体过滤配置。
+   *
+   * ESSAY 为仅使用古文，POEM 为仅使用古诗。
+   *
+   * ALL 不特别过滤，随机使用全部文体。 */
+  FilterMode?: "ALL" | "ESSAY" | "POEM";
+  /** 古诗过滤配置，若不启用古诗则此配置无效。
+   *
+   * FOUR/FIVE/SEVEN 分别过滤出四言/五言/七言。
+   *
+   * ALL 不特别过滤，随机使用全部诗词。 */
+  PoemFilterMode?: "ALL" | "FOUR" | "FIVE" | "SEVEN";
+  /** 采样模式，SMART 为自适应算法采样。RANDOM 为简单随机采样。默认为 SMART */
+  SampleMode?: "SMART" | "RANDOM";
+  /** 段内载荷分配的模式， UNIFORM 为均匀。CONCENTRATE 为集中。默认为 UNIFORM */
+  PayloadDistribution?: "UNIFORM" | "CONCENTRATE";
+  /** 传入一个稀释语料库对象，用于稀释，若不传，则使用内置库 */
+  Corpus?: DilutionCorpus | null;
+}
+
+export * from "./ChineseDilutionHelper.js";
 
 export interface CallbackObj {
   /** 回调数据的标签 */

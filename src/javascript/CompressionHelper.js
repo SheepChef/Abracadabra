@@ -55,7 +55,7 @@ const INTER_WEBSITE_LIB_2 = [
   "github.io",
   "netlify.app",
 ];
-const JAPAN_WEBSITE_LIB = [
+const INTER_WEBSITE_LIB_3 = [
   "https://",
   "pixiv.net",
   "nicovideo.jp",
@@ -63,7 +63,7 @@ const JAPAN_WEBSITE_LIB = [
   "line.me",
   "dmm.com",
 ];
-const PIRACY_WEBSITE_LIB = [
+const INTER_WEBSITE_LIB_4 = [
   "https://",
   "nyaa.si",
   "bangumi.moe",
@@ -150,11 +150,11 @@ function UNISHOX_COMPRESS(Data) {
         libmark = 244;
         break;
       }
-      if (Datastr.indexOf(JAPAN_WEBSITE_LIB[i]) != -1) {
+      if (Datastr.indexOf(INTER_WEBSITE_LIB_3[i]) != -1) {
         libmark = 251;
         break;
       }
-      if (Datastr.indexOf(PIRACY_WEBSITE_LIB[i]) != -1) {
+      if (Datastr.indexOf(INTER_WEBSITE_LIB_4[i]) != -1) {
         libmark = 250;
         break;
       }
@@ -239,7 +239,7 @@ function UNISHOX_COMPRESS(Data) {
         Data,
         Data.byteLength,
         CompressedStrCharArray,
-        JAPAN_WEBSITE_LIB
+        INTER_WEBSITE_LIB_3
       );
       break;
     case 250:
@@ -247,7 +247,7 @@ function UNISHOX_COMPRESS(Data) {
         Data,
         Data.byteLength,
         CompressedStrCharArray,
-        PIRACY_WEBSITE_LIB
+        INTER_WEBSITE_LIB_4
       );
       break;
     case 249:
@@ -395,7 +395,7 @@ function UNISHOX_DECOMPRESS(Data) {
         DecompressedStrCharArray,
         Unishox.USX_HCODES_DFLT,
         Unishox.USX_HCODE_LENS_DFLT,
-        JAPAN_WEBSITE_LIB,
+        INTER_WEBSITE_LIB_3,
         Unishox.USX_TEMPLATES
       );
       break;
@@ -406,7 +406,7 @@ function UNISHOX_DECOMPRESS(Data) {
         DecompressedStrCharArray,
         Unishox.USX_HCODES_DFLT,
         Unishox.USX_HCODE_LENS_DFLT,
-        PIRACY_WEBSITE_LIB,
+        INTER_WEBSITE_LIB_4,
         Unishox.USX_TEMPLATES
       );
       break;
