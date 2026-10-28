@@ -10,11 +10,11 @@
  *
  */
 
-import {
-  DilutionCorpusSourceManifestObj,
-  DilutionCorpusJSONInput,
-  DilutionCorpusObj,
-} from "./ChineseDilutionHelper.d.ts";
+/**
+ * @typedef {import("./ChineseDilutionHelper.js").DilutionCorpusSourceManifestObj} DilutionCorpusSourceManifestObj
+ * @typedef {import("./ChineseDilutionHelper.js").DilutionCorpusJSONInput} DilutionCorpusJSONInput
+ * @typedef {import("./ChineseDilutionHelper.js").DilutionCorpusObj} DilutionCorpusObj
+ */
 
 export class DilutionCorpus {
   /**
