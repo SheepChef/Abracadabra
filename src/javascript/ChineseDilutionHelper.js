@@ -69,11 +69,13 @@ export class DilutionCorpus {
         const RawFile = JSONFiles[i];
         const JSONFile =
           typeof RawFile === "string" ? JSON.parse(RawFile) : RawFile;
+
         if (!JSONFile || !Array.isArray(JSONFile.Sentences)) {
           throw new Error(
             `Invalid Dilution Corpus JSON: ${SentenceType}, part ${i + 1}.`
           );
         }
+
         if (i === 0) Metadata = JSONFile.Metadata;
         Parts.push(JSONFile.Sentences);
         Count += JSONFile.Sentences.length;

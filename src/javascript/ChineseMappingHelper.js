@@ -24,6 +24,7 @@ import {
   CallbackObj,
   FlexibleTransferDataObj,
   FLEXIBLE_TRANSFER_MAGIC,
+  DilutionConfig,
 } from "./CoreHandler.js";
 import * as OpenCC from "opencc-js";
 import { Base64 } from "js-base64";
@@ -475,6 +476,7 @@ export class WenyanSimulator {
    * @param {number[]|boolean}RandomParagraphing 随机分段范围参数
    * @param {boolean}p 是否强制用对仗骈文
    * @param {boolean}l 是否强制用逻辑句式
+   * @param {DilutionConfig}d 文言文稀释配置
    * @returns {Array} 返回处理后的数组
    */
   selectSentence(
@@ -482,7 +484,8 @@ export class WenyanSimulator {
     RandomIndex = 0,
     RandomParagraphing = [20, 80],
     p,
-    l
+    l,
+    d = new DilutionConfig()
   ) {
     //句式选择函数。
     //P 强制对仗骈文
@@ -714,9 +717,10 @@ export class WenyanSimulator {
    * @param {boolean}p 是否强制用对仗骈文
    * @param {boolean}l 是否强制用逻辑句式
    * @param {boolean}t 是否使用繁体输出
+   * @param {DilutionConfig}d 文言文稀释配置
    * @returns {string} 返回汉字字符串(加密结果)
    */
-  enMap(OriginStr, q, r, rp, p, l, t) {
+  enMap(OriginStr, q, r, rp, p, l, t, d = new DilutionConfig()) {
     let TempStr1 = "",
       temp = "";
 
@@ -724,7 +728,7 @@ export class WenyanSimulator {
 
     //从这里开始做文章，开始文言文仿真，以及三重轮转对表。
 
-    let Sentence = this.selectSentence(OriginStr.length, r, rp, p, l); //选择句式
+    let Sentence = this.selectSentence(OriginStr.length, r, rp, p, l, d); //选择句式
     let i = 0;
     let Finished = false;
     let hasSpecialEndSymbol = false; //标记，此短句是否有特殊符号
