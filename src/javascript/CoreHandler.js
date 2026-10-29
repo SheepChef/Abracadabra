@@ -488,7 +488,11 @@ export function Enc(
     WenyanConfigObj.LogicMode !== undefined ? WenyanConfigObj.LogicMode : false,
     WenyanConfigObj.Traditional !== undefined
       ? WenyanConfigObj.Traditional
-      : false
+      : false,
+    WenyanConfigObj.DilutionConfig !== undefined &&
+      WenyanConfigObj.DilutionConfig instanceof DilutionConfig
+      ? WenyanConfigObj.DilutionConfig
+      : new DilutionConfig()
   );
   let Encoder = new TextEncoder();
   return new EncResultDataObj(Res, Encoder.encode(Res));
