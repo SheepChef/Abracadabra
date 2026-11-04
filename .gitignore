@@ -15,3 +15,9 @@ coverage
 temptests.test.js
 
 /docs/.vitepress/cache
+
+Dilution_Algorithm_Code_Walkthrough.html
+Dilution_Algorithm_Code_Walkthrough.md
+Dilution_Runtime_Sampling_Algorithm_Plan.md
+Agent_guideline.txt
+/src/generated

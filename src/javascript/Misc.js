@@ -89,7 +89,7 @@ export function GetRandomIndex(length) {
   return Rand;
 }
 
-export function GetSecureRandomIndex(length) {
+export function GetSecureRandomIndex(length, AllowUnsafe = false) {
   // 取随机数
   let Rand;
   Rand = Math.floor(MT.random() * length);
@@ -97,7 +97,13 @@ export function GetSecureRandomIndex(length) {
   try {
     Rand = Math.floor(random() * length);
   } catch (err) {
-    Rand = Math.floor(MT.random() * length);
+    if (AllowUnsafe === true) {
+      Rand = Math.floor(MT.random() * length);
+    } else {
+      throw new Error(
+        "CSPRNG unavailable. Refusing to generate weak randomness."
+      );
+    }
   }
 
   return Rand;

@@ -12,6 +12,7 @@
 
 import * as Unishox from "./unishox2.js";
 import pako from "pako";
+import { Inflate } from "pako";
 
 import { Uint8ArrayTostring } from "./Misc.js";
 
@@ -91,6 +92,65 @@ const GENERIC_LINK_LIB_4 = [
   ".ca",
 ];
 
+/**
+ *
+ * 工具函数
+ *
+ * 限制压缩率的 ungzip 替代函数。
+ * @param {Uint8Array|ArrayBuffer} data 压缩数据
+ * @param {Object} [options] pako Inflate 选项
+ * @returns {Uint8Array|string}
+ */
+function safeUngzip(data, options = {}) {
+  const MAX_RATIO = 2000;
+  const MAX_OUTPUT = 1536 * 1024 * 1024; // 1.5 GB 上限
+
+  const inflator = new Inflate({
+    ...options,
+    to: "",
+    toText: false,
+    chunkSize: 16384,
+  });
+
+  const chunks = [];
+  let totalOut = 0;
+
+  inflator.onData = (chunk) => {
+    totalOut += chunk.byteLength;
+
+    // 当前 push 已实际消耗的输入字节数
+    const totalIn = inflator.strm.next_in;
+
+    if (totalOut > MAX_OUTPUT) {
+      throw new Error("GZIP output size limit exceeded");
+    }
+
+    if (totalOut > totalIn * MAX_RATIO) {
+      throw new Error("GZIP compression ratio limit exceeded");
+    }
+
+    chunks.push(chunk);
+  };
+
+  const ok = inflator.push(data, true);
+
+  if (!ok || inflator.err || !inflator.ended) {
+    throw new Error(inflator.msg || "GZIP decompression failed");
+  }
+
+  const result = new Uint8Array(totalOut);
+  let offset = 0;
+
+  for (const chunk of chunks) {
+    result.set(chunk, offset);
+    offset += chunk.byteLength;
+  }
+
+  return options.to === "string" || options.toText === true
+    ? new TextDecoder().decode(result)
+    : result;
+}
+
 function GZIP_COMPRESS(Data) {
   let DataOutput = pako.gzip(Data);
 
@@ -108,7 +168,7 @@ function GZIP_DECOMPRESS(Data) {
     // Likely compressed with gzip
     let DataOutput;
     try {
-      DataOutput = pako.ungzip(Data);
+      DataOutput = safeUngzip(Data);
     } catch (err) {
       return Data;
     }

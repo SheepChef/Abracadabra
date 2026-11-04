@@ -15,6 +15,7 @@ import { totp } from "./otplib.d.ts";
 import { pbkdf2 } from "@noble/hashes/pbkdf2.js";
 import { hmac } from "@noble/hashes/hmac.js";
 import { sha256 } from "@noble/hashes/sha2.js";
+import { equalBytes } from "@noble/ciphers/utils.js";
 import { hexToBytes, bytesToHex, utf8ToBytes } from "@noble/hashes/utils.js";
 import { AdvancedEncConfig } from "./CoreHandler.js";
 import {
@@ -267,7 +268,7 @@ function AES_256_CTR_HMAC_SHA256_D(
     }
 
     for (let i = 0; i < HMAC_HASH.byteLength; i++) {
-      if (HMAC_HASH[i] != HMAC_HASH_B[i]) {
+      if (!equalBytes(HMAC_HASH[i], HMAC_HASH_B[i])) {
         throw new Error("Error Decrypting. HMAC Mismatch."); // HMAC不匹配，阻止进一步解密
       }
     }

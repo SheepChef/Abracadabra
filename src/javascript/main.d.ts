@@ -88,10 +88,10 @@ export interface DilutionConfig {
   DilutionTargetRate?: number;
   /** 文体过滤配置。
    *
-   * ESSAY 为仅使用古文，POEM 为仅使用古诗。
+   * ESSAY 为仅使用一般古文，POEM 为仅使用古诗，LYRIC 为仅使用宋词。
    *
-   * ALL 不特别过滤，随机使用全部文体。 */
-  FilterMode?: "ALL" | "ESSAY" | "POEM";
+   * ALL 不特别过滤，随机使用全部文体，默认 ALL */
+  FilterMode?: "ALL" | "ESSAY" | "POEM" | "LYRIC";
   /** 古诗过滤配置，若不启用古诗则此配置无效。
    *
    * FOUR/FIVE/SEVEN 分别过滤出四言/五言/七言。
@@ -104,6 +104,10 @@ export interface DilutionConfig {
   PayloadDistribution?: "UNIFORM" | "CONCENTRATE";
   /** 传入一个稀释语料库对象，用于稀释，若不传，则使用内置库 */
   Corpus?: DilutionCorpus | null;
+  /** 古诗词每条模板后自动单换行，默认 true；段落仍使用双换行 */
+  PoemAutoLineBreak?: boolean;
+  /** 每次生成，在选择文体时的随机性，应当是[0~100]之间的整数。此参数越低，文体的选择将越与载荷率的取值、语料库的载荷率分布相关，默认 50。*/
+  StyleRandomIndex?: number;
 }
 
 export * from "./ChineseDilutionHelper.js";

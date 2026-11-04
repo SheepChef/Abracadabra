@@ -43,7 +43,7 @@ export class WenyanSimulator {
     this.Map =
       '{"Actual":{"N":{"alphabet":{"a":"人","b":"镜","c":"鹏","d":"曲","e":"霞","f":"绸","g":"裳","h":"路","i":"岩","j":"叶","k":"鲤","l":"月","m":"雪","n":"冰","o":"局","p":"恋","q":"福","r":"铃","s":"琴","t":"家","u":"天","v":"韵","w":"书","x":"莺","y":"璃","z":"雨","A":"文","B":"涧","C":"水","D":"花","E":"风","F":"棋","G":"楼","H":"鹤","I":"鸢","J":"灯","K":"雁","L":"星","M":"声","N":"树","O":"茶","P":"竹","Q":"兰","R":"苗","S":"心","T":"语","U":"礼","V":"梦","W":"庭","X":"木","Y":"驿","Z":"火"},"numbersymbol":{"0":"森","1":"夏","2":"光","3":"林","4":"物","5":"云","6":"夜","7":"城","8":"春","9":"空","+":"雀","/":"鹂","=":"鸳"}},"V":{"alphabet":{"a":"关","b":"赴","c":"呈","d":"添","e":"停","f":"成","g":"走","h":"达","i":"行","j":"称","k":"见","l":"学","m":"听","n":"买","o":"作","p":"弹","q":"写","r":"定","s":"谈","t":"动","u":"旅","v":"返","w":"度","x":"开","y":"筑","z":"选","A":"流","B":"指","C":"换","D":"探","E":"放","F":"看","G":"报","H":"事","I":"泊","J":"现","K":"迸","L":"彰","M":"需","N":"飞","O":"游","P":"求","Q":"御","R":"航","S":"歌","T":"读","U":"振","V":"登","W":"任","X":"留","Y":"奏","Z":"连"},"numbersymbol":{"0":"知","1":"至","2":"致","3":"去","4":"画","5":"说","6":"进","7":"信","8":"取","9":"问","+":"笑","/":"视","=":"言"}},"MV":["欲","应","可","能","将","请","想","必","当"],"A":{"alphabet":{"a":"莹","b":"畅","c":"新","d":"高","e":"静","f":"美","g":"绿","h":"佳","i":"善","j":"良","k":"瀚","l":"明","m":"早","n":"宏","o":"青","p":"遥","q":"速","r":"慧","s":"绚","t":"绮","u":"寒","v":"冷","w":"银","x":"灵","y":"绣","z":"北","A":"临","B":"南","C":"俊","D":"捷","E":"骏","F":"益","G":"雅","H":"舒","I":"智","J":"谜","K":"彩","L":"余","M":"短","N":"秋","O":"乐","P":"怡","Q":"瑞","R":"惠","S":"和","T":"纯","U":"悦","V":"迷","W":"长","X":"少","Y":"近","Z":"清"},"numbersymbol":{"0":"远","1":"极","2":"安","3":"聪","4":"秀","5":"旧","6":"浩","7":"盈","8":"快","9":"悠","+":"后","/":"轻","=":"坚"}},"AD":{"alphabet":{"a":"诚","b":"畅","c":"新","d":"高","e":"静","f":"恒","g":"愈","h":"谨","i":"善","j":"良","k":"频","l":"笃","m":"早","n":"湛","o":"昭","p":"遥","q":"速","r":"朗","s":"祗","t":"攸","u":"徐","v":"咸","w":"皆","x":"灵","y":"恭","z":"弥","A":"临","B":"允","C":"公","D":"捷","E":"淳","F":"益","G":"雅","H":"舒","I":"嘉","J":"勤","K":"协","L":"永","M":"短","N":"歆","O":"乐","P":"怡","Q":"已","R":"忻","S":"和","T":"谧","U":"悦","V":"稍","W":"长","X":"少","Y":"近","Z":"尚"},"numbersymbol":{"0":"远","1":"极","2":"安","3":"竟","4":"悉","5":"渐","6":"颇","7":"辄","8":"快","9":"悠","+":"后","/":"轻","=":"曾"}}},"Virtual":{"zhi":["之"],"hu":["乎"],"zhe":["者"],"ye":["也"],"for":["为"],"ba":["把"],"le":["了"],"er":["而"],"this":["此","斯"],"still":["仍"],"with":["与","同"],"also":["亦","也"],"is":["是","乃"],"not":["未","莫"],"or":["或"],"more":["更"],"make":["使","将","让"],"and":["与","同"],"anti":["非","不"],"why":["为何","奈何","何哉"],"but":["但","却","则","而","况","且"],"like":["似","如","若"],"if":["若","倘"],"int":["哉","呼","噫","焉"],"self":["自"],"by":["以","于"],"number":["一","二","三","四","五","六","七","八","九","十"],"numberpairfiltered":["一二","二三","三四","三五","四五","五六","六七","七八"],"magnitude":["百","千","万"],"dynasty":["秦","汉","魏","晋","唐","宋"],"country":["韩","赵","魏","楚","齐"],"zi":["子"],"gentlemen":["老","庄","孟","孔","荀","墨","韩非","君","慎","孙","晏","申","颜"],"SignAnimal":["鼠","牛","虎","兔","龙","蛇","马","羊","猴","鸡","狗","猪"],"SignBranch":["子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥"],"SignBranchAnimal":["子鼠","丑牛","寅虎","卯兔","辰龙","巳蛇","午马","未羊","申猴","酉鸡","戌狗","亥猪"],"HeavenStems":["甲","乙","丙","丁","戊","己","庚","辛","壬","癸"],"ReignTitle":["建元","贞观","宣德","弘治","正德","崇德","顺治","康熙","熙宁"]},"Sentences":{"Begin":["1D/非/N/ye","1B/N/曰/R","1Z/zi/曰/R","1Z/gentlemen/zi/曰/R","1B/gentlemen/zi/AD/然/曰/R","1B/若夫/N","1C/anti/MV/V/ye/P","1Z/zi/曰/R","1Z/gentlemen/zi/曰/R","2B/A/N/曰/R","2B/N/以/A","2C/N/anti/在/A","2C/N/make/N/zhi","2C/MV/N/zhe/A","2E/有/N/则/A","2E/不/入/于/N/、/则/入/于/N/P","2C/V/zhe/V/zhi","2D/but/MV/A/zhe/A","2Z/HeavenStems/SignBranch/年","2Z/HeavenStems/SignBranchAnimal/年","2Z/ReignTitle/number/年","3C/N/V/by/N","3B/初，/N/V/by/N","3B/夫/N/anti/V/by/N","3B/AD/V/zhi/谓/A","3C/A/N/为/N/兮","3B/V/而/V/zhi/zhi/谓/A","3B/N/，/N/zhi/N/ye/P","3D/A/之/V/者/必/有/N/P","3D/入/出/而/无/V/其/形/，/是/谓/A/N/P","3D/有/所/V/N/，/则/不/得/其/V/P","3D/世/之/观/V/者/，/唯/能/AD/V/其/间/P","4D/非/N/不/A/，/V/不/A","4C/A/N/AD/V","4C/V/N/以/V/N","4C/有/number/magnitude/A/N/，/number/magnitude/A/N/P","4C/numberpairfiltered/个/A/N/外/，/numberpairfiltered/点/A/N/前/P","4D/A/者/自/V/也/，/而/N/自/V/也/P","4E/N/不在/A/，/有/N/则/A/P","4E/上/不/V/N/，/下/不/V/N/P","4D/A/N/常有/，/而/A/N/不常有/P","4D/V/N/者/，/N/之/N/也/P","4E/N/有/MV/V/，/N/有/AD/然/P","4D/N/无/N/，/无以/V/N","4D/欲/V/其/N/者/，/先/V/其/N/P","4D/今/夫/N/，/一/N/之/多/，/及/其/A/A/P","4D/有/所/A/，/有/所/V/，/然/而/MV/V/其/N/者/也/P","4D/V/之/不/为/N/，/V/之/不/为/N/P","4D/吾/为/N/之/所/V/，/N/亦/为/吾/所/V/P","5D/V/N/而/V/A/，/V/zhi/道/ye/P","5D/A/N/之/N/，/like/N/like/N/P","5E/N/zhi/V/V/，/实为/A/A/P","5C/本/MV/V/A/，/anti/V/N/N","5C/N/之/无/N/，/N/V/之/N","5D/V/N/而/V/之/者/，/非/其/N/AD/也/P","5B/今/V/N/以/V/A/N","5B/N/乃/V/V/N/zhi/N","5B/N/N/无/V/，/V/而/必/V/P","5B/今/N/乃/A/N/A/N","5C/A/N/V/A/N","5B/夫/N/、/N/不/MV/AD/V/N","5D/不/有/A/N/，/何/V/A/N/Q","5D/以/A/N/为/N/者/，/N/MV/弗/而/V/之/P","6B/以/N/V/，/like/V/N/V/N","6B/A/N/zhi/N/，/V/zhi/以/V/其/N","6B/A/N/V/于/N/而/V/N","6B/A/N/未/V/N/、/N/之/N","6B/V/A/N/若/V/A/N","6C/A/N/为/N/兮/，/A/N/为/N/P","6D/不/V/N/，/不/V/N/，/当/以/AD/V/论/P","6D/A/则为/V/N/，/A/则为/V/N/P","6D/若/居/A/N/之/N/，/则/当/A/N/之/V/P","6D/N/无/N/则/V/，/N/无/N/则/V/P","6D/A/者/V/而/V/之/，/A/者/V/而/V/之/P","6D/N/受/命/于/N/，/固/AD/然/V/于/A/N/P","6D/V/N/而/不/能/V/，/V/而/不/能/V/，/N/也/P","6D/常/有/N/V/A/N/，/请/N/为/N/P","6D/A/而/V/，/A/而/V/者/，/A/N/也/P","7D/夫/A/之/N/V/N/者/，/其/所以/AD/V/者/N/也/P","7C/N/以/A/A/，/AD/V/A/N","7B/V/N/A/，/A/N/V/N","7B/N/V/以/N/V/，/V/不/V/N","7C/N/N/V/N/，/A/于/N/N","7D/MV/AD/V/A/N/，/but/V/V/不/A","7C/或/V/N/V/N/，/V/N/于/N","7E/则有/N/A/N/A/，/N/N/具/V","7D/V/A/N/zhe/，/常/V/其/所/A/，/而/V/其/所/A/P","7D/A/N/之/N/，/常/V/于/其/所/AD/V/而/不/V/之/处/P","7D/A/N/之/N/不在/N/，/在乎/A/N/之/N/也/P","8D/V/A/N/，/V/A/N/，/by/MV/A/zhi/N/P","8D/N/anti/AD/V/zhe/by/AD/V/zhe/V/，/anti/MV/AD/V/P","8D/N/anti/MV/V/N/，/still/继/N/V/，/why/，/and/N/而/anti/V/N/ye/P","8C/V/N/A/A/，/V/N/A/A","8C/N/V/A/N/，/N/V/A/N","8C/N/在/A/N/，/A/N/zhi/A/，/V/于/N/P","8C/A/N/AD/V/，/N/N/AD/V","8C/A/N/V/N/，/N/N/V/N/P","8B/尝/V/A/N/，/AD/V/A/N/zhi/N","8D/予/V/夫/A/N/A/N/，/在/A/N/之/N","8D/N/V/于/A/N/，/而/N/V/于/A/N","8D/N/V/N/为/N/，/N/V/N/为/N/P","8B/N/A/即/N/A/，/N/A/即/N/A/P","8D/虽/无/N/N/zhi/V/，/亦/V/以/AD/V/A/N/P","8D/是/故/A/N/有/A/N/，/必/AD/V/以/得/之/，/AD/V/以/失/之/P","8D/A/N/之/A/N/，/常/为/A/N/之/A/N/P","9D/A/N/V/zhi/而不/V/zhi/、亦/make/A/N/er/复/V/A/N/ye/P","9D/N/MV/V/N/V/V/，/but/N/N/AD/V/P","9B/以/N/，/当/V/A/N/，/非/N/V/N/所/MV/AD/V/P","9C/此/N/有/A/N/A/N/，/A/N/A/N/P","9D/是/N/ye/，/N/A/N/A/，/N/A/N/A/P"],"Main":["1B/非/N/ye","1B/N/曰/R","1Z/zi/曰/R","1Z/gentlemen/zi/曰/R","1B/gentlemen/zi/AD/然/曰/R","1C/anti/MV/V/ye","2C/N/make/N/zhi","2C/MV/N/zhe/A","2E/有/N/则/A","2E/不/入/于/N/、/则/入/于/N/P","2C/V/zhe/V/zhi","2C/but/MV/A/zhe/A","2Z/HeavenStems/SignBranch/年","2Z/HeavenStems/SignBranchAnimal/年","2Z/ReignTitle/number/年","2D/道/N/惟/微/，/谓/微/妙/而/难/V/也/P","2D/惟/大/N/之/有/V/，/越/百/代/而/孤/峙/P","2D/然/N/息/不/忘/，/即/不/得/V/P","3C/N/with/N/V","3B/N/曰，何/A/zhi/V/Q","3D/入/出/而/无/V/其/形/，/是/谓/A/N/P","3D/有/所/V/N/，/则/不/得/其/V/P","3D/世/之/观/V/者/，/唯/能/AD/V/其/间/P","4C/A/N/AD/V","4C/V/N/以/V/N","4C/有/number/magnitude/A/N/，/number/magnitude/A/N/P","4C/numberpairfiltered/个/A/N/外/，/numberpairfiltered/点/A/N/前/P","4D/N/无/N/，/无以/V/N/P","4D/此/谓/V/N/在/V/其/N/P","4D/今/夫/N/，/一/N/之/多/，/及/其/A/A/P","4D/有/所/A/，/有/所/V/，/然/而/MV/V/其/N/者/也/P","4D/欲/V/其/N/者/，/先/V/其/N/P","4E/上/不/V/N/，/下/不/V/N/P","4D/A/者/自/V/也/，/而/N/自/V/也/P","4D/V/N/者/，/N/之/N/也/P","4D/以/此/V/N/，/何/N/不/V/Q","4E/N/不在/A/，/有/N/则/A/P","4C/N/有/MV/V/，/N/有/AD/然/P","4D/N/非/V/而/V/之/者/，/孰/MV/无/N/P","4D/A/N/常有/，/而/A/N/不常有/P","4D/吾/为/N/之/所/V/，/N/亦/为/吾/所/V/P","4C/不/以/N/V/，/不/以/N/V/P","4D/有/N/V/者/，/不/得/其/N/则/V/P","4D/V/之/不/为/N/，/V/之/不/为/N/P","5B/今/V/N/以/V/A/N","5B/N/乃/V/V/N/zhi/N","5B/N/N/无/V/，/V/而/必/V/P","5C/本/MV/V/A/，/anti/V/N/N","5D/V/N/而/V/之/者/，/非/其/N/AD/也/P","5D/故/N/于/A/N/之/N/，/有/所/V/int/P","5D/A/N/之/N/，/like/N/like/N/P","5D/以/A/N/为/N/者/，/N/MV/弗/而/V/之/P","5D/故/夫/A/N/之/N/，/不/可/make/其/V/于/N/也/P","5D/N/不/为/A/，/而/有/时/乎/为/A/，/谓/A/N/者/也/P","5D/于/是/A/N/之/N/AD/然/V/矣/P","5B/今/N/乃/A/N/A/N","5E/每/有/V/N/，/便/AD/然/V/N/P","5D/N/V/而/A/N/V/也","5E/不/有/A/N/，/何/V/A/N/Q","5C/N/之/无/N/，/N/V/之/N","6D/N/A/N/A/，/则/所/V/得/其/A/P","6D/V/AD/而/V/AD/，/anti/MV/V/于/N/也/P","6D/A/而/V/，/A/而/V/者/，/A/N/也/P","6B/以/N/V/，/like/V/N/V/N","6B/V/A/N/若/V/A/N","6C/N/V/，/V/N/V/N","6E/虽/V/V/A/A/，/A/A/不/同/P","6D/而/A/N/zhi/N/，/V/zhi/以/V/其/N/P","6B/A/N/V/于/N/而/V/N","6B/A/N/未/V/N/、/N/之/N","6C/V/A/N/，/V/A/N","6C/A/N/为/N/兮/，/A/N/为/N/P","6D/V/MV/with/其/N/，/而/V/MV/V/以/N/者/，/N/也/P","6D/A/N/必/有/A/N/V/之者/、/予/可/无/N/也/P","6D/将/有/V/，/则/V/A/N/以/V/N/P","6D/不/V/N/，/不/V/N/，/当/以/AD/V/论/P","6D/A/则为/V/N/，/A/则为/V/N/P","6D/N/无/N/则/V/，/N/无/N/则/V/P","6D/A/者/V/而/V/之/，/A/者/V/而/V/之/P","6D/若/居/A/N/之/N/，/则/当/A/N/之/V/P","6D/N/受/命/于/N/，/固/AD/然/V/于/A/N/P","6D/V/N/而/不/能/V/，/V/而/不/能/V/，/N/也/P","6D/常/有/N/V/A/N/，/请/N/为/N/P","7D/夫/A/之/N/V/N/者/，/其/所以/AD/V/者/N/也/P","7B/N/V/以/N/V/，/V/不/V/N","7C/N/N/V/N/，/A/于/N/N","7D/MV/AD/V/A/N/，/but/V/V/不/A","7C/或/V/N/V/N/，/V/N/于/N","7D/V/A/N/zhe/，/常/V/其/所/A/，/而/V/其/所/A/P","7D/A/N/之/不/V/也/AD/矣/，/欲/N/之/无/N/也/AD/矣/P","7D/A/N/之/N/，/常/V/于/其/所/AD/V/而/不/V/之/处/P","7D/A/N/之/N/不在/N/，/在乎/A/N/之/N/也/P","7D/A/N/之/N/，/V/之/N/而/V/之/N/也/P","7D/是故/A/N/不必不如/N/，/N/不必/A/于/A/N/P","7B/有/A/N/、/A/N/、/A/N/之/N/P","8D/N/anti/MV/V/N/，/still/继/N/V/，/why/，/and/N/而/anti/V/N/ye/P","8E/是/故/无/A/无/A/，/无/A/无/A/，/N/之/所/V/、/N/之/所/V/ye/P","8C/V/N/A/A/，/V/N/A/A","8B/N/在/A/N/，/A/N/zhi/A/，/V/于/N/P","8B/like/A/N/V/N/，/不/V/N/V/之/N/P","8C/A/N/AD/V/，/N/N/AD/V","8D/A/N/之/A/N/，/常/为/A/N/之/A/N/P","8C/A/N/V/N/，/N/N/V/N/P","8D/虽/无/N/N/zhi/V/，/亦/V/以/AD/V/A/N/P","8D/予/V/夫/A/N/A/N/，/在/A/N/之/N","8D/故/V/A/N/者/，/当/V/A/N/之/A/N/P","8D/N/V/于/A/N/，/而/N/V/于/A/N","8D/N/V/N/为/N/，/N/V/N/为/N/P","8B/N/A/即/N/A/，/N/A/即/N/A/P","8B/A/N/MV/A/N/之/A/，/V/N/中/之/A","8D/N/V/于/A/N/之上/，/AD/V/于/A/N/之间/P","8D/是/故/A/N/有/A/N/，/必/AD/V/以/得/之/，/AD/V/以/失/之/P","8D/故/其/N/不/可/以/V/N/，/A/N/V/N/而/不/MV/N/P","8B/使/其/A/N/AD/V/，/A/N/AD/V/P","9B/N/MV/V/N/V/V/，/but/N/N/AD/V","9D/A/N/V/zhi/而不/V/zhi/、亦/make/A/N/er/复/V/A/N/ye/P","9D/以/N/，/当/V/A/N/，/非/N/V/N/所/MV/AD/V/P","9C/此/N/有/A/N/A/N/，/A/N/A/N/P","9E/是/N/ye/，/N/A/N/A/，/N/A/N/A","9E/V/A/N/，/N/A/N/A/，/乃/AD/V","9D/何/其/AD/也/，/岂/V/之/AD/而/V/之/AD/int/，/抑/本/其/A/A/之/N/而/also/自/于/N/int/Q","9D/V/A/N/，/V/A/N/，/此/A/N/所/以/A/也/P"],"End":["1B/非/N/ye","1C/anti/MV/V/ye","2C/唯/N/V/zhi","2B/V/by/N","2D/其/also/A/hu/其/V/ye/P","2C/N/make/N/zhi","2C/MV/N/zhe/A","2E/有/N/则/A","2C/V/zhe/V/zhi","2C/but/MV/A/zhe/A","2D/道/N/惟/微/，/谓/微/妙/而/难/V/也/P","2D/惟/大/N/之/有/V/，/越/百/代/而/孤/峙/P","2D/然/N/息/不/忘/，/即/不/得/V/P","3D/入/出/而/无/V/其/形/，/是/谓/A/N/P","3D/有/所/V/N/，/则/不/得/其/V/P","3D/世/之/观/V/者/，/唯/能/AD/V/其/间/P","3C/V/在/A/N","3D/今/zhi/V/zhe/，/亦将有/V/于/this/N/P","3D/某也/A/，/某也/A/，/可/不/A/哉","3D/有/所/V/N/，/则/不/得/其/V/P","4B/V/N/zhi/N/by/N","4D/A/者/自/V/也/，/而/N/自/V/也/P","4C/A/N/AD/V","4C/V/N/以/V/N","4D/N/无/N/，/无以/V/N","4D/V/N/者/，/N/之/N/也/P","4D/以/此/V/N/，/何/N/不/V/Q","4D/噫/，/A/N/ye/，/N/谁/与/V/Q","4D/此/谓/V/N/在/V/其/N/P","4D/今/夫/N/，/一/N/之/多/，/及/其/A/A/P","4D/有/所/A/，/有/所/V/，/然/而/MV/V/其/N/者/也/P","4E/上/不/V/N/，/下/不/V/N/P","4D/欲/V/其/N/者/，/先/V/其/N/P","4D/有/N/V/者/，/不/得/其/N/则/V/P","4C/不/以/N/V/，/不/以/N/V/P","4D/V/之/不/为/N/，/V/之/不/为/N/P","4D/然/则/A/N/自/N/V/矣/P","5B/请/V/N/zhi/N/中/，/是/N/zhi/N/P","5D/今/V/N/以/V/A/N","5B/N/乃/V/V/N/zhi/N","5B/N/N/无/V/，/V/而/必/V/P","5C/本/MV/V/A/，/anti/V/N/N","5D/V/N/而/V/之/者/，/非/其/N/AD/也/P","5D/以/A/N/为/N/者/，/N/MV/弗/而/V/之/P","5D/A/N/之/N/，/like/N/like/N/P","5D/N/不/为/A/，/而/有/时/乎/为/A/，/谓/A/N/者/也/P","5D/于/是/A/N/之/N/AD/然/V/矣/P","5D/故/N/于/A/N/之/N/，/有/所/V/int/P","5D/故/夫/A/N/之/N/，/不/可/make/其/V/于/N/也/P","5B/今/N/乃/A/N/A/N","5D/N/V/而/A/N/V/也","5E/不/有/A/N/，/何/V/A/N/Q","5C/N/之/无/N/，/N/V/之/N","6C/A/N/为/N/兮/，/A/N/为/N/P","6D/以/N/V/，/like/V/N/V/N","6D/A/zhi/V/N/，/亦/like/今/zhi/V/N/，/A/夫/P","6D/A/者/V/而/V/之/，/A/者/V/而/V/之/P","6D/若/居/A/N/之/N/，/则/当/A/N/之/V/P","6D/V/AD/而/V/AD/，/anti/MV/V/于/N/也/P","6D/A/而/V/，/A/而/V/者/，/A/N/也/P","6B/N/V/，/V/N/V/N","6E/V/N/之/N/，/为/N/V/者/，/可以/V/矣/P","6D/V/MV/with/其/N/，/而/V/MV/V/以/N/者/，/N/也/P","6D/A/N/必/有/A/N/V/之者/、/予/可/无/N/也/P","6E/虽/V/V/A/A/，/A/A/不/同/P","6D/将/有/V/，/则/V/A/N/以/V/N/P","6D/不/V/N/，/不/V/N/，/当/以/AD/V/论/P","6D/A/则为/V/N/，/A/则为/V/N/P","6D/N/受/命/于/N/，/固/AD/然/V/于/A/N/P","6D/N/无/N/则/V/，/N/无/N/则/V/P","6D/N/A/N/A/，/则/所/V/得/其/A/P","6D/常/有/N/V/A/N/，/请/N/为/N/P","6D/V/N/而/不/能/V/，/V/而/不/能/V/，/N/也/P","7D/夫/A/之/N/V/N/者/，/其/所以/AD/V/者/N/也/P","7D/N/V/以/N/V/，/V/不/V/N","7C/N/N/V/N/，/A/于/N/N","7D/MV/AD/V/A/N/，/but/V/V/不/A","7E/或/V/N/V/N/，/V/N/于/N","7D/A/N/之/N/不在/N/，/在乎/A/N/之/N/也/P","7D/A/N/之/N/，/V/之/N/而/V/之/N/也/P","7D/是故/A/N/不必不如/N/，/N/不必/A/于/A/N/P","7B/有/A/N/、/A/N/、/A/N/之/N/P","8E/虽/N/A/N/A/，/所/以/V/N/，其/N/A/ye/P","8B/like/A/N/V/N/，/不/V/N/V/之/N/P","8B/N/A/即/N/A/，/N/A/即/N/A/P","8D/何必/V/N/V/N/，/V/N/zhi/N/N/哉/P","8D/N/anti/MV/V/N/，/still/继/N/V/，/why/，/and/N/而/anti/V/N/ye/P","8D/是/故/A/N/有/A/N/，/必/AD/V/以/得/之/，/AD/V/以/失/之/P","8D/故/其/N/不/可/以/V/N/，/A/N/V/N/而/不/MV/N/P","8C/V/N/A/A/，/V/N/A/A","8B/N/在/A/N/，/A/N/zhi/A/，/V/于/N/P","8C/A/N/AD/V/，/N/N/AD/V","8D/虽/无/N/N/zhi/V/，/亦/V/以/AD/V/A/N/P","8D/N/V/N/为/N/，/N/V/N/为/N/P","8D/故/V/A/N/者/，/当/V/A/N/之/A/N/P","8D/N/V/于/A/N/之上/，/AD/V/于/A/N/之间/P","8C/使/其/A/N/AD/V/，/A/N/AD/V/P","9D/A/N/V/zhi/而不/V/zhi/、亦/make/A/N/er/复/V/A/N/ye/P","9B/N/MV/V/N/V/V/，/but/N/N/AD/V","9D/以/N/，/当/V/A/N/，/非/N/V/N/所/MV/AD/V/P","9C/此/N/有/A/N/A/N/，/A/N/A/N/P","9B/是/N/ye/，/N/A/N/A/，/N/A/N/A/P","9D/何/其/AD/也/，/岂/V/之/AD/而/V/之/AD/int/，/抑/本/其/A/A/之/N/而/also/自/于/N/int/Q","9D/V/A/N/，/V/A/N/，/此/A/N/所/以/A/也/P"]}}';
     this.Normal_Characters =
-        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+/=1234567890"; //表内有映射的所有字符组成的字符串
+      "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+/=1234567890"; //表内有映射的所有字符组成的字符串
     this.LETTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     this.BIG_LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     this.NUMBERS = "1234567890";
@@ -484,40 +484,10 @@ export class WenyanSimulator {
     RandomParagraphing,
     DilutionConfigObj
   ) {
-    //到这里如果没有执行，那么默认出了问题
+    //只有启用稀释时才允许进入本函数，非法调用报错。
     if (!DilutionConfigObj.Enable) {
       throw new Error("Unexpected Function Call to selectDilutionSentence()");
     }
-    if (PayloadLength > RandomParagraphing[1] && RandomParagraphing !== false) {
-      //如果密文太长了，那么自动分段
-      let distributedPayload = this.distributePayload(
-        PayloadLength,
-        RandomParagraphing[0],
-        RandomParagraphing[1]
-      );
-      let Result = [];
-      distributedPayload.forEach((Payload) => {
-        //递归给自己，深度为1。
-        Result = Result.concat(
-          this.selectDilutionSentence(
-            Payload,
-            RandomIndex,
-            false,
-            DilutionConfigObj
-          )
-        );
-        Result[Result.length - 1].push("Z");
-        try {
-          if (this.callback != null)
-            this.callback(new CallbackObj("ENC_SENTENCES", Result.toString()));
-        } catch (err) {
-          // continue regardless of error
-        }
-      });
-      return Result;
-    }
-
-    //稀释选句算法的开始
 
     /** 目标载荷率 */
     const TargetPayloadRate = DilutionConfigObj.DilutionTargetRate;
@@ -533,12 +503,996 @@ export class WenyanSimulator {
     const FilterMode = DilutionConfigObj.FilterMode;
     /** 指定的诗词句式过滤器 */
     const PoemFilterMode = DilutionConfigObj.PoemFilterMode;
+    /** 指定的文体随机性因子 */
+    const StyleRandomIndex = DilutionConfigObj.StyleRandomIndex ?? 0;
 
-    //运行时变量
-    let CompletedPayloadLength = 0; //定义已经完成的载荷量
-    let TotalCharacterCount = 0; //定义已经确认的总字符数(包含所有字符，载荷位，以及标点符号在内)
+    //验证载荷、目标率和模式
+    //验证几个参数的合法性
+    if (!Number.isSafeInteger(PayloadLength) || PayloadLength < 0) {
+      throw new Error("Invalid Dilution Payload Length.");
+    }
+    if (
+      !Number.isFinite(TargetPayloadRate) ||
+      TargetPayloadRate < 0.01 ||
+      TargetPayloadRate > 1
+    ) {
+      throw new Error("Invalid Dilution Target Rate.");
+    }
+    if (!Number.isFinite(RandomIndex) || RandomIndex < 0 || RandomIndex > 100) {
+      throw new Error("Incorrect Random Index");
+    }
+    if (
+      !["ALL", "ESSAY", "POEM", "LYRIC"].includes(FilterMode) ||
+      !["ALL", "FOUR", "FIVE", "SEVEN"].includes(PoemFilterMode) ||
+      !["SMART", "RANDOM"].includes(SampleMode) ||
+      !["UNIFORM", "CONCENTRATE"].includes(PayloadDistributionMode)
+    ) {
+      throw new Error("Invalid Dilution Sampling Mode.");
+    }
+    //如果未传入任何语料，抛出错误。
+    if (!Corpus) {
+      throw new Error("Missing Dilution Corpus.");
+    }
+    //空载荷返回空结果。
+    if (PayloadLength === 0) {
+      return [];
+    }
 
+    //一些运行时参数，这些运行时参数可以调整，后续也可以让用户手动指定
 
+    const MAX_ANCHOR_SEARCH_TIME = 80; //最多搜索几个锚点位置
+    const ANCHOR_SEARCH_WINDOW_SIZE = 300; //每个锚点后面，按顺序扫描多少条模板
+    const NEIGHBORHOOD_SIZES = [16, 64, 256, 512, 1024, 2048]; //逐级扩张的邻域范围
+    const MAX_NORMAL_SCAN_COUNT = 131072; //每段正常采样的扫描上限
+    const MAX_JUMP_COUNT = 256; //每段正常采样的远跳上限
+    const MAX_CLOSING_SCAN_COUNT = 2048; //每段优化找零的扫描上限
+    const MAX_ZERO_PAYLOAD_STREAK = 128; //连续零载荷句的上限
+    const MAX_FALLBACK_CANDIDATES = 32; //临时找零缓存的上限
+    const CONCENTRATION_REGION_RATIO = 0.8; //集中区域占本段目标长度的比例
+    const CONCENTRATION_REGION_POSITION = null; //null 为随机，0~1 指定区域起点的相对位置
+    const PARAGRAPH_LENGTH_FACTOR = 2; //显示段落长度相对原分段配置的倍乘系数
+    const BUDGET_WEIGHT = 4; //剩余长度适配的权重
+    const DISTRIBUTION_WEIGHT = 2; //段内载荷分布的权重
+    const MIN_CANDIDATE_QUALITY = 0.005; //正常采样的最低预算质量
+
+    //判断可用的文体类型。
+    //正常采样和找零共用同一组硬过滤，未提供的文体不参与搜索。
+    const AllowedTypes = ["B", "S", "C"].filter((Type) => {
+      if (FilterMode === "ALL") {
+        //不过滤
+        return Corpus[Type] != null;
+      } else if (FilterMode === "ESSAY") {
+        //仅古文模式，保留 B
+        if (Type !== "B") {
+          return false;
+        }
+        return Corpus[Type] != null;
+      } else if (FilterMode === "POEM") {
+        //仅诗词模式，保留 S
+        if (Type !== "S") {
+          return false;
+        }
+        return Corpus[Type] != null;
+      } else if (FilterMode === "LYRIC") {
+        //仅诗词模式，保留 S
+        if (Type !== "C") {
+          return false;
+        }
+        return Corpus[Type] != null;
+      }
+    });
+
+    for (const Type of AllowedTypes) {
+      //核对句式模板的数量和Manifest里写的数量是否匹配，不匹配即为非法模板，丢出错误。
+      if (
+        !Array.isArray(Corpus[Type].Sentences) ||
+        Corpus[Type].Metadata?.SentenceCount !== Corpus[Type].Sentences.length
+      ) {
+        throw new Error(`Invalid Dilution Corpus: ${Type}.`);
+      }
+    }
+
+    //如果事实上某个类型模板的可用句数量为0，那么也丢出错误。
+    const AvailableTypes = AllowedTypes.filter((Type) => {
+      const SentenceCount = Corpus[Type].Sentences.length;
+      return SentenceCount > 0;
+    });
+
+    if (!AvailableTypes.length) {
+      throw new Error("Empty Allowed Dilution Corpus.");
+    }
+
+    //执行诗词长度过滤的初始化。
+    //如果不过滤(ALL)则将得到 undefined ，此后会跳过诗词分句长度检查。
+    const PoemLengths = {
+      FOUR: 4,
+      FIVE: 5,
+      SEVEN: 7,
+    };
+    const PoemLength = PoemLengths[PoemFilterMode];
+
+    //读取和抽样工具的定义部分
+
+    /**
+     * 工具函数
+     *
+     * 用于读取和对象化某个位置索引的模板
+     *
+     * 读取模板的整数 P/L 并核对载荷位点。不合句式的诗词跳过，损坏的数据直接报错。
+     *
+     * 模板位置包含文体，两个数组之间不计算连续距离。
+     *
+     * @param{{ Type: "B" | "S" | "C", Index: number }} Position 传入索引
+     *
+     */
+    const ReadTemplate = (Position) => {
+      //先照着索引直接读一个模板
+      const Sentences = Corpus[Position.Type].Sentences;
+      const RawTemplate = Sentences[Position.Index];
+
+      //应当是一个字符串，不是字符串立刻丢出错误
+      if (typeof RawTemplate !== "string") {
+        throw new Error("Invalid Dilution Template.");
+      }
+
+      /*
+      模板语法
+      
+      例如
+      "3/14/0.21/B/N/生/富/贵/何/所/望/，/恨/不/A/嫁/东/N"
+      
+      P(载荷量)/L(模板总字符长度)/R(模板的载荷率)/文体类型(B/S)/句式
+      R 只是元数据，不参与精确预算计算。
+
+      */
+      const Parts = RawTemplate.split("/");
+      const P = Number(Parts[0]); //模板的载荷量，必须填入
+      const L = Number(Parts[1]); //模板的总有效长度，不包含末尾标点
+      const Tokens = Parts.slice(4);
+
+      //执行校验，注意，校验后续可以移除，
+      //计算实际的载荷量
+      const PayloadTokens = Tokens.filter((Token) => {
+        return ["V", "N", "A", "AD"].includes(Token);
+      });
+      const ActualPayload = PayloadTokens.length;
+
+      //计算实际的模板总长度
+      //载荷占位符均只生成一个字，普通文本按字符数累计。末尾标点不计入 L。
+      let ActualLength = Tokens.reduce((Count, Token) => {
+        if (["V", "N", "A", "AD"].includes(Token)) {
+          return Count + 1;
+        } else {
+          //按 Unicode 码点计数，避免把一个生僻字的代理对算成两个字符。
+          const TokenCharacters = [...Token];
+          return Count + TokenCharacters.length;
+        }
+      }, 0);
+
+      //考虑末尾标点
+      const LastTokenIndex = Tokens.length - 1;
+      const LastToken = Tokens[LastTokenIndex];
+      //沿用规则库的末尾标点口径，不能把自动句末标点重复算进 L。
+      const HasEndSymbol = /[，、；：。？！]|^[PQRT]$/.test(LastToken);
+      if (HasEndSymbol) {
+        ActualLength -= 1;
+      }
+
+      //执行判断，如果校验有问题，抛出错误。
+      if (
+        !Number.isSafeInteger(P) ||
+        P < 0 ||
+        !Number.isSafeInteger(L) ||
+        L <= 0 ||
+        Parts[3] !== Position.Type ||
+        ActualPayload !== P ||
+        ActualLength !== L
+      ) {
+        throw new Error(
+          `Invalid Dilution Template: ${Position.Type}/${Position.Index}.`
+        );
+      }
+
+      //这段是针对诗句分句字数的校验，如果分句长度和指定的不一致，则拒绝读取
+      if (Position.Type === "S" && PoemLength) {
+        //先把载荷位点替成单字，再按标点拆句；不改变原模板内容。
+        const TextTokens = Tokens.map((Token) => {
+          if (["V", "N", "A", "AD"].includes(Token)) {
+            return "字";
+          } else {
+            return Token;
+          }
+        });
+        const Text = TextTokens.join("");
+        const SplitClauses = Text.split(/[，、；：。？！PQR]/);
+        //连续标点或末尾标点会产生空分句，过滤后只检查实际文字部分。
+        const Clauses = SplitClauses.filter(Boolean);
+        if (!Clauses.length) {
+          //没有有效分句时无法满足指定诗体，继续寻找其他模板。
+          return null;
+        }
+        const HasInvalidClauseLength = Clauses.some((Clause) => {
+          const ClauseLength = [...Clause].length;
+          return ClauseLength !== PoemLength;
+        });
+        if (HasInvalidClauseLength) {
+          //字数不合属于正常过滤，不是语料损坏，交给调用处继续找下一条。
+          return null;
+        }
+      }
+      return {
+        ...Position,
+        P,
+        L,
+        Tokens,
+        Key: `${Position.Type}/${Position.Index}`,
+      };
+    };
+
+    /**
+     *
+     * 工具函数
+     *
+     * 生成一个伪随机的合法索引位置。
+     * 随机起点只在允许的文体数组中产生，不假定 B/S 共享原始顺序。
+     *
+     * @returns{{Type:"B"|"S",Index:number}}
+     *
+     */
+    const RandomPosition = () => {
+      const TypeRandomIndex = GetRandomIndex(AvailableTypes.length * 100);
+      const Type = AvailableTypes[Math.floor(TypeRandomIndex / 100)];
+      const SentenceCount = Corpus[Type].Sentences.length;
+      const Index = GetRandomIndex(SentenceCount);
+      return {
+        Type,
+        Index,
+      };
+    };
+
+    /**
+     * 工具函数
+     *
+     * 用于递增某个索引的下标(增加一)。
+     *
+     * 这里只推进同一数组的下标；是否越界、是否允许环绕，由搜索阶段决定。
+     *
+     * @param{{ Type: "B" | "S" | "C", Index: number }} Template 传入索引
+     * @returns{{Type:"B" | "S" | "C",Index:number}}
+     *
+     */
+    const NextPosition = (Template) => {
+      return {
+        Type: Template.Type,
+        Index: Template.Index + 1,
+      };
+    };
+
+    /**
+     * 工具函数
+     *
+     * 用于有随机性地在一组候选模板中选择一个。
+     *
+     * 按最终权重随机选一句，保留多样性
+     *
+     * @param{[{Template: { Type: "B" | "S" | "C", Index: number }, Quality: number, Weight:number}]} Candidates 传入索引
+     * @returns{{Type:"B" | "S" | "C",Index:number}}
+     *
+     */
+    const PickCandidate = (Candidates) => {
+      const TotalWeight = Candidates.reduce((Total, Candidate) => {
+        return Total + Candidate.Weight;
+      }, 0);
+      const CandidateRandomIndex = GetRandomIndex(1000000);
+      const RandomRatio = CandidateRandomIndex / 1000000;
+      let Rand = RandomRatio * TotalWeight;
+      for (const Candidate of Candidates) {
+        Rand -= Candidate.Weight;
+        //随机位置落进当前候选的权重区间，就返回这一条，不固定取最高分。
+        if (Rand < 0) {
+          return Candidate.Template;
+        }
+      }
+      //浮点边界未在循环内命中时，沿用原来的末项返回保障。
+      const LastCandidateIndex = Candidates.length - 1;
+      return Candidates[LastCandidateIndex].Template;
+    };
+
+    //执行载荷层的噪声分段，与普通模式不同，这里采用递推而不是递归。
+    //沿用现有噪声分段器，单段时也使用同一个外层循环。
+    const distributedPayload = this.distributePayload(
+      PayloadLength,
+      RandomParagraphing[0],
+      RandomParagraphing[1]
+    );
+
+    //校验配额，最终版本可以省略。
+    const HasInvalidPayloadLength = distributedPayload.some((Length) => {
+      return !Number.isSafeInteger(Length) || Length <= 0;
+    });
+    if (HasInvalidPayloadLength) {
+      //任何一个配额非法就立即停止，不再计算整篇的配额总和。
+      throw new Error("Invalid Dilution Payload Distribution.");
+    }
+
+    const DistributedPayloadLength = distributedPayload.reduce(
+      (Total, Length) => {
+        return Total + Length;
+      },
+      0
+    );
+
+    if (DistributedPayloadLength !== PayloadLength) {
+      //所有段都合法仍须核对总量，防止分段丢失或多分配载荷。
+      throw new Error("Invalid Dilution Payload Distribution.");
+    }
+
+    //进入第二重噪声分段，这个分段是为了防止Dilution时候单重分段仍然容易导致单段文本过长而设计的。
+    //其核心思想是计算总字符数，如果总字符数超出分段限制则强制换行，并不提前分配任何东西。
+    //显示分段单独使用噪声选目标，不再调用载荷分段器，也不改变载荷配额。
+    const ConfiguredMinParagraphLength = RandomParagraphing[0] ?? 20;
+    const ScaledMinParagraphLength =
+      ConfiguredMinParagraphLength * PARAGRAPH_LENGTH_FACTOR;
+    const MinParagraphLength = Math.ceil(ScaledMinParagraphLength);
+
+    const ConfiguredMaxParagraphLength = RandomParagraphing[1] ?? 80;
+    const ScaledMaxParagraphLength =
+      ConfiguredMaxParagraphLength * PARAGRAPH_LENGTH_FACTOR;
+    const MaxParagraphLength = Math.ceil(ScaledMaxParagraphLength);
+    let ParagraphNoiseGen = null;
+    let ParagraphIndex = 0;
+
+    /**
+     *
+     * 工具函数
+     *
+     * 滚动计算二重分段的目标长度。
+     *
+     * @returns{number}
+     *
+     */
+    const NextParagraphLength = () => {
+      if (!ParagraphNoiseGen) {
+        //理想长度没有超限时不会调用这里，也就不会额外创建噪声生成器。
+        ParagraphNoiseGen = new ValueNoise1D();
+      }
+      const NoisePosition = ParagraphIndex * 0.5;
+      const WaveFactor = ParagraphNoiseGen.get(NoisePosition);
+      ParagraphIndex++;
+
+      const ParagraphLengthRange = MaxParagraphLength - MinParagraphLength;
+      const ParagraphLengthOffset = WaveFactor * ParagraphLengthRange;
+      const ParagraphLength = MinParagraphLength + ParagraphLengthOffset;
+      return Math.floor(ParagraphLength);
+    };
+
+    //进入组句循环
+
+    //循环外变量用于控制全篇的状态。
+
+    //全篇预算只累计已经完成的载荷段；已用模板和找零缓存则跨段保留。
+    let Result = []; //组句结果
+    let CompletedPayloadLength = 0; //已经完成的载荷量，只包括完整分段
+    let TotalCharacterCount = 0; //已经完成分段的有效长度
+    let LastSelectedTemplate = null; //上一段最后实际选中的模板引用
+    const UsedTemplates = new Set(); //已使用的所有模板，重复只作为软惩罚
+    const FallbackCandidates = new Map(); //临时正载荷找零候选缓存
+
+    for (const CurrentPayloadLength of distributedPayload) {
+      //计算本段的总字符数目标长度 CurrentIdealTotalCharacterCount (并非强制性)
+      //前段的长度偏差由剩余载荷共同承担，本段配额仍保持噪声分段的原值。
+      const RemainingIdealCharacterCount =
+        IdealTotalCharacterCount - TotalCharacterCount;
+      const CurrentWeightedCharacterCount =
+        RemainingIdealCharacterCount * CurrentPayloadLength;
+      const RemainingGlobalPayloadLength =
+        PayloadLength - CompletedPayloadLength;
+      const CurrentIdealCharacterCount =
+        CurrentWeightedCharacterCount / RemainingGlobalPayloadLength;
+      //前面的段偏长，后面各段就缩短。前面偏短，后面就获得更多长度分配。
+      //但载荷分段数组本身不变
+      const CurrentIdealTotalCharacterCount = Math.max(
+        0,
+        CurrentIdealCharacterCount
+      );
+      //决定本段是否额外显示分段，不超过上限就不分段
+      //超过时才启用显示长度计数和噪声目标。
+      const CurrentLengthParagraphing =
+        CurrentIdealTotalCharacterCount > MaxParagraphLength;
+      let CurrentParagraphCharacterCount = 0;
+      const CurrentParagraphBreaks = []; //先记录候选切分位置，整段生成后再决定是否追加 Z
+      let CurrentParagraphTarget;
+      if (CurrentLengthParagraphing) {
+        //只有理想长度超出显示上限，才消耗一次噪声目标。
+        CurrentParagraphTarget = NextParagraphLength();
+      } else {
+        CurrentParagraphTarget = 0;
+      }
+
+      //接下来计算本段的所有状态。
+      //下面的进度只属于当前载荷段，提交单句时不同时更新全篇累计值。
+      let CurrentResult = []; //本段选中的所有模板
+      let CurrentCompletedPayloadLength = 0; //本段的载荷字数总和
+      let CurrentTotalCharacterCount = 0; //本段已确定的字符数量总和
+      let CurrentLastSelectedTemplate = LastSelectedTemplate; //从上一段继承的位置
+      //阶段只向 normal → greedy → forced 推进，不回退、不递归重新选句。
+      let CurrentSamplingPhase = "normal"; //搜索阶段，分为normal greedy 和 forced
+      let CurrentScanPosition = null; //
+      let CurrentScannedCount = 0; //正常阶段检查总数，包含锚点探测
+      let CurrentJumpCount = 0; //正常邻域未能选出模板的次数
+      let CurrentClosingScanCount = 0; //优化找零检查总数，不与正常阶段混算
+      let CurrentZeroPayloadStreak = 0;
+      //集中模式区域外可能需要较多零载荷句，仍受长度预算和扫描总量约束。
+      let CurrentZeroPayloadLimit;
+      if (PayloadDistributionMode === "CONCENTRATE") {
+        CurrentZeroPayloadLimit = Math.max(
+          MAX_ZERO_PAYLOAD_STREAK,
+          Math.ceil(CurrentIdealTotalCharacterCount)
+        );
+      } else {
+        CurrentZeroPayloadLimit = MAX_ZERO_PAYLOAD_STREAK;
+      }
+      //指定起点时不取随机数；未指定时每个载荷段仍取一次，包括均匀模式。
+      let RegionPosition;
+      if (CONCENTRATION_REGION_POSITION != null) {
+        RegionPosition = CONCENTRATION_REGION_POSITION;
+      } else {
+        const RegionRandomIndex = GetRandomIndex(1000000);
+        RegionPosition = RegionRandomIndex / 1000000;
+      }
+      //区域宽度固定为配置比例，起点只能在剩余空白比例中移动，避免越过段尾。
+      const RegionPositionRange = 1 - CONCENTRATION_REGION_RATIO;
+      const CurrentRegionStart = RegionPosition * RegionPositionRange;
+
+      //以下工具只服务当前载荷段，因此放在 for 内，评分时读取本段最新进度。
+      //先排除超出余量的候选，再综合长度压力、分布进度、连续性和重复情况评分。
+      const ScoreTemplate = (Template, IgnoreContinuity) => {
+        //每次评分重新读取本段余量，上一轮候选不能带着旧预算直接复用。
+        const RemainingPayload =
+          CurrentPayloadLength - CurrentCompletedPayloadLength;
+        const RemainingLength =
+          CurrentIdealTotalCharacterCount - CurrentTotalCharacterCount;
+        //载荷位点必须全部填满，超过余量的模板不能截取一部分使用。
+        if (Template.P > RemainingPayload) {
+          return null;
+        }
+        if (Template.P === 0) {
+          //找零阶段必须推进正载荷，不能继续提交纯稀释句。
+          if (CurrentSamplingPhase !== "normal") {
+            return null;
+          }
+          //长度预算不足以容纳整条零载荷句时，也停止接受它。
+          if (RemainingLength <= Template.L) {
+            return null;
+          }
+          //连续零载荷已到上限时，要求下一次提交恢复正载荷进展。
+          if (CurrentZeroPayloadStreak >= CurrentZeroPayloadLimit) {
+            return null;
+          }
+        }
+
+        //用选后余量衡量长度压力，不使用四舍五入后的 R 反推预算。
+        let ExpectedLength;
+        if (RemainingLength > 0) {
+          //候选承担多少剩余载荷，就按同样比例分配剩余理想长度。
+          const WeightedRemainingLength = RemainingLength * Template.P;
+          ExpectedLength = WeightedRemainingLength / RemainingPayload;
+        } else {
+          //预算已经用完时，候选不再获得额外理想长度，但仍须完成载荷。
+          ExpectedLength = 0;
+        }
+        //仍有预算时比较理想长度，超支时转为衡量每个载荷需要的字符数。
+        let LengthError;
+        if (RemainingLength > 0) {
+          const LengthDifference = Math.abs(Template.L - ExpectedLength);
+          const RemainingLengthPerPayload = RemainingLength / RemainingPayload;
+          //分母至少为 4，并照顾单个载荷的平均长度，避免小余量放大误差。
+          const LengthScale = Math.max(
+            4,
+            ExpectedLength,
+            RemainingLengthPerPayload
+          );
+          LengthError = LengthDifference / LengthScale;
+        } else {
+          //已经超支时比较每个载荷要用多少字符，较短且载荷较高的模板更有利。
+          const PayloadScale = Math.max(1, Template.P);
+          LengthError = Template.L / PayloadScale;
+        }
+        //误差平方越大，分母越大；这一项只降低质量，不改变模板合法性。
+        const WeightedLengthError = BUDGET_WEIGHT * LengthError;
+        const LengthPenalty = 1 + WeightedLengthError * LengthError;
+        let Quality = 1 / LengthPenalty;
+        if (Template.P === RemainingPayload && RemainingLength > 0) {
+          //这一条会用完剩余载荷，额外比较它与全部剩余长度的偏差。
+          const ClosingLengthDifference = Math.abs(
+            RemainingLength - Template.L
+          );
+          const ClosingLengthScale = Math.max(1, Template.L);
+          const ClosingLengthPenalty =
+            1 + ClosingLengthDifference / ClosingLengthScale;
+          Quality /= ClosingLengthPenalty;
+        }
+        let Weight = Quality;
+        //均匀模式跟随线性进度；集中模式只在指定连续区域内提高期望载荷。
+        if (CurrentIdealTotalCharacterCount > 0) {
+          const SelectedCharacterCount =
+            CurrentTotalCharacterCount + Template.L;
+          const Progress =
+            SelectedCharacterCount / CurrentIdealTotalCharacterCount;
+          let PayloadProgress;
+          if (PayloadDistributionMode === "CONCENTRATE") {
+            //把全段进度换算成集中区域内的进度，区域外稍后会被限制到 0 或 1。
+            const ProgressWithinRegion = Progress - CurrentRegionStart;
+            PayloadProgress = ProgressWithinRegion / CONCENTRATION_REGION_RATIO;
+          } else {
+            //均匀模式直接跟随文本进度，不使用上面随机产生的区域起点。
+            PayloadProgress = Progress;
+          }
+          const UpperBoundedProgress = Math.min(1, PayloadProgress);
+          const BoundedProgress = Math.max(0, UpperBoundedProgress);
+          const DesiredPayload = CurrentPayloadLength * BoundedProgress;
+          const SelectedPayloadLength =
+            CurrentCompletedPayloadLength + Template.P;
+          const DistributionError = SelectedPayloadLength - DesiredPayload;
+          //比较选后实际载荷和期望载荷；偏差越大，指数惩罚越强。
+          const WeightedDistributionError =
+            -DISTRIBUTION_WEIGHT * DistributionError;
+          const DistributionExponent =
+            WeightedDistributionError * DistributionError;
+          const DistributionPenalty = Math.exp(DistributionExponent);
+          Weight *= DistributionPenalty;
+          //最后一条正载荷不能过早结束本段，否则后面不再有机会追加稀释句。
+          if (Template.P === RemainingPayload) {
+            const UnfilledLength = Math.max(0, RemainingLength - Template.L);
+            const ClosingScale = Math.max(4, Template.L);
+            const ClosingError = UnfilledLength / ClosingScale;
+            const WeightedClosingError = -BUDGET_WEIGHT * ClosingError;
+            const ClosingExponent = WeightedClosingError * ClosingError;
+            const ClosingPenalty = Math.exp(ClosingExponent);
+            Weight *= ClosingPenalty;
+          }
+        }
+        //质量门槛不受来源距离影响；连续性和去重只改变随机选择的相对权重。
+        Quality = Weight;
+        if (
+          !IgnoreContinuity &&
+          CurrentLastSelectedTemplate?.Type === Template.Type &&
+          Template.Index > CurrentLastSelectedTemplate.Index
+        ) {
+          //只对同数组内的前向距离减权，不把跨数组下标当成连续距离。
+          const PositionDistance =
+            Template.Index - CurrentLastSelectedTemplate.Index;
+          const ForwardDistance = PositionDistance - 1;
+          //紧接上一模板的下一条距离为零，不因连续性而减权。
+          const ContinuityPenalty = 1 + ForwardDistance / 16;
+          Weight /= ContinuityPenalty;
+        }
+        if (UsedTemplates.has(Template.Key)) {
+          //重复是软惩罚，候选稀少或闭合时仍允许复用。
+          Weight *= 0.2;
+        }
+        //指数计算可能下溢为零，给抽样权重保留最小正数；Quality 的门槛不变。
+        const CandidateWeight = Math.max(Number.MIN_VALUE, Weight);
+        return {
+          Template,
+          Quality,
+          Weight: CandidateWeight,
+        };
+      };
+
+      //只保留少量正载荷候选，优先确保缓存里有可反复使用的 P=1 闭合模板。
+      const RememberTemplate = (Template) => {
+        //零载荷无法闭合余量；已缓存的 Key 也不重复插入或改变原有顺序。
+        if (Template.P > 0 && !FallbackCandidates.has(Template.Key)) {
+          if (FallbackCandidates.size < MAX_FALLBACK_CANDIDATES) {
+            FallbackCandidates.set(Template.Key, Template);
+          } else if (Template.P === 1) {
+            //缓存满后只考虑补入缺失的 P=1，不为普通候选反复替换缓存。
+            const CachedTemplates = [...FallbackCandidates.values()];
+            const HasUnitPayloadTemplate = CachedTemplates.some((Candidate) => {
+              return Candidate.P === 1;
+            });
+            if (!HasUnitPayloadTemplate) {
+              //缓存尚无 P=1，替换最早加入的一项，保留单位载荷闭合能力。
+              const CachedKeys = FallbackCandidates.keys();
+              const OldestKey = CachedKeys.next().value;
+              FallbackCandidates.delete(OldestKey);
+              FallbackCandidates.set(Template.Key, Template);
+            }
+          }
+        }
+      };
+
+      //比较随机锚点与上一段继承位置，选择附近合法候选质量较好的起点。
+      const SelectAnchor = (IgnoreContinuity) => {
+        let CurrentAnchor = null;
+        let BestQuality = -1;
+        const CurrentAnchors = [];
+        const ViableAnchors = []; //可行的锚点
+        if (!IgnoreContinuity && CurrentLastSelectedTemplate) {
+          //继承上一条的后续位置；已到数组末尾时不把环绕当成连续延伸。
+          const NextTemplateIndex = CurrentLastSelectedTemplate.Index + 1;
+          const SentenceCount =
+            Corpus[CurrentLastSelectedTemplate.Type].Sentences.length;
+          if (NextTemplateIndex < SentenceCount) {
+            const InheritedPosition = NextPosition(CurrentLastSelectedTemplate);
+            CurrentAnchors.push(InheritedPosition);
+          }
+        }
+        for (let i = 0; i < MAX_ANCHOR_SEARCH_TIME; i++) {
+          const Position = RandomPosition();
+          const HasDuplicateAnchor = CurrentAnchors.some((Anchor) => {
+            if (Anchor.Type !== Position.Type) {
+              return false;
+            }
+            return Anchor.Index === Position.Index;
+          });
+          if (!HasDuplicateAnchor) {
+            //文体和下标都相同才视为重复；重复抽中时不额外补抽。
+            CurrentAnchors.push(Position);
+          }
+        }
+        for (const Anchor of CurrentAnchors) {
+          let Quality = 0; //窗口内全部合法候选的质量总和，包含零载荷句
+          let Count = 0; //只统计正载荷候选，防止选择只能稀释却不能推进的区域
+          const End = Math.min(
+            Corpus[Anchor.Type].Sentences.length,
+            Anchor.Index + ANCHOR_SEARCH_WINDOW_SIZE
+          );
+          for (
+            let i = Anchor.Index;
+            i < End && CurrentScannedCount < MAX_NORMAL_SCAN_COUNT;
+            i++
+          ) {
+            CurrentScannedCount++;
+            const Position = {
+              Type: Anchor.Type,
+              Index: i,
+            };
+            const Template = ReadTemplate(Position);
+            if (!Template) {
+              //诗词子过滤没有通过，仍消耗一次检查，但不进入评分与缓存。
+              continue;
+            }
+            RememberTemplate(Template);
+            const Candidate = ScoreTemplate(Template, IgnoreContinuity);
+            if (Candidate) {
+              Quality += Candidate.Quality;
+            }
+            if (Candidate && Template.P > 0) {
+              Count++;
+            }
+          }
+          if (Count) {
+            const AnchorQuality = Quality / Math.max(1, End - Anchor.Index);
+
+            ViableAnchors.push(Anchor);
+
+            //按整个计划窗口长度求平均；质量严格更好才替换，同分保留先前锚点。
+            if (AnchorQuality > BestQuality) {
+              BestQuality = AnchorQuality;
+              CurrentAnchor = Anchor;
+            }
+          }
+        }
+
+        if (
+          StyleRandomIndex > 0 &&
+          ViableAnchors.length > 1 &&
+          GetRandomIndex(10000) < StyleRandomIndex * 100
+        ) {
+          //如果用户设置了随机因子，那么考虑随机因子。
+          //随机因子会让锚点选择和特定载荷率目标下的最优选择解耦。
+          return ViableAnchors[GetRandomIndex(ViableAnchors.length)];
+        }
+        return CurrentAnchor;
+      };
+
+      while (CurrentCompletedPayloadLength < CurrentPayloadLength) {
+        //本轮先寻找一条候选；只有下方统一提交处才能更改载荷和字符进度。
+        let SelectedTemplate = null;
+        //RANDOM 始终重新随机定位；SMART 按 RandomIndex 的概率暂时忽略连续性。
+        let IgnoreContinuity;
+        if (SampleMode === "RANDOM") {
+          //纯随机采样不执行 SMART 的概率抽取，保留原来的短路行为。
+          IgnoreContinuity = true;
+        } else {
+          const ContinuityRandomIndex = GetRandomIndex(10000);
+          const ContinuityRandomThreshold = RandomIndex * 100;
+          IgnoreContinuity = ContinuityRandomIndex < ContinuityRandomThreshold;
+        }
+        if (CurrentSamplingPhase === "normal") {
+          if (
+            CurrentScannedCount >= MAX_NORMAL_SCAN_COUNT ||
+            CurrentJumpCount >= MAX_JUMP_COUNT
+          ) {
+            //正常搜索成本已到上限，只切换阶段，不修改已提交的载荷。
+            CurrentSamplingPhase = "greedy";
+            continue;
+          }
+          if (!CurrentScanPosition || IgnoreContinuity) {
+            if (IgnoreContinuity) {
+              //本轮放弃连续性时直接随机定位，仍保留后面的预算评分。
+              CurrentScanPosition = RandomPosition();
+            } else {
+              //需要连续性但尚无起点时，比较继承位置和随机锚点的局部质量。
+              CurrentScanPosition = SelectAnchor(false);
+            }
+          }
+          if (!CurrentScanPosition) {
+            //锚点评估没有可用区域时，转入同一允许集合内的找零流程。
+            CurrentSamplingPhase = "greedy";
+            continue;
+          }
+          let CurrentCandidates = [];
+          let CurrentNeighborhoodLevel = 0;
+          let ScannedWidth = 0;
+          //扩大窗口时只扫描新增范围；选中后从实际选中位置继续，而非扫描终点。
+          //等级已在上面初始化为零，所以 for 的初始化位置留空。
+          for (
+            ;
+            CurrentNeighborhoodLevel < NEIGHBORHOOD_SIZES.length;
+            CurrentNeighborhoodLevel++
+          ) {
+            const Width = NEIGHBORHOOD_SIZES[CurrentNeighborhoodLevel];
+            const End = Math.min(
+              Corpus[CurrentScanPosition.Type].Sentences.length,
+              CurrentScanPosition.Index + Width
+            );
+            for (
+              let i = CurrentScanPosition.Index + ScannedWidth;
+              i < End && CurrentScannedCount < MAX_NORMAL_SCAN_COUNT;
+              i++
+            ) {
+              CurrentScannedCount++;
+              const Template = ReadTemplate({
+                Type: CurrentScanPosition.Type,
+                Index: i,
+              });
+              if (!Template) {
+                //不符合当前诗词子集时跳过，不能因为候选少而静默放宽过滤。
+                continue;
+              }
+              RememberTemplate(Template);
+              const Candidate = ScoreTemplate(Template, IgnoreContinuity);
+              if (Candidate) {
+                CurrentCandidates.push(Candidate);
+              }
+            }
+            ScannedWidth = Width;
+            //Quality 只反映预算与分布适配，距离和重复只影响最终抽样的 Weight。
+            const GoodCandidates = CurrentCandidates.filter((Candidate) => {
+              return Candidate.Quality >= MIN_CANDIDATE_QUALITY;
+            });
+            if (GoodCandidates.length >= 3) {
+              //完整候选池必须包含正载荷；合格池本身仍允许只包含零载荷句。
+              const HasPositivePayloadCandidate = CurrentCandidates.some(
+                (Candidate) => {
+                  return Candidate.Template.P > 0;
+                }
+              );
+              if (HasPositivePayloadCandidate) {
+                //质量和数量足够，接受本轮抽样，不再继续扩大窗口。
+                SelectedTemplate = PickCandidate(GoodCandidates);
+                break;
+              }
+            }
+          }
+          if (!SelectedTemplate) {
+            //整个扩张邻域都未选出模板，记一次失败并让下一轮重新选起点。
+            CurrentJumpCount++;
+            CurrentScanPosition = null;
+            continue;
+          }
+        } else if (CurrentSamplingPhase === "greedy") {
+          //优化找零只接受正载荷，允许有限向前搜索及环绕，预算耗尽后进入强制闭合。
+          let CurrentCandidates = [];
+          let Position = CurrentScanPosition;
+          if (!Position) {
+            //只有没有可继承的扫描位置时才额外抽取随机起点。
+            Position = RandomPosition();
+          }
+          const RemainingClosingScanCount =
+            MAX_CLOSING_SCAN_COUNT - CurrentClosingScanCount;
+          const ScanCount = Math.min(256, RemainingClosingScanCount);
+          for (let i = 0; i < ScanCount; i++) {
+            if (Position.Index >= Corpus[Position.Type].Sentences.length) {
+              //到达数组末尾，切到下一允许文体；只有一个数组时从自身开头环绕。
+              const CurrentTypeIndex = AvailableTypes.indexOf(Position.Type);
+              const NextTypeIndex =
+                (CurrentTypeIndex + 1) % AvailableTypes.length;
+              const Type = AvailableTypes[NextTypeIndex];
+              Position = {
+                Type,
+                Index: 0,
+              };
+            }
+            CurrentClosingScanCount++;
+            const Template = ReadTemplate(Position);
+            //即使这一条被过滤，扫描游标也前进，避免下一批重复停在同一位置。
+            Position = {
+              Type: Position.Type,
+              Index: Position.Index + 1,
+            };
+            if (!Template) {
+              continue;
+            }
+            RememberTemplate(Template);
+            const Candidate = ScoreTemplate(Template, true);
+            if (Candidate) {
+              CurrentCandidates.push(Candidate);
+            }
+          }
+          CurrentScanPosition = Position;
+          if (CurrentCandidates.length) {
+            //本批只要有合法正载荷就选择，不要求正常阶段的最低候选数量。
+            const CandidateWeights = CurrentCandidates.map((Candidate) => {
+              return Candidate.Weight;
+            });
+            const BestQuality = Math.max(...CandidateWeights);
+            //这里沿用 Weight 做相对优选，保留最佳权重八成以上的候选再随机选择。
+            const BestCandidates = CurrentCandidates.filter((Candidate) => {
+              return Candidate.Weight >= BestQuality * 0.8;
+            });
+            SelectedTemplate = PickCandidate(BestCandidates);
+          } else if (CurrentClosingScanCount >= MAX_CLOSING_SCAN_COUNT) {
+            //优化扫描耗尽且没有候选，不再继续追求 K，改为保证载荷闭合。
+            CurrentSamplingPhase = "forced";
+          }
+          if (!SelectedTemplate) {
+            //尚未找到可提交句子，阶段可能已经更新；交给下一轮继续，不扣载荷。
+            continue;
+          }
+        } else {
+          //强制闭合先按缓存顺序取能承载余量的模板，不再追求 K、连续性或去重。
+          const RemainingPayload =
+            CurrentPayloadLength - CurrentCompletedPayloadLength;
+          const CachedTemplates = [...FallbackCandidates.values()];
+          //ForceFallBackSearch 是测试用属性。正常情况下应当是undefined.
+          if (!DilutionConfigObj?.ForceFallBackSearch) {
+            SelectedTemplate = CachedTemplates.find((Template) => {
+              return Template.P <= RemainingPayload;
+            });
+          }
+          if (!SelectedTemplate || DilutionConfigObj?.ForceFallBackSearch) {
+            //缓存没有能装下当前余量的模板，才进入确定性的全库搜索。(或者使用测试用属性强行跳转)
+            //强制闭合最多扫描允许集合一整轮，找到正载荷即推进，P=1 可缓存复用。
+            let FirstType = CurrentScanPosition?.Type;
+            if (!FirstType) {
+              FirstType = AvailableTypes[0];
+            }
+
+            let ScanStartIndex = CurrentScanPosition?.Index;
+            if (!ScanStartIndex) {
+              ScanStartIndex = 0;
+            }
+            //游标可能正好指向数组末尾，通过取模回到合法下标后开始这一轮搜索。
+            const FirstSentenceCount = Corpus[FirstType].Sentences.length;
+            const FirstIndex = ScanStartIndex % FirstSentenceCount;
+            for (
+              let t = 0;
+              t < AvailableTypes.length && !SelectedTemplate;
+              t++
+            ) {
+              const FirstTypeIndex = AvailableTypes.indexOf(FirstType);
+              const CurrentTypeIndex =
+                (FirstTypeIndex + t) % AvailableTypes.length;
+              const Type = AvailableTypes[CurrentTypeIndex];
+              const Count = Corpus[Type].Sentences.length;
+              for (let i = 0; i < Count; i++) {
+                //先从当前数组的扫描位置环绕，其余文体数组从头开始检查。
+                let StartIndex;
+                if (t === 0) {
+                  StartIndex = FirstIndex;
+                } else {
+                  StartIndex = 0;
+                }
+                const Index = (StartIndex + i) % Count;
+                const Template = ReadTemplate({ Type, Index });
+                if (!Template || Template.P === 0) {
+                  //过滤不合格或不能推进载荷的模板，仍遵守同一允许文体集合。
+                  continue;
+                }
+                RememberTemplate(Template);
+                if (Template.P <= RemainingPayload) {
+                  //强制阶段取第一条能承载余量的合法模板，不再比较软性评分。
+                  SelectedTemplate = Template;
+                  break;
+                }
+              }
+            }
+          }
+          if (!SelectedTemplate) {
+            //允许集合已完整检查仍无法承载余量，明确失败，不静默跨文体兜底。
+            throw new Error(
+              "Cannot Complete Dilution Payload with Allowed Templates."
+            );
+          }
+        }
+
+        //只有提交时才改变载荷和长度，输出仍由现有 enMap 填充及组装。
+        const CurrentSentence = SelectedTemplate.Tokens.slice();
+        //把换行意图附在模板数组上，由 enMap 在自动标点之后换行，不占用载荷位点。
+        if (
+          SelectedTemplate.Type === "S" &&
+          DilutionConfigObj.PoemAutoLineBreak !== false
+        ) {
+          //诗词只附加单换行意图，实际换行留给 enMap 完成标点后处理。
+          CurrentSentence.PoemAutoLineBreak = true;
+        }
+        CurrentResult.push(CurrentSentence);
+        CurrentCompletedPayloadLength += SelectedTemplate.P;
+        CurrentTotalCharacterCount += SelectedTemplate.L;
+        if (SelectedTemplate.P === 0) {
+          CurrentZeroPayloadStreak = CurrentZeroPayloadStreak + 1;
+        } else {
+          //提交了正载荷后，重新开始计算后续连续零载荷句。
+          CurrentZeroPayloadStreak = 0;
+        }
+        CurrentLastSelectedTemplate = SelectedTemplate;
+        //从实际输出的位置继续，而不是从候选窗口已经探测到的最远位置继续。
+        CurrentScanPosition = NextPosition(SelectedTemplate);
+        UsedTemplates.add(SelectedTemplate.Key);
+        //L 已计内部标点但不计末尾标点，这里补计一字；显示换行不改变 K 的预算口径。
+        CurrentParagraphCharacterCount += SelectedTemplate.L + 1;
+        if (
+          CurrentLengthParagraphing &&
+          CurrentParagraphCharacterCount > CurrentParagraphTarget &&
+          CurrentCompletedPayloadLength < CurrentPayloadLength
+        ) {
+          //此时还不知道最终尾段长度，只记录句末位置，不立即插入 Z。
+          CurrentParagraphBreaks.push({
+            Index: CurrentResult.length - 1,
+            CharacterCount: CurrentTotalCharacterCount + CurrentResult.length,
+          });
+          //只重置显示段落长度；本载荷段的预算、已完成载荷和搜索阶段全部保留。
+          CurrentParagraphCharacterCount = 0;
+          CurrentParagraphTarget = NextParagraphLength();
+        }
+      }
+      if (CurrentCompletedPayloadLength !== CurrentPayloadLength) {
+        //这是载荷配额的硬性核对，文本长度可以有误差，载荷数量不可以。
+        throw new Error("Incorrect Dilution Segment Payload.");
+      }
+
+      //全部句子生成后再落实显示分段；不足下限的尾段并入前段，不拆句或重新选句。
+      const CurrentSegmentCharacterCount =
+        CurrentTotalCharacterCount + CurrentResult.length;
+      for (const ParagraphBreak of CurrentParagraphBreaks) {
+        const RemainingCharacterCount =
+          CurrentSegmentCharacterCount - ParagraphBreak.CharacterCount;
+        if (RemainingCharacterCount < MinParagraphLength) {
+          //后面的切分位置只会留下更短的尾段，保留原载荷段末尾的 Z 即可。
+          break;
+        }
+        const Sentence = CurrentResult[ParagraphBreak.Index];
+        Sentence.push("Z");
+      }
+
+      //载荷段原有的边界照常保留，累计状态只在本段完整结束后更新一次。
+      const LastSentenceIndex = CurrentResult.length - 1;
+      const LastSentence = CurrentResult[LastSentenceIndex];
+      LastSentence.push("Z");
+      for (const Sentence of CurrentResult) {
+        Result.push(Sentence);
+      }
+      //本载荷段已经完整完成，现在才把局部进度并入全篇状态，供下一段滚动预算使用。
+      CompletedPayloadLength += CurrentCompletedPayloadLength;
+      TotalCharacterCount += CurrentTotalCharacterCount;
+      LastSelectedTemplate = CurrentLastSelectedTemplate;
+      try {
+        if (this.callback != null) {
+          //调试回调只观察已完成的载荷段，回调出错不影响选句结果。
+          this.callback(new CallbackObj("ENC_SENTENCES", Result.toString()));
+        }
+      } catch (err) {
+        // continue regardless of error
+      }
+    }
+    if (CompletedPayloadLength !== PayloadLength) {
+      throw new Error("Incorrect Dilution Total Payload.");
+    }
+    return Result;
   }
   /**
    * 关键流程函数
@@ -899,12 +1853,20 @@ export class WenyanSimulator {
           }
         } else if (Sentence[j][k] == "Q") {
           //插入问号
-          //倒数第二个句式禁止出现句号和问号
+          //倒数第二个句式禁止出现句号，问号和感叹号
           if (j == Sentence.length - 2) {
             continue;
           }
           hasSpecialEndSymbol = true;
           TempStr1 = TempStr1 + "？";
+        } else if (Sentence[j][k] == "T") {
+          //插入问号
+          //倒数第二个句式禁止出现句号，问号和感叹号
+          if (j == Sentence.length - 2) {
+            continue;
+          }
+          hasSpecialEndSymbol = true;
+          TempStr1 = TempStr1 + "！";
         } else {
           TempStr1 = TempStr1 + Sentence[j][k]; //如果是句式中的其他字符，那么直接追加到句子中
         }
@@ -930,6 +1892,10 @@ export class WenyanSimulator {
           TempStr1 = TempStr1 + "” ";
           LastQuote = 0;
           LastQuoteMark = false;
+        }
+        //古诗词在末句标点及引号处理完成后换行，已有段落换行时不重复追加。
+        if (Sentence[j].PoemAutoLineBreak && !TempStr1.endsWith("\n")) {
+          TempStr1 = TempStr1 + "\n";
         }
         NoAutoSymbol = false;
         try {
@@ -979,6 +1945,10 @@ export class WenyanSimulator {
         }
         if (NoAutoSymbol) {
           NoAutoSymbol = false;
+        }
+        //普通诗句只换一行；Z 已处理的段落边界仍保留原来的双换行。
+        if (Sentence[j].PoemAutoLineBreak && !TempStr1.endsWith("\n")) {
+          TempStr1 = TempStr1 + "\n";
         }
       }
     }

@@ -69,11 +69,13 @@ export class DilutionConfig {
    *
    * @param{boolean}Enable 指定是否启用密文稀释功能，默认 false/不开启;
    * @param{number}DilutionTargetRate 指定用户期望的目标密文载荷率，范围 0~1，精度为两位小数，默认 0.1。实际生成的密文载荷率允许存在必要误差;
-   * @param{"ALL" | "ESSAY" | "POEM"}FilterMode 文体过滤配置，ESSAY 为仅使用古文，POEM 为仅使用古诗，ALL 为不特别过滤，默认 ALL;
+   * @param{"ALL" | "ESSAY" | "POEM" | "LYRIC"}FilterMode 文体过滤配置，ESSAY 为仅使用一般古文，POEM 为仅使用古诗，LYRIC 为仅使用宋词，ALL 为不特别过滤，默认 ALL;
    * @param{"ALL" | "FOUR" | "FIVE" | "SEVEN"}PoemFilterMode 古诗过滤配置，FOUR/FIVE/SEVEN 分别为四言/五言/七言，ALL 为不特别过滤，默认 ALL。若不启用古诗则此配置无效;
    * @param{"SMART" | "RANDOM"}SampleMode 采样模式，SMART 为自适应算法采样，RANDOM 为简单随机采样，默认 SMART;
    * @param{"UNIFORM" | "CONCENTRATE"}PayloadDistribution 段内载荷分配模式，UNIFORM 为均匀，CONCENTRATE 为集中，默认 UNIFORM;
    * @param{DilutionCorpus | null}Corpus 指定用于稀释的语料库对象，默认 null，使用内置语料库;
+   * @param{boolean}PoemAutoLineBreak 古诗词每条模板后自动换行，默认 true；不影响古文和段落分隔;
+   * @param{number}StyleRandomIndex 每次生成，在选择文体时的随机性，应当是[0~100]之间的整数。此参数越低，文体的选择将越与载荷率的取值、语料库的载荷率分布相关，默认 50。
    * @constructor
    */
   constructor(
@@ -83,7 +85,9 @@ export class DilutionConfig {
     PoemFilterMode = "ALL",
     SampleMode = "SMART",
     PayloadDistribution = "UNIFORM",
-    Corpus = null
+    Corpus = null,
+    PoemAutoLineBreak = true,
+    StyleRandomIndex = 50
   ) {
     if (
       typeof DilutionTargetRate !== "number" ||
@@ -97,6 +101,18 @@ export class DilutionConfig {
       throw new Error("Invalid Dilution Target Rate.");
     }
 
+    if (
+      typeof StyleRandomIndex !== "number" ||
+      !Number.isFinite(StyleRandomIndex) ||
+      StyleRandomIndex < 0 ||
+      StyleRandomIndex > 100
+    ) {
+      throw new Error("Invalid Dilution StyleRandomIndex.");
+    }
+
+    if (Enable && Corpus == null) {
+      Corpus = new DilutionCorpus();
+    }
     this.Enable = Enable;
     this.DilutionTargetRate = DilutionTargetRate;
     this.FilterMode = FilterMode;
@@ -104,6 +120,8 @@ export class DilutionConfig {
     this.SampleMode = SampleMode;
     this.PayloadDistribution = PayloadDistribution;
     this.Corpus = Corpus;
+    this.PoemAutoLineBreak = PoemAutoLineBreak;
+    this.StyleRandomIndex = StyleRandomIndex;
   }
 }
 

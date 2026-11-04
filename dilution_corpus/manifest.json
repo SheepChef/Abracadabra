@@ -1,0 +1,548 @@
+{
+  "Format": "AbracadabraDilutionRuleSetManifestV2",
+  "Tier": "Std",
+  "Description": "标准尺寸，用于多数 PC 用户",
+  "SentenceCount": 110000,
+  "NominalSentenceCount": 100000,
+  "SupplementalCorpus": {
+    "Mode": "supplemental",
+    "SentenceType": "C",
+    "MinimumRatioToNominalTier": 0.1,
+    "AvailableSentenceCount": 80196,
+    "IncludedSentenceCount": 10000,
+    "SelectionBlockSize": 16,
+    "Selection": "nested deterministic bit-reversal of 16-line C source blocks; source order preserved",
+    "AddedOutsideNominalTierSize": true
+  },
+  "ParentTier": "Plus",
+  "NestedSampling": true,
+  "UltraSentenceCount": 15314175,
+  "UltraSource": "..\\..\\dilution_templates.json",
+  "UltraSentencesSHA256": "a16bdf38b4b72618a397342b258af530355610f819e0513beea6be6ac40d2fc5",
+  "Statistics": {
+    "Overall": {
+      "SentenceCount": 110000,
+      "TargetBaseRate": 0.27,
+      "TargetBaseRateDefinition": "mode of NON-ZERO rounded PayloadRate buckets; ties choose lower rate",
+      "OverallModePayloadRate": 0.0,
+      "PayloadRateHardLimit": [
+        0.0,
+        0.82
+      ],
+      "NonZeroPayloadRateHardLimit": [
+        0.02,
+        0.82
+      ],
+      "ZeroPayloadAllowed": true,
+      "ZeroPayloadSentenceCount": 13161,
+      "PayloadBearingSentenceCount": 96839,
+      "TotalPayloadCharacterCount": 264530,
+      "SentenceTypeCount": {
+        "B": 58024,
+        "S": 41976,
+        "C": 10000
+      },
+      "PayloadRateRounding": {
+        "Decimals": 2,
+        "Mode": "ROUND_HALF_EVEN"
+      },
+      "PayloadRateDistribution": {
+        "0.00": 13161,
+        "0.02": 19,
+        "0.03": 533,
+        "0.04": 1172,
+        "0.05": 1724,
+        "0.06": 2564,
+        "0.07": 5560,
+        "0.08": 3804,
+        "0.09": 7313,
+        "0.10": 3185,
+        "0.11": 5431,
+        "0.12": 4062,
+        "0.13": 6684,
+        "0.14": 2776,
+        "0.15": 2794,
+        "0.16": 1176,
+        "0.17": 2763,
+        "0.18": 6918,
+        "0.19": 1830,
+        "0.20": 7482,
+        "0.21": 1501,
+        "0.22": 3061,
+        "0.23": 1487,
+        "0.24": 904,
+        "0.25": 2134,
+        "0.26": 464,
+        "0.27": 7515,
+        "0.28": 338,
+        "0.29": 906,
+        "0.30": 746,
+        "0.31": 747,
+        "0.32": 188,
+        "0.33": 3354,
+        "0.34": 17,
+        "0.35": 173,
+        "0.36": 1791,
+        "0.37": 38,
+        "0.38": 454,
+        "0.39": 49,
+        "0.40": 1133,
+        "0.41": 37,
+        "0.42": 102,
+        "0.43": 98,
+        "0.44": 256,
+        "0.45": 603,
+        "0.46": 68,
+        "0.47": 310,
+        "0.48": 1,
+        "0.50": 153,
+        "0.53": 96,
+        "0.54": 14,
+        "0.55": 146,
+        "0.56": 51,
+        "0.57": 13,
+        "0.58": 5,
+        "0.59": 1,
+        "0.60": 23,
+        "0.61": 1,
+        "0.62": 13,
+        "0.64": 38,
+        "0.67": 9,
+        "0.69": 1,
+        "0.71": 2,
+        "0.73": 5,
+        "0.75": 1,
+        "0.82": 2
+      },
+      "PayloadRateDistributionCSV": "payload_rate_distribution.csv",
+      "SentenceLengthDefinition": "Original sentence Unicode character count including internal punctuation, excluding one terminal punctuation character as in the generator rate denominator",
+      "SentenceLengthHardLimit": [
+        3,
+        40
+      ],
+      "PayloadCountHardLimit": [
+        0,
+        14
+      ],
+      "LengthPayloadReachableCombinationCount": 395,
+      "LengthPayloadJointDistributionCSV": "length_payload_joint_distribution.csv",
+      "LengthPayloadHeatmapPNG": "length_payload_heatmap.png",
+      "LengthPayloadReachabilityPNG": "length_payload_reachability.png",
+      "LengthPayloadContourDefinition": "K = P / L (exact, unrounded)",
+      "ContinuousWindowBoundaryFile": "segments.jsonl",
+      "SegmentCount": 1714
+    },
+    "B": {
+      "SentenceCount": 58024,
+      "TargetBaseRate": 0.12,
+      "TargetBaseRateDefinition": "mode of NON-ZERO rounded PayloadRate buckets; ties choose lower rate",
+      "OverallModePayloadRate": 0.0,
+      "PayloadRateHardLimit": [
+        0.0,
+        0.69
+      ],
+      "NonZeroPayloadRateHardLimit": [
+        0.02,
+        0.69
+      ],
+      "ZeroPayloadAllowed": true,
+      "ZeroPayloadSentenceCount": 6988,
+      "PayloadBearingSentenceCount": 51036,
+      "TotalPayloadCharacterCount": 145250,
+      "SentenceTypeCount": {
+        "B": 58024,
+        "S": 0,
+        "C": 0
+      },
+      "PayloadRateRounding": {
+        "Decimals": 2,
+        "Mode": "ROUND_HALF_EVEN"
+      },
+      "PayloadRateDistribution": {
+        "0.00": 6988,
+        "0.02": 19,
+        "0.03": 533,
+        "0.04": 1163,
+        "0.05": 1676,
+        "0.06": 2385,
+        "0.07": 2153,
+        "0.08": 3414,
+        "0.09": 2467,
+        "0.10": 2927,
+        "0.11": 2523,
+        "0.12": 3714,
+        "0.13": 1735,
+        "0.14": 2565,
+        "0.15": 2491,
+        "0.16": 1101,
+        "0.17": 2386,
+        "0.18": 2123,
+        "0.19": 1655,
+        "0.20": 2248,
+        "0.21": 1285,
+        "0.22": 1189,
+        "0.23": 1238,
+        "0.24": 812,
+        "0.25": 1750,
+        "0.26": 393,
+        "0.27": 875,
+        "0.28": 282,
+        "0.29": 691,
+        "0.30": 552,
+        "0.31": 498,
+        "0.32": 155,
+        "0.33": 643,
+        "0.34": 16,
+        "0.35": 131,
+        "0.36": 299,
+        "0.37": 28,
+        "0.38": 290,
+        "0.39": 29,
+        "0.40": 166,
+        "0.41": 27,
+        "0.42": 63,
+        "0.43": 52,
+        "0.44": 71,
+        "0.45": 41,
+        "0.46": 27,
+        "0.47": 11,
+        "0.48": 1,
+        "0.50": 88,
+        "0.53": 3,
+        "0.54": 7,
+        "0.55": 7,
+        "0.56": 10,
+        "0.57": 2,
+        "0.58": 3,
+        "0.59": 1,
+        "0.60": 8,
+        "0.61": 1,
+        "0.62": 9,
+        "0.64": 2,
+        "0.67": 1,
+        "0.69": 1
+      },
+      "PayloadRateDistributionCSV": "payload_rate_distribution_B.csv",
+      "SentenceLengthDefinition": "Original sentence Unicode character count including internal punctuation, excluding one terminal punctuation character as in the generator rate denominator",
+      "SentenceLengthHardLimit": [
+        4,
+        40
+      ],
+      "PayloadCountHardLimit": [
+        0,
+        14
+      ],
+      "LengthPayloadReachableCombinationCount": 385,
+      "LengthPayloadJointDistributionCSV": "length_payload_joint_distribution_B.csv",
+      "LengthPayloadHeatmapPNG": "length_payload_heatmap_B.png",
+      "LengthPayloadReachabilityPNG": "length_payload_reachability_B.png",
+      "LengthPayloadContourDefinition": "K = P / L (exact, unrounded)",
+      "ContinuousWindowBoundaryFile": "segments_B.jsonl",
+      "SegmentCount": 593
+    },
+    "S": {
+      "SentenceCount": 41976,
+      "TargetBaseRate": 0.27,
+      "TargetBaseRateDefinition": "mode of NON-ZERO rounded PayloadRate buckets; ties choose lower rate",
+      "OverallModePayloadRate": 0.27,
+      "PayloadRateHardLimit": [
+        0.0,
+        0.82
+      ],
+      "NonZeroPayloadRateHardLimit": [
+        0.07,
+        0.82
+      ],
+      "ZeroPayloadAllowed": true,
+      "ZeroPayloadSentenceCount": 5493,
+      "PayloadBearingSentenceCount": 36483,
+      "TotalPayloadCharacterCount": 91909,
+      "SentenceTypeCount": {
+        "B": 0,
+        "S": 41976,
+        "C": 0
+      },
+      "PayloadRateRounding": {
+        "Decimals": 2,
+        "Mode": "ROUND_HALF_EVEN"
+      },
+      "PayloadRateDistribution": {
+        "0.00": 5493,
+        "0.07": 2985,
+        "0.09": 4541,
+        "0.11": 2696,
+        "0.13": 4404,
+        "0.18": 4295,
+        "0.20": 4388,
+        "0.22": 1679,
+        "0.27": 5940,
+        "0.33": 2317,
+        "0.36": 1258,
+        "0.40": 777,
+        "0.44": 148,
+        "0.45": 497,
+        "0.47": 257,
+        "0.53": 85,
+        "0.55": 128,
+        "0.56": 29,
+        "0.60": 13,
+        "0.64": 33,
+        "0.67": 7,
+        "0.73": 4,
+        "0.82": 2
+      },
+      "PayloadRateDistributionCSV": "payload_rate_distribution_S.csv",
+      "SentenceLengthDefinition": "Original sentence Unicode character count including internal punctuation, excluding one terminal punctuation character as in the generator rate denominator",
+      "SentenceLengthHardLimit": [
+        9,
+        15
+      ],
+      "PayloadCountHardLimit": [
+        0,
+        11
+      ],
+      "LengthPayloadReachableCombinationCount": 29,
+      "LengthPayloadJointDistributionCSV": "length_payload_joint_distribution_S.csv",
+      "LengthPayloadHeatmapPNG": "length_payload_heatmap_S.png",
+      "LengthPayloadReachabilityPNG": "length_payload_reachability_S.png",
+      "LengthPayloadContourDefinition": "K = P / L (exact, unrounded)",
+      "ContinuousWindowBoundaryFile": "segments_S.jsonl",
+      "SegmentCount": 471
+    },
+    "C": {
+      "SentenceCount": 10000,
+      "TargetBaseRate": 0.2,
+      "TargetBaseRateDefinition": "mode of NON-ZERO rounded PayloadRate buckets; ties choose lower rate",
+      "OverallModePayloadRate": 0.2,
+      "PayloadRateHardLimit": [
+        0.0,
+        0.75
+      ],
+      "NonZeroPayloadRateHardLimit": [
+        0.04,
+        0.75
+      ],
+      "ZeroPayloadAllowed": true,
+      "ZeroPayloadSentenceCount": 680,
+      "PayloadBearingSentenceCount": 9320,
+      "TotalPayloadCharacterCount": 27371,
+      "SentenceTypeCount": {
+        "B": 0,
+        "S": 0,
+        "C": 10000
+      },
+      "PayloadRateRounding": {
+        "Decimals": 2,
+        "Mode": "ROUND_HALF_EVEN"
+      },
+      "PayloadRateDistribution": {
+        "0.00": 680,
+        "0.04": 9,
+        "0.05": 48,
+        "0.06": 179,
+        "0.07": 422,
+        "0.08": 390,
+        "0.09": 305,
+        "0.10": 258,
+        "0.11": 212,
+        "0.12": 348,
+        "0.13": 545,
+        "0.14": 211,
+        "0.15": 303,
+        "0.16": 75,
+        "0.17": 377,
+        "0.18": 500,
+        "0.19": 175,
+        "0.20": 846,
+        "0.21": 216,
+        "0.22": 193,
+        "0.23": 249,
+        "0.24": 92,
+        "0.25": 384,
+        "0.26": 71,
+        "0.27": 700,
+        "0.28": 56,
+        "0.29": 215,
+        "0.30": 194,
+        "0.31": 249,
+        "0.32": 33,
+        "0.33": 394,
+        "0.34": 1,
+        "0.35": 42,
+        "0.36": 234,
+        "0.37": 10,
+        "0.38": 164,
+        "0.39": 20,
+        "0.40": 190,
+        "0.41": 10,
+        "0.42": 39,
+        "0.43": 46,
+        "0.44": 37,
+        "0.45": 65,
+        "0.46": 41,
+        "0.47": 42,
+        "0.50": 65,
+        "0.53": 8,
+        "0.54": 7,
+        "0.55": 11,
+        "0.56": 12,
+        "0.57": 11,
+        "0.58": 2,
+        "0.60": 2,
+        "0.62": 4,
+        "0.64": 3,
+        "0.67": 1,
+        "0.71": 2,
+        "0.73": 1,
+        "0.75": 1
+      },
+      "PayloadRateDistributionCSV": "payload_rate_distribution_C.csv",
+      "SentenceLengthDefinition": "Original sentence Unicode character count including internal punctuation, excluding one terminal punctuation character as in the generator rate denominator",
+      "SentenceLengthHardLimit": [
+        3,
+        33
+      ],
+      "PayloadCountHardLimit": [
+        0,
+        12
+      ],
+      "LengthPayloadReachableCombinationCount": 200,
+      "LengthPayloadJointDistributionCSV": "length_payload_joint_distribution_C.csv",
+      "LengthPayloadHeatmapPNG": "length_payload_heatmap_C.png",
+      "LengthPayloadReachabilityPNG": "length_payload_reachability_C.png",
+      "LengthPayloadContourDefinition": "K = P / L (exact, unrounded)",
+      "ContinuousWindowBoundaryFile": "segments_C.jsonl",
+      "SegmentCount": 650
+    }
+  },
+  "PayloadIntegrity": {
+    "GeneratorScript": "..\\..\\erya_dilution_template_generator_v6.py",
+    "PayloadTableFingerprintSHA256": "bda53ff3a3c759288119a4e268fc511e0cb8afb6505c8771fcb600a7b29f7cfa",
+    "PayloadSlotCharacterCount": {
+      "N": 65,
+      "V": 65,
+      "A": 65,
+      "AD": 65
+    },
+    "PayloadSlotPrecedence": [
+      "N",
+      "V",
+      "A",
+      "AD"
+    ],
+    "AADSharedCharacterCount": 30,
+    "RawPayloadCharacterLeakCheck": "PASS",
+    "TemplateMutation": false,
+    "SentenceStoragePolicy": "copy original Ultra JSON string literal; never reconstruct or rewrite template body"
+  },
+  "Sampling": {
+    "Algorithm": "NestedSourceBlockPriorityV1+BSCIndependentSupplementV1",
+    "CMode": "supplemental",
+    "Seed": 20260918,
+    "SourceBlockSize": 128,
+    "SmallTierPrefixOptimization": "deficit-aware greedy on B/S × PayloadRate bands",
+    "RateBands": [
+      {
+        "Name": "zero",
+        "MinBucketInclusive": 0,
+        "MaxBucketInclusive": 0
+      },
+      {
+        "Name": "0.01-0.03",
+        "MinBucketInclusive": 1,
+        "MaxBucketInclusive": 3
+      },
+      {
+        "Name": "0.04-0.06",
+        "MinBucketInclusive": 4,
+        "MaxBucketInclusive": 6
+      },
+      {
+        "Name": "0.07-0.10",
+        "MinBucketInclusive": 7,
+        "MaxBucketInclusive": 10
+      },
+      {
+        "Name": "0.11-0.15",
+        "MinBucketInclusive": 11,
+        "MaxBucketInclusive": 15
+      },
+      {
+        "Name": "0.16-0.20",
+        "MinBucketInclusive": 16,
+        "MaxBucketInclusive": 20
+      },
+      {
+        "Name": "0.21-0.30",
+        "MinBucketInclusive": 21,
+        "MaxBucketInclusive": 30
+      },
+      {
+        "Name": "0.31-0.50",
+        "MinBucketInclusive": 31,
+        "MaxBucketInclusive": 50
+      },
+      {
+        "Name": "0.51-1.00",
+        "MinBucketInclusive": 51,
+        "MaxBucketInclusive": 100
+      }
+    ],
+    "FeatureNames": [
+      "B:zero",
+      "B:0.01-0.03",
+      "B:0.04-0.06",
+      "B:0.07-0.10",
+      "B:0.11-0.15",
+      "B:0.16-0.20",
+      "B:0.21-0.30",
+      "B:0.31-0.50",
+      "B:0.51-1.00",
+      "S:zero",
+      "S:0.01-0.03",
+      "S:0.04-0.06",
+      "S:0.07-0.10",
+      "S:0.11-0.15",
+      "S:0.16-0.20",
+      "S:0.21-0.30",
+      "S:0.31-0.50",
+      "S:0.51-1.00"
+    ],
+    "ContinuousWindowBoundaryFiles": {
+      "Overall": "segments.jsonl",
+      "B": "segments_B.jsonl",
+      "S": "segments_S.jsonl",
+      "C": "segments_C.jsonl"
+    },
+    "ContinuousWindowRule": "runtime contiguous scans MUST stay inside the appropriate sentence-type segment; Overall segments also break at B/S/C source transitions in the conceptual unsplit sequence, not a physical JSON file"
+  },
+  "Storage": {
+    "Mode": "split-by-sentence-type-json",
+    "Files": {
+      "B": {
+        "Mode": "single-json",
+        "File": "dilution_templates_B.json",
+        "SentenceCount": 58024,
+        "ByteSize": 5157138,
+        "SHA256": "22cc6afc5f7e30a33204189e16b44a1ce4c9d81369ad723a53fc0a7c069d1191",
+        "TierContentSHA256": "d98d4b858f0a19f717cdb9aafbf4517e4d238760d9379146d60f0656060d9784"
+      },
+      "S": {
+        "Mode": "single-json",
+        "File": "dilution_templates_S.json",
+        "SentenceCount": 41976,
+        "ByteSize": 2715761,
+        "SHA256": "b07e88462a669df76a7d34c73a3fbb65a96a395cc9fece1ac286195876b6089d",
+        "TierContentSHA256": "7947a497423f0eff5b304c12a243eb1ed31c5466c3208c29bbfb5b678b8eb91e"
+      },
+      "C": {
+        "Mode": "single-json",
+        "File": "dilution_templates_C.json",
+        "SentenceCount": 10000,
+        "ByteSize": 710906,
+        "SHA256": "49f377722d7b5c96f645d67f5c485e7f7bed374b5877357c2111302115e7780f",
+        "TierContentSHA256": "e198f22f87cdc9bcc9efe78029778bd3400992c1872aa1dde2f433d41698128b"
+      }
+    }
+  }
+}

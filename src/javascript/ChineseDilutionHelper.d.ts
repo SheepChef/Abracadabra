@@ -22,8 +22,8 @@ export type DilutionCorpusTier =
   | "Mega"
   | "Ultra";
 
-/** B 为一般古文，S 为古诗词。 */
-export type DilutionCorpusSentenceType = "B" | "S";
+/** B 为一般古文，S 为古诗，C 为词 */
+export type DilutionCorpusSentenceType = "B" | "S" | "C";
 
 /** 两端均包含；Manifest 未提供该统计时为 null。 */
 export type DilutionCorpusRange = [number, number] | null;
@@ -39,15 +39,15 @@ export interface DilutionCorpusObj {
 export interface DilutionCorpusMetadataObj {
   /** 规则库尺寸。 */
   Tier: DilutionCorpusTier;
-  /** B 为一般古文，S 为古诗词。 */
+  /** B 为一般古文，S 为古诗，C 为词 */
   SentenceType: DilutionCorpusSentenceType;
-  /** 当前 B/S Corpus 的句式总数。 */
+  /** 当前 B/S/C Corpus 的句式总数。 */
   SentenceCount: number;
   /** 运行时使用的精简统计对象，不是原始 JSON 中的 Manifest 文件名。 */
   Manifest: DilutionCorpusManifestObj;
 }
 
-/** 当前 B/S 的必要统计；Manifest 未提供的字段为 null。 */
+/** 当前 B/S/C 的必要统计；Manifest 未提供的字段为 null。 */
 export interface DilutionCorpusManifestObj {
   /** 非零载荷率的众数（精确到两位小数）。 */
   TargetBaseRate: number | null;
@@ -69,7 +69,7 @@ export interface DilutionCorpusSourceManifestObj {
   >;
 }
 
-/** 原始 B/S JSON 第一片的 Metadata。 */
+/** 原始 B/S/C JSON 第一片的 Metadata。 */
 export interface DilutionCorpusSourceMetadataObj {
   Tier: DilutionCorpusTier;
   SentenceType: DilutionCorpusSentenceType;
@@ -91,7 +91,7 @@ export interface DilutionCorpusJSONPartObj {
 export type DilutionCorpusJSON = DilutionCorpusJSONFirstObj | string;
 
 /**
- * B/S 句式 JSON 输入。
+ * B/S/C 句式 JSON 输入。
  * 单文件传入 JSON 对象或 JSON 字符串；分片传入按顺序排列的数组。
  * 分片第一项必须包含 Metadata，后续项只需要 Sentences。
  */
@@ -104,28 +104,32 @@ export class DilutionCorpus {
    *
    * Dilution Corpus 规则库容器
    *
-   * 传入 Manifest 及 B/S 句式 JSON，同步初始化 Corpus。
+   * 传入 Manifest 及 B/S/C 句式 JSON，同步初始化 Corpus。
    *
-   * B/S 可以是单份 JSON，也可以是按原顺序排列的 JSON 分片数组。
+   * B/S/C 可以是单份 JSON，也可以是按原顺序排列的 JSON 分片数组。
    *
    * 每份 JSON 可以是已经解析的对象，或者尚未解析的 JSON 字符串。
    *
-   * B 和 S 至少提供一种；未提供的类型设为 null。
+   * B, S 和 C 至少提供一种；未提供的类型设为 null。
    *
    * @param Manifest 发行 Manifest JSON 对象或 JSON 字符串
    * @param B 一般古文 JSON 或顺序分片，默认 null
-   * @param S 古诗词 JSON 或顺序分片，默认 null
+   * @param S 古诗 JSON 或顺序分片，默认 null
+   * @param C 词 JSON 或顺序分片，默认 null
    */
   constructor(
     Manifest: DilutionCorpusSourceManifestObj | string,
     B?: DilutionCorpusJSONInput | null,
-    S?: DilutionCorpusJSONInput | null
+    S?: DilutionCorpusJSONInput | null,
+    C?: DilutionCorpusJSONInput | null
   );
 
   /** 规则库尺寸。 */
   readonly Tier: DilutionCorpusTier;
   /** 已初始化的一般古文 Corpus；未提供 B 时为 null。 */
   readonly B: DilutionCorpusObj | null;
-  /** 已初始化的古诗词 Corpus；未提供 S 时为 null。 */
+  /** 已初始化的古诗 Corpus；未提供 S 时为 null。 */
   readonly S: DilutionCorpusObj | null;
+  /** 已初始化的词 Corpus；未提供 C 时为 null。 */
+  readonly C: DilutionCorpusObj | null;
 }
