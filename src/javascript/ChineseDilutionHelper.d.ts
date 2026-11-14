@@ -110,6 +110,8 @@ export class DilutionCorpus {
    *
    * 每份 JSON 可以是已经解析的对象，或者尚未解析的 JSON 字符串。
    *
+   * 若不提供Manifest，则将自动调用内置规则集。
+   *
    * B, S 和 C 至少提供一种；未提供的类型设为 null。
    *
    * @param Manifest 发行 Manifest JSON 对象或 JSON 字符串
@@ -118,7 +120,7 @@ export class DilutionCorpus {
    * @param C 词 JSON 或顺序分片，默认 null
    */
   constructor(
-    Manifest: DilutionCorpusSourceManifestObj | string,
+    Manifest?: DilutionCorpusSourceManifestObj | string,
     B?: DilutionCorpusJSONInput | null,
     S?: DilutionCorpusJSONInput | null,
     C?: DilutionCorpusJSONInput | null

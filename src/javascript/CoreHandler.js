@@ -68,7 +68,7 @@ export class DilutionConfig {
    * 魔曰 文言文稀释配置
    *
    * @param{boolean}Enable 指定是否启用密文稀释功能，默认 false/不开启;
-   * @param{number}DilutionTargetRate 指定用户期望的目标密文载荷率，范围 0~1，精度为两位小数，默认 0.1。实际生成的密文载荷率允许存在必要误差;
+   * @param{number}DilutionTargetRate 指定用户期望的目标密文载荷率，范围 [0.01,1]，精度为两位小数，默认 0.18。实际生成的密文载荷率允许存在必要误差;
    * @param{"ALL" | "ESSAY" | "POEM" | "LYRIC"}FilterMode 文体过滤配置，ESSAY 为仅使用一般古文，POEM 为仅使用古诗，LYRIC 为仅使用宋词，ALL 为不特别过滤，默认 ALL;
    * @param{"ALL" | "FOUR" | "FIVE" | "SEVEN"}PoemFilterMode 古诗过滤配置，FOUR/FIVE/SEVEN 分别为四言/五言/七言，ALL 为不特别过滤，默认 ALL。若不启用古诗则此配置无效;
    * @param{"SMART" | "RANDOM"}SampleMode 采样模式，SMART 为自适应算法采样，RANDOM 为简单随机采样，默认 SMART;
@@ -80,7 +80,7 @@ export class DilutionConfig {
    */
   constructor(
     Enable = false,
-    DilutionTargetRate = 0.1,
+    DilutionTargetRate = 0.18,
     FilterMode = "ALL",
     PoemFilterMode = "ALL",
     SampleMode = "SMART",
@@ -92,7 +92,7 @@ export class DilutionConfig {
     if (
       typeof DilutionTargetRate !== "number" ||
       !Number.isFinite(DilutionTargetRate) ||
-      DilutionTargetRate < 0 ||
+      DilutionTargetRate < 0.01 ||
       DilutionTargetRate > 1 ||
       Math.abs(
         DilutionTargetRate * 100 - Math.round(DilutionTargetRate * 100)

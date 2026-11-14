@@ -63,16 +63,17 @@ export class DilutionCorpus {
    * @param {DilutionCorpusJSONInput | null} C 词 JSON 或顺序分片，默认 null
    * @constructor
    */
-  constructor(Manifest, B = null, S = null, C = null) {
+  constructor(Manifest = null, B = null, S = null, C = null) {
     let ManifestObj =
       typeof Manifest === "string" ? JSON.parse(Manifest) : Manifest;
     // 校验传参，传参为空就直接报错。
     if (
       !ManifestObj ||
       typeof ManifestObj.Tier !== "string" ||
-      (B == null && S == null)
+      (B == null && S == null && C == null)
     ) {
       // 无参构造：自动使用随 npm 包分发的 Std Corpus
+      // 注意，不传入Manifest将会自动回落，无论传入何种规则集，都必须要传入Manifest。
       const data = loadBundledDilutionCorpus();
 
       Manifest = data.manifest;

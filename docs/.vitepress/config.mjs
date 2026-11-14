@@ -81,6 +81,7 @@ export default withMermaid({
           { text: "灵活分段传输", link: "/document/flexible.md" },
           { text: "字符映射", link: "/document/character.md" },
           { text: "文言文仿真", link: "/document/wenyan.md" },
+          { text: "密文稀释", link: "/document/dilution.md" },
         ],
       },
       {
