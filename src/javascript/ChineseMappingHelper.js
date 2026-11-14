@@ -1965,7 +1965,8 @@ export class WenyanSimulator {
           TempStr1[i] != "：" &&
           TempStr1[i] != "“" &&
           TempStr1[i] != "”" &&
-          TempStr1[i] != " "
+          TempStr1[i] != " " &&
+          TempStr1[i] != "！"
         ) {
           TempStrQ = TempStrQ + TempStr1[i];
         }
