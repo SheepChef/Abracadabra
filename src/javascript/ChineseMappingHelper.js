@@ -1188,6 +1188,7 @@ export class WenyanSimulator {
         return CurrentAnchor;
       };
 
+      let ReuseFallback;
       while (CurrentCompletedPayloadLength < CurrentPayloadLength) {
         //本轮先寻找一条候选；只有下方统一提交处才能更改载荷和字符进度。
         let SelectedTemplate = null;
@@ -1350,8 +1351,16 @@ export class WenyanSimulator {
           const CachedTemplates = [...FallbackCandidates.values()];
           //ForceFallBackSearch 是测试用属性。正常情况下应当是undefined.
           if (!DilutionConfigObj?.ForceFallBackSearch) {
+            const IsEligible = (Template) => {
+              return Template.P > 0 && Template.P <= RemainingPayload;
+            };
+
+            //保留一个必要时允许复用的候选。
+            ReuseFallback = CachedTemplates.find(IsEligible) ?? null;
+
+            //优先寻找尚未使用过的缓存模板。
             SelectedTemplate = CachedTemplates.find((Template) => {
-              return Template.P <= RemainingPayload;
+              return IsEligible(Template) && !UsedTemplates.has(Template.Key);
             });
           }
           if (!SelectedTemplate || DilutionConfigObj?.ForceFallBackSearch) {
@@ -1396,11 +1405,20 @@ export class WenyanSimulator {
                 RememberTemplate(Template);
                 if (Template.P <= RemainingPayload) {
                   //强制阶段取第一条能承载余量的合法模板，不再比较软性评分。
-                  SelectedTemplate = Template;
-                  break;
+                  if (!UsedTemplates.has(Template.Key)) {
+                    SelectedTemplate = Template;
+                    break;
+                  }
+                  //旧模板只能作为最后的保险。
+                  if (!ReuseFallback) {
+                    ReuseFallback = Template;
+                  }
                 }
               }
             }
+          }
+          if (!SelectedTemplate) {
+            SelectedTemplate = ReuseFallback;
           }
           if (!SelectedTemplate) {
             //允许集合已完整检查仍无法承载余量，明确失败，不静默跨文体兜底。
