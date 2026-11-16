@@ -2052,6 +2052,7 @@ export class WenyanSimulator {
       }
     }
     OriginStr = TempStrQ;
+    size = OriginStr.length; //更新长度，防止简繁转换引入的问题
 
     //先筛选密文中的所有有效字符
     for (let i = 0; i < size; i++) {

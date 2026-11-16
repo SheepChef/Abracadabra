@@ -15,6 +15,7 @@ coverage
 temptests.test.js
 
 /docs/.vitepress/cache
+/docs/.vitepress/components/homePresets.js
 
 Dilution_Algorithm_Code_Walkthrough.html
 Dilution_Algorithm_Code_Walkthrough.md

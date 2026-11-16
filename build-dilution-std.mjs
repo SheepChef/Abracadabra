@@ -105,7 +105,20 @@ const compressed = zstdCompressSync(serialized, {
 const base64 = compressed.toString("base64");
 
 // 5. 生成唯一的 ESM 文件
-const generated = `/**
+const generated = `
+/*
+ * Copyright (C) 2025-2026 SheepChef (a.k.a. Haruka Hokuto)
+ *
+ * 这是一个源代码公开的软件。
+ * 在遵守AIPL-1.2许可证的前提下，
+ * 你可以自由复制，修改，分发，使用它。
+ *
+ * 查阅 Academic Innovation Protection License(AIPL) 来了解更多 .
+ * 本作品应随附一份完整的 AIPL-1.2 许可证全文。
+ *
+ */
+
+/**
  * Dilution Standard Corpus
  *
  * AUTO-GENERATED FILE. DO NOT EDIT.
