@@ -139,11 +139,41 @@ function decodeBase64(input) {
         return Uint8Array.fromBase64(input);
     }
 
-    const binary = atob(input);
-    const bytes = new Uint8Array(binary.length);
+    if (typeof atob === "function") {
+        const binary = atob(input);
+        const bytes = new Uint8Array(binary.length);
 
-    for (let i = 0; i < binary.length; i++) {
-        bytes[i] = binary.charCodeAt(i);
+        for (let i = 0; i < binary.length; i++) {
+            bytes[i] = binary.charCodeAt(i);
+        }
+
+        return bytes;
+    }
+
+    const clean = input.replace(/[^A-Za-z0-9+/=]/g, "");
+    let padding = 0;
+    if (clean.endsWith("==")) padding = 2;
+    else if (clean.endsWith("=")) padding = 1;
+
+    const outLen = (clean.length * 3) / 4 - padding;
+    const bytes = new Uint8Array(outLen);
+    const lookup = new Uint8Array(128).fill(255);
+    const alphabet =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    for (let i = 0; i < 64; i++) {
+        lookup[alphabet.charCodeAt(i)] = i;
+    }
+
+    let outIndex = 0;
+    for (let i = 0; i < clean.length; i += 4) {
+        const c0 = lookup[clean.charCodeAt(i)];
+        const c1 = lookup[clean.charCodeAt(i + 1)];
+        const c2 = lookup[clean.charCodeAt(i + 2)];
+        const c3 = lookup[clean.charCodeAt(i + 3)];
+
+        bytes[outIndex++] = (c0 << 2) | (c1 >> 4);
+        if (outIndex < outLen) bytes[outIndex++] = ((c1 & 15) << 4) | (c2 >> 2);
+        if (outIndex < outLen) bytes[outIndex++] = ((c2 & 3) << 6) | c3;
     }
 
     return bytes;

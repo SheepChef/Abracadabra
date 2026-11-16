@@ -165,3 +165,5 @@ export class DilutionCorpus {
     }
   }
 }
+
+Object.setPrototypeOf(DilutionCorpus.prototype, null);

@@ -2,11 +2,7 @@
 import { computed, onBeforeUnmount, ref, watch } from "vue";
 import { withBase } from "vitepress";
 import { getDilutionCorpus, markPayload } from "./homeCipher.js";
-import {
-  DEMO_KEY,
-  PAYLOAD_ALPHABET,
-  DILUTION_PRESET,
-} from "./homePresets.js";
+import { DEMO_KEY, PAYLOAD_ALPHABET, DILUTION_PRESET } from "./homePresets.js";
 import { useSceneClock } from "./useSceneClock.js";
 const props = defineProps({ loadEngine: Function });
 const scene = ref(null);
@@ -51,7 +47,7 @@ const bins = computed(() => {
   return Array.from({ length: 40 }, (_, index) => {
     const slice = tokens.slice(
       Math.floor((index * tokens.length) / 40),
-      Math.floor(((index + 1) * tokens.length) / 40),
+      Math.floor(((index + 1) * tokens.length) / 40)
     );
     return slice.length
       ? slice.filter((t) => t.payload).length / slice.length
@@ -61,7 +57,7 @@ const bins = computed(() => {
 const density = computed(() =>
   result.value
     ? ((result.value.payload / result.value.length) * 100).toFixed(1)
-    : "—",
+    : "—"
 );
 const expansion = computed(() => {
   if (!result.value || !baseline.value?.length) return null;
@@ -71,8 +67,7 @@ async function generate(refresh = false) {
   if (refresh) initialized = true;
   if (!initialized || disposed) return;
   const selected = styles[style.value];
-  const cacheKey =
-    style.value + "-" + target.value + "-" + distribution.value;
+  const cacheKey = style.value + "-" + target.value + "-" + distribution.value;
   const cached = !refresh && cache.get(cacheKey);
   if (cached) {
     ticket++;
@@ -103,7 +98,7 @@ async function generate(refresh = false) {
         "ENCRYPT",
         key,
         new WenyanConfig(),
-        new AdvancedEncConfig(),
+        new AdvancedEncConfig()
       );
       const text = original.Output();
       encoded = new WenyanSimulator(key).deMap(text, key);
@@ -120,7 +115,7 @@ async function generate(refresh = false) {
       distribution.value,
       corpus,
       true,
-      50,
+      50
     );
     const text = new WenyanSimulator(key).enMap(
       encoded,
@@ -130,7 +125,7 @@ async function generate(refresh = false) {
       false,
       false,
       false,
-      config,
+      config
     );
     // Confirm both the exact encrypted payload and the normal public decoder.
     if (new WenyanSimulator(key).deMap(text, key) !== encoded)
@@ -167,7 +162,7 @@ watch(
   () => Math.floor(clock.time.value / AUTO_PLAY_MS) % styles.length,
   (index) => {
     if (!busy.value) style.value = index;
-  },
+  }
 );
 watch([style, target, distribution], () => {
   initialized = true;
@@ -185,25 +180,40 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <section id="dilution-showcase" class="feature-section dilution-section" aria-labelledby="dilution-title">
+  <section
+    id="dilution-showcase"
+    class="feature-section dilution-section"
+    aria-labelledby="dilution-title"
+  >
     <div class="dilution-copy">
       <span class="section-label">新功能 · 密文稀释</span>
-      <h2 id="dilution-title">
-        一纸密语<br /><span>散入诗词曲赋</span>
-      </h2>
+      <h2 id="dilution-title">一纸密语<br /><span>散入诗词曲赋</span></h2>
       <p>
         以海量真实古文和诗词为底本，将加密汉字直接稀释到真实古文之间，增强密文风貌，字面意境亦与密文无关。
       </p>
       <p>
         目标载荷率愈低，结果愈长，实际载荷占比亦因随机选句略有浮动。稀释不改变加密强度，接收方解密无需预设任何参数。
       </p>
-      <a :href="withBase('/document/dilution.html')">详阅密文稀释与参数取舍 <span aria-hidden="true">↗</span></a>
+      <a :href="withBase('/document/dilution.html')"
+        >了解密文稀释 <span aria-hidden="true">↗</span></a
+      >
     </div>
     <div ref="scene" class="dilution-demo" :aria-busy="busy">
-      <div class="dilution-styles" role="group" aria-label="稀释文体" :style="{ '--n': styles.length, '--i': style }">
+      <div
+        class="dilution-styles"
+        role="group"
+        aria-label="稀释文体"
+        :style="{ '--n': styles.length, '--i': style }"
+      >
         <span class="style-pill" aria-hidden="true"></span>
-        <button v-for="(item, index) in styles" :key="item.name" type="button" :disabled="busy"
-          :aria-pressed="style === index" @click="selectStyle(index)">
+        <button
+          v-for="(item, index) in styles"
+          :key="item.name"
+          type="button"
+          :disabled="busy"
+          :aria-pressed="style === index"
+          @click="selectStyle(index)"
+        >
           {{ item.name }}
         </button>
       </div>
@@ -212,25 +222,51 @@ onBeforeUnmount(() => {
           <div class="density-control">
             <span>目标载荷率</span>
             <div class="seg-group" role="group" aria-label="稀释目标载荷率">
-              <button v-for="rate in [0.18, 0.1]" :key="rate" type="button" :disabled="busy"
-                :aria-pressed="target === rate" @click="target = rate">
+              <button
+                v-for="rate in [0.18, 0.1]"
+                :key="rate"
+                type="button"
+                :disabled="busy"
+                :aria-pressed="target === rate"
+                @click="target = rate"
+              >
                 {{ (rate * 100).toFixed(0) }}%
               </button>
             </div>
           </div>
-          <div class="distribution-control seg-group" role="group" aria-label="载荷分布">
-            <button type="button" :disabled="busy" :aria-pressed="distribution === 'UNIFORM'"
-              @click="distribution = 'UNIFORM'">
-              均匀</button><button type="button" :disabled="busy" :aria-pressed="distribution === 'CONCENTRATE'"
-              @click="distribution = 'CONCENTRATE'">
+          <div
+            class="distribution-control seg-group"
+            role="group"
+            aria-label="载荷分布"
+          >
+            <button
+              type="button"
+              :disabled="busy"
+              :aria-pressed="distribution === 'UNIFORM'"
+              @click="distribution = 'UNIFORM'"
+            >
+              均匀</button
+            ><button
+              type="button"
+              :disabled="busy"
+              :aria-pressed="distribution === 'CONCENTRATE'"
+              @click="distribution = 'CONCENTRATE'"
+            >
               集中
             </button>
           </div>
         </div>
         <div class="sample-caption">
-          <span>原文<b>「{{ input }}」</b></span>
+          <span
+            >原文<b>「{{ input }}」</b></span
+          >
           <div class="sample-actions">
-            <button type="button" class="tint-toggle" :aria-pressed="showPayload" @click="showPayload = !showPayload">
+            <button
+              type="button"
+              class="tint-toggle"
+              :aria-pressed="showPayload"
+              @click="showPayload = !showPayload"
+            >
               {{ showPayload ? "显露载荷" : "纯文面貌" }}
             </button>
             <button type="button" :disabled="busy" @click="generate(true)">
@@ -241,18 +277,29 @@ onBeforeUnmount(() => {
         </div>
         <div class="dilution-paper">
           <Transition name="poem-ink" mode="out-in">
-            <div v-if="result" :key="result.text" class="dilution-text" :class="{
-              verse: result.verse,
-              'plain-ink': !showPayload,
-            }" tabindex="0" :aria-label="result.text">
-              <span v-for="(token, index) in result.tokens" :key="index" :class="showPayload && token.payload
-                ? 'payload tone-' + token.tone
-                : ''
-                ">{{ token.char }}</span>
+            <div
+              v-if="result"
+              :key="result.text"
+              class="dilution-text"
+              :class="{
+                verse: result.verse,
+                'plain-ink': !showPayload,
+              }"
+              tabindex="0"
+              :aria-label="result.text"
+            >
+              <span
+                v-for="(token, index) in result.tokens"
+                :key="index"
+                :class="
+                  showPayload && token.payload
+                    ? 'payload tone-' + token.tone
+                    : ''
+                "
+                >{{ token.char }}</span
+              >
             </div>
-            <div v-else class="dilution-loading">
-              正在整理语料，稍候落笔…
-            </div>
+            <div v-else class="dilution-loading">正在整理语料，稍候落笔…</div>
           </Transition>
         </div>
         <div class="payload-distribution" aria-label="当前全文载荷密度分布">
@@ -260,11 +307,17 @@ onBeforeUnmount(() => {
             <span>载荷分布</span>
           </div>
           <div class="payload-bars">
-            <i v-for="(value, index) in bins" :key="index" :title="`第 ${index + 1} 段：约 ${Math.round(value * 100)}% 载荷字`"
+            <i
+              v-for="(value, index) in bins"
+              :key="index"
+              :title="`第 ${index + 1} 段：约 ${Math.round(
+                value * 100
+              )}% 载荷字`"
               :style="{
                 height: 2 + Math.min(1, value / 0.45) * 29 + 'px',
                 opacity: 0.25 + Math.min(1, value / 0.45) * 0.75,
-              }"></i>
+              }"
+            ></i>
           </div>
         </div>
         <div class="dilution-stats">
@@ -272,7 +325,8 @@ onBeforeUnmount(() => {
             <span>稀释篇幅</span>
             <p>
               {{ baseline?.length ?? "—" }} <span aria-hidden="true">→</span>
-              <strong>{{ result?.length ?? "—" }}</strong><small>字{{ expansion ? `（${expansion}×）` : "" }}</small>
+              <strong>{{ result?.length ?? "—" }}</strong
+              ><small>字{{ expansion ? `（${expansion}×）` : "" }}</small>
             </p>
           </div>
           <div>
@@ -295,9 +349,11 @@ onBeforeUnmount(() => {
   gap: 56px;
   padding: 76px 0;
   border-bottom: 1px solid #ffffff12;
-  background: radial-gradient(ellipse 62% 60% at 76% 48%,
-      #c68cff0d 0%,
-      transparent 72%);
+  background: radial-gradient(
+    ellipse 62% 60% at 76% 48%,
+    #c68cff0d 0%,
+    transparent 72%
+  );
 }
 
 .section-label {
@@ -310,8 +366,8 @@ onBeforeUnmount(() => {
 }
 
 .dilution-copy h2 {
-  font-family:
-    "Noto Serif SC", "Source Han Serif SC", "Songti SC", STSong, serif;
+  font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", STSong,
+    serif;
   font-size: 34px;
   font-weight: 400;
   line-height: 1.38;
@@ -321,11 +377,11 @@ onBeforeUnmount(() => {
   text-wrap: balance;
 }
 
-.dilution-copy h2>span {
+.dilution-copy h2 > span {
   color: #b7a8c7;
 }
 
-.dilution-copy>p {
+.dilution-copy > p {
   font-size: 14px;
   line-height: 1.95;
   color: #a69fae;
@@ -333,7 +389,7 @@ onBeforeUnmount(() => {
   text-wrap: pretty;
 }
 
-.dilution-copy>a {
+.dilution-copy > a {
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -343,7 +399,7 @@ onBeforeUnmount(() => {
   text-decoration: none;
 }
 
-.dilution-copy>a:hover {
+.dilution-copy > a:hover {
   color: #e0bdff;
 }
 
@@ -352,9 +408,7 @@ onBeforeUnmount(() => {
   background: #202026;
   border-radius: 13px;
   padding: 4px;
-  box-shadow:
-    inset 0 0 0 1px #c68cff26,
-    0 14px 36px #00000036;
+  box-shadow: inset 0 0 0 1px #c68cff26, 0 14px 36px #00000036;
   overflow: hidden;
 }
 
@@ -377,9 +431,7 @@ onBeforeUnmount(() => {
   width: calc((100% - 4px) / var(--n, 4));
   border-radius: 5px;
   background: #c68cff1f;
-  box-shadow:
-    inset 0 0 0 1px #c68cff38,
-    0 1px 2px #0005;
+  box-shadow: inset 0 0 0 1px #c68cff38, 0 1px 2px #0005;
   transform: translateX(calc(var(--i, 0) * 100%));
   transition: transform 0.34s cubic-bezier(0.22, 1, 0.36, 1);
   pointer-events: none;
@@ -405,9 +457,7 @@ onBeforeUnmount(() => {
   background: #17171c;
   border-radius: 9px;
   padding: 2px 15px 15px;
-  box-shadow:
-    inset 0 0 0 1px #ffffff0e,
-    0 1px 2px #0003;
+  box-shadow: inset 0 0 0 1px #ffffff0e, 0 1px 2px #0003;
 }
 
 .dilution-controls {
@@ -445,9 +495,7 @@ onBeforeUnmount(() => {
   font: 11px var(--vp-font-family-mono);
   cursor: pointer;
   white-space: nowrap;
-  transition:
-    color 0.2s,
-    background 0.2s;
+  transition: color 0.2s, background 0.2s;
 }
 
 .dilution-controls button[aria-pressed="true"] {
@@ -518,12 +566,7 @@ onBeforeUnmount(() => {
   scrollbar-color: #66516f transparent;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
-  font:
-  16px/1.95 "Noto Serif SC",
-  "Songti SC",
-  STSong,
-  SimSun,
-  serif;
+  font: 16px/1.95 "Noto Serif SC", "Songti SC", STSong, SimSun, serif;
   letter-spacing: 0.7px;
   color: #a69baa;
   padding-right: 5px;
@@ -592,9 +635,7 @@ onBeforeUnmount(() => {
   min-width: 1px;
   background: #b287cd;
   border-radius: 1px;
-  transition:
-    height 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.5s;
+  transition: height 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s;
 }
 
 .dilution-stats {
@@ -606,11 +647,11 @@ onBeforeUnmount(() => {
   padding-top: 16px;
 }
 
-.dilution-stats>div:last-child {
+.dilution-stats > div:last-child {
   text-align: right;
 }
 
-.dilution-stats>div>span {
+.dilution-stats > div > span {
   font-size: 11px;
   color: #9681a5;
 }
@@ -622,8 +663,9 @@ onBeforeUnmount(() => {
   margin-top: 5px;
 }
 
-.dilution-stats p>span {
-  font-size: 13px;
+.dilution-stats p > span {
+  font-size: 0.85em;
+  vertical-align: 0.06em;
   color: #6a5978;
   margin: 0 5px;
 }
@@ -650,16 +692,12 @@ onBeforeUnmount(() => {
 }
 
 .poem-ink-enter-active {
-  transition:
-    opacity 0.35s,
-    filter 0.45s,
+  transition: opacity 0.35s, filter 0.45s,
     transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .poem-ink-leave-active {
-  transition:
-    opacity 0.15s,
-    filter 0.15s;
+  transition: opacity 0.15s, filter 0.15s;
 }
 
 .poem-ink-enter-from {
@@ -683,7 +721,7 @@ onBeforeUnmount(() => {
 
 .dilution-demo button:focus-visible,
 .dilution-text:focus-visible,
-.dilution-copy>a:focus-visible {
+.dilution-copy > a:focus-visible {
   outline: 2px solid #c68cff;
   outline-offset: 4px;
 }
@@ -740,11 +778,11 @@ onBeforeUnmount(() => {
     margin-bottom: 14px;
   }
 
-  .dilution-copy>p {
+  .dilution-copy > p {
     font-size: 13px;
   }
 
-  .dilution-copy>a {
+  .dilution-copy > a {
     font-size: 12px;
     margin-top: 18px;
   }
@@ -776,7 +814,7 @@ onBeforeUnmount(() => {
     font-size: 20px;
   }
 
-  .dilution-stats>div>span {
+  .dilution-stats > div > span {
     font-size: 10px;
   }
 

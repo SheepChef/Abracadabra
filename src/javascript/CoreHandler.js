@@ -89,6 +89,9 @@ export class DilutionConfig {
     PoemAutoLineBreak = true,
     StyleRandomIndex = 50
   ) {
+    if (typeof Enable !== "boolean") {
+      throw new Error("Invalid Dilution Enable.");
+    }
     if (
       typeof DilutionTargetRate !== "number" ||
       !Number.isFinite(DilutionTargetRate) ||
@@ -100,7 +103,17 @@ export class DilutionConfig {
     ) {
       throw new Error("Invalid Dilution Target Rate.");
     }
-
+    if (
+      !["ALL", "ESSAY", "POEM", "LYRIC"].includes(FilterMode) ||
+      !["ALL", "FOUR", "FIVE", "SEVEN"].includes(PoemFilterMode) ||
+      !["SMART", "RANDOM"].includes(SampleMode) ||
+      !["UNIFORM", "CONCENTRATE"].includes(PayloadDistribution)
+    ) {
+      throw new Error("Invalid Dilution Sampling Mode.");
+    }
+    if (typeof PoemAutoLineBreak !== "boolean") {
+      throw new Error("Invalid Dilution PoemAutoLineBreak.");
+    }
     if (
       typeof StyleRandomIndex !== "number" ||
       !Number.isFinite(StyleRandomIndex) ||
@@ -108,6 +121,9 @@ export class DilutionConfig {
       StyleRandomIndex > 100
     ) {
       throw new Error("Invalid Dilution StyleRandomIndex.");
+    }
+    if (Corpus != null && !(Corpus instanceof DilutionCorpus)) {
+      throw new Error("Invalid Dilution Corpus.");
     }
 
     if (Enable && Corpus == null) {
@@ -123,6 +139,33 @@ export class DilutionConfig {
     this.PoemAutoLineBreak = PoemAutoLineBreak;
     this.StyleRandomIndex = StyleRandomIndex;
   }
+}
+
+export function normalizeDilutionConfig(RawConfig) {
+  if (
+    RawConfig == null ||
+    typeof RawConfig !== "object" ||
+    Array.isArray(RawConfig)
+  ) {
+    return new DilutionConfig();
+  }
+
+  const Normalized = new DilutionConfig(
+    RawConfig.Enable,
+    RawConfig.DilutionTargetRate,
+    RawConfig.FilterMode,
+    RawConfig.PoemFilterMode,
+    RawConfig.SampleMode,
+    RawConfig.PayloadDistribution,
+    RawConfig.Corpus,
+    RawConfig.PoemAutoLineBreak,
+    RawConfig.StyleRandomIndex
+  );
+
+  if (RawConfig.ForceFallBackSearch !== undefined) {
+    Normalized.ForceFallBackSearch = Boolean(RawConfig.ForceFallBackSearch);
+  }
+  return Normalized;
 }
 
 export class FlexibleTransferConfig {
@@ -354,12 +397,20 @@ export function Enc(
       RecursiveAdvancedEncObj.FlexibleTransfer.MessageID = GetRandomIndex(4096);
     }
 
+    const NormalizedDilutionConfig = normalizeDilutionConfig(
+      WenyanConfigObj?.DilutionConfig
+    );
     let ResultArray = new Array(SlicedDataArray.length);
     for (let i = 0; i < SlicedDataArray.length; i++) {
+      const ClonedWenyanConfig = structuredClone({
+        ...WenyanConfigObj,
+        DilutionConfig: undefined,
+      });
+      ClonedWenyanConfig.DilutionConfig = NormalizedDilutionConfig;
       ResultArray[i] = Enc(
         { output: SlicedDataArray[i] },
         key,
-        structuredClone(WenyanConfigObj),
+        ClonedWenyanConfig,
         structuredClone(RecursiveAdvancedEncObj),
         callback
       );
@@ -507,10 +558,7 @@ export function Enc(
     WenyanConfigObj.Traditional !== undefined
       ? WenyanConfigObj.Traditional
       : false,
-    WenyanConfigObj.DilutionConfig !== undefined &&
-      WenyanConfigObj.DilutionConfig instanceof DilutionConfig
-      ? WenyanConfigObj.DilutionConfig
-      : new DilutionConfig()
+    normalizeDilutionConfig(WenyanConfigObj.DilutionConfig)
   );
   let Encoder = new TextEncoder();
   return new EncResultDataObj(Res, Encoder.encode(Res));

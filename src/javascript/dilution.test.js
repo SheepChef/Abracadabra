@@ -75,3 +75,73 @@ test.each(Array.from({ length: 100 }, (_, Round) => Round))(
     expect(Decoder.Output()).toBe(Input);
   }
 );
+
+test("Dilution 和 FlexibleTransfer 联合测试", () => {
+  const Corpus = GetDilutionTestCorpus();
+  expect(Corpus instanceof DilutionCorpus).toBe(true);
+  expect(Object.getPrototypeOf(Corpus)).toBe(DilutionCorpus.prototype);
+  expect(Object.getPrototypeOf(DilutionCorpus.prototype)).toBeNull();
+
+  const Input =
+    "57004cf6-c72a-4f99-96bb-c9b14f67b53b50669cfc-1811-45e0-9ff3-db122101aac9037e47c3-9361-4eb4-925e-8dcb63812c9df426eec7-ebe8-4166-93b2-f4d51c3337b8c7131e27-7382-4f5f-b2db-894f2fed9e5b";
+  const Password = "PLAIN-CONFIG-TEST";
+
+  const PlainEnc = new Abracadabra();
+  PlainEnc.WenyanInput(Input, "ENCRYPT", Password, {
+    DilutionConfig: {
+      Enable: true,
+      DilutionTargetRate: 0.25,
+      FilterMode: "POEM",
+      PoemFilterMode: "FIVE",
+    },
+  });
+  const PlainCipher = PlainEnc.Output();
+  const PlainDec = new Abracadabra();
+  PlainDec.WenyanInput(PlainCipher, "DECRYPT", Password);
+  expect(PlainDec.Output()).toBe(Input);
+
+  const FlexEnc = new Abracadabra();
+  FlexEnc.WenyanInput(
+    Input.repeat(5),
+    "ENCRYPT",
+    Password,
+    {
+      DilutionConfig: { Enable: true, Corpus },
+    },
+    {
+      FlexibleTransfer: {
+        Enable: true,
+        UseAONT: true,
+        RandomParagraphing: [10, 30],
+      },
+    }
+  );
+  const FlexCipher = FlexEnc.Output().join("");
+  const FlexDec = new Abracadabra();
+  FlexDec.WenyanInput(FlexCipher, "DECRYPT", Password);
+  expect(FlexDec.Output()).toEqual([Input.repeat(5)]);
+
+  const BadConfigs = [
+    { Enable: "yes" },
+    { Enable: true, DilutionTargetRate: 0.123 },
+    { Enable: true, DilutionTargetRate: 0 },
+    { Enable: true, FilterMode: "BAD" },
+    { Enable: true, PoemFilterMode: "SIX" },
+    { Enable: true, SampleMode: "OTHER" },
+    { Enable: true, PayloadDistribution: "OTHER" },
+    { Enable: true, PoemAutoLineBreak: 1 },
+    { Enable: true, StyleRandomIndex: 101 },
+    {
+      Enable: true,
+      Corpus: { Tier: Corpus.Tier, B: Corpus.B, S: Corpus.S, C: Corpus.C },
+    },
+  ];
+
+  for (const BadConfig of BadConfigs) {
+    expect(() =>
+      PlainEnc.WenyanInput(Input, "ENCRYPT", Password, {
+        DilutionConfig: BadConfig,
+      })
+    ).toThrow();
+  }
+});

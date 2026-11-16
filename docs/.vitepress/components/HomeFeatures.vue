@@ -30,7 +30,7 @@ const { time: securityTime, seek: seekSecurity } = useSceneClock(securityScene);
 const openQuestion = ref(-1);
 watch(
   () => Math.floor(securityTime.value / 3200) % 3,
-  (index) => (preset.value = index),
+  (index) => (preset.value = index)
 );
 function choosePreset(index) {
   preset.value = index;
@@ -40,7 +40,7 @@ const packets = ref(
   TRANSFER_PRESET.packets.map((item) => ({
     number: item.number,
     tokens: markPayload(item.text, PAYLOAD_ALPHABET),
-  })),
+  }))
 );
 const packetResult = ref(TRANSFER_PRESET.result);
 const failure = ref("");
@@ -73,7 +73,7 @@ const questions = [
     q: "为什么原文很短，密文却长了很多？",
     a: "汉字映射、文言虚词与安全参数都需要额外空间。开启 Dilution 后，较低的目标载荷率通常会让同一条消息变成更长的诗文。魔曰会先尝试压缩，但长度、文貌和安全参数仍需按用途取舍。",
     link: "best-practise",
-    label: "查看参数选择建议",
+    label: "查看最佳实践",
   },
   {
     q: "稀释后的密文，解密也要同一份语料库吗？",
@@ -83,9 +83,9 @@ const questions = [
   },
   {
     q: "目标载荷率越低，加密就越安全吗？",
-    a: "载荷率调节的是字频、句式与载荷分布，不代表更高的 AES 安全强度，也不能保证规避某种统计分析。降低目标载荷率通常会显著增加长度，机密性与完整性仍取决于加密算法、强口令与 HMAC 等配置。",
+    a: "载荷率调节的是字频、句式与载荷分布，不增加或减少密码学安全性，也不能保证防御所有统计攻击。降低目标载荷率通常会显著增加密文长度，在一定程度上增加统计分析的难度，但机密性仍取决于加密层的配置。",
     link: "dilution",
-    label: "查看能力边界与参数取舍",
+    label: "查看能力边界",
   },
   {
     q: "不用联网也能加密吗？",
@@ -123,7 +123,7 @@ onMounted(() => {
       entries.forEach((entry) => {
         entry.target.classList.toggle("in-view", entry.isIntersecting);
       }),
-    { threshold: 0.1 },
+    { threshold: 0.1 }
   );
   root.value
     .querySelectorAll(".feature-section")
@@ -138,44 +138,73 @@ onBeforeUnmount(() => {
 <template>
   <div ref="root" class="home-features">
     <DilutionShowcase :load-engine="loadEngine" />
-    <section class="feature-section pipeline-section" aria-labelledby="pipeline-title">
+    <section
+      class="feature-section pipeline-section"
+      aria-labelledby="pipeline-title"
+    >
       <div class="section-intro">
         <span class="section-label">加密过程</span>
         <h2 id="pipeline-title">惜字如金<br /><span>落笔成文</span></h2>
         <p>
           短句、链接以至长文，皆可交付魔曰。依次经由压缩、流式加密、字符映射，最终织就文言章法，环环各司其职。
         </p>
-        <a :href="withBase('/document/luhn-compress.html')"> 细览字里行间的加密步骤 <span aria-hidden="true">↗</span></a>
+        <a :href="withBase('/document/luhn-compress.html')">
+          细览加密步骤 <span aria-hidden="true">↗</span></a
+        >
       </div>
       <PipelineDemo :trace="trace" :alphabet="alphabet" />
     </section>
 
-    <section class="feature-section security-section" aria-labelledby="security-title">
+    <section
+      class="feature-section security-section"
+      aria-labelledby="security-title"
+    >
       <div ref="securityScene" class="security-scene">
         <div class="security-stage">
-          <div class="security-presets" role="group" aria-label="高级加密样例" :style="{ '--n': presetNames.length }">
-            <span class="security-pill" :style="{ transform: `translateX(${preset * 100}%)` }"
-              aria-hidden="true"></span>
-            <button v-for="(name, index) in presetNames" :key="name" type="button" :aria-pressed="preset === index"
-              @click="choosePreset(index)">
+          <div
+            class="security-presets"
+            role="group"
+            aria-label="高级加密样例"
+            :style="{ '--n': presetNames.length }"
+          >
+            <span
+              class="security-pill"
+              :style="{ transform: `translateX(${preset * 100}%)` }"
+              aria-hidden="true"
+            ></span>
+            <button
+              v-for="(name, index) in presetNames"
+              :key="name"
+              type="button"
+              :aria-pressed="preset === index"
+              @click="choosePreset(index)"
+            >
               {{ name }}
             </button>
           </div>
           <div class="security-options">
-            <div v-for="row in securityRows" :key="row.title" class="security-option"
-              :class="{ enabled: preset >= row.minimum }">
+            <div
+              v-for="row in securityRows"
+              :key="row.title"
+              class="security-option"
+              :class="{ enabled: preset >= row.minimum }"
+            >
               <span class="option-check" aria-hidden="true">{{
                 preset >= row.minimum ? "✓" : "+"
-                }}</span>
+              }}</span>
               <div>
-                <code>{{ row.title }}</code><span>{{ row.subtitle }}</span>
+                <code>{{ row.title }}</code
+                ><span>{{ row.subtitle }}</span>
               </div>
             </div>
           </div>
           <div class="security-result">
             <span>输出篇幅</span>
-            <Transition name="number" mode="out-in"><strong :key="preset">{{ selectedSecurity?.length ?? "—"
-                }}<small>字</small></strong></Transition>
+            <Transition name="number" mode="out-in"
+              ><strong :key="preset"
+                >{{ selectedSecurity?.length ?? "—" }}<small>字</small></strong
+              ></Transition
+            >
           </div>
         </div>
       </div>
@@ -183,70 +212,91 @@ onBeforeUnmount(() => {
         <span class="section-label">安全配置</span>
         <h2 id="security-title">辞章为表<br /><span>密码为里</span></h2>
         <p>
-          魔曰底层以标准 AES-256-CTR 加密消息。
-          可选 StrongIV 提供以完整随机 IV；HMAC 以校验密文是否遭篡改；PBKDF2 以提高口令枚举成本。
+          魔曰底层以标准 AES-256-CTR 加密消息。 可选 StrongIV 提供以完整随机
+          IV；HMAC 以校验密文是否遭篡改；PBKDF2 以提高口令枚举成本。
         </p>
         <p>
           防护愈重，成文亦会相应加长。按场景择取配置，并为真正的秘密设定高强度魔咒。
         </p>
-        <a :href="withBase('/document/enc.html')">详阅各项安全参数 <span aria-hidden="true">↗</span></a>
+        <a :href="withBase('/document/enc.html')"
+          >查阅安全参数 <span aria-hidden="true">↗</span></a
+        >
       </div>
     </section>
 
-    <section class="feature-section transfer-section" aria-labelledby="transfer-title">
+    <section
+      class="feature-section transfer-section"
+      aria-labelledby="transfer-title"
+    >
       <div class="section-intro">
         <span class="section-label">分段传输</span>
         <h2 id="transfer-title">分道扬镳<br /><span>萍水相逢</span></h2>
         <p>
-          使用灵活分段传输功能，可将数据拆成多段，分别加密，分别发送。<br>
+          使用灵活分段传输功能，可将数据拆成多段，分别加密，分别发送。<br />
           收齐后无须顾虑顺序，魔曰自会辨序重组。
         </p>
         <p>若开启 AONT 全有或全无转换，须集齐全部片段才可解出原文。</p>
-        <a :href="withBase('/document/flexible.html')">了解灵活分段传输功能 <span aria-hidden="true">↗</span></a>
+        <a :href="withBase('/document/flexible.html')"
+          >了解灵活分段传输 <span aria-hidden="true">↗</span></a
+        >
       </div>
       <TransferDemo :packets="packets" :result="packetResult" />
     </section>
 
-    <section class="feature-section local-section" aria-labelledby="local-title">
+    <section
+      class="feature-section local-section"
+      aria-labelledby="local-title"
+    >
       <OfflineDemo />
       <div class="section-intro">
         <span class="section-label">离线运算</span>
-        <h2 id="local-title">
-          藏器于身<br /><span>何假外求</span>
-        </h2>
+        <h2 id="local-title">藏器于身<br /><span>何假外求</span></h2>
         <p>
           所有加解密均在本地完成，不经由任何服务端。载入后即可脱机使用，亦可自行部署前端环境。
         </p>
-        <a :href="withBase('/document/frontend-deploy.html')">查看前端与自部署方式 <span aria-hidden="true">↗</span></a>
+        <a :href="withBase('/document/frontend-deploy.html')"
+          >查看前端与自部署方式 <span aria-hidden="true">↗</span></a
+        >
       </div>
     </section>
 
-    <section class="feature-section integration-section" aria-labelledby="integration-title">
+    <section
+      class="feature-section integration-section"
+      aria-labelledby="integration-title"
+    >
       <div class="integration-copy">
         <span class="section-label">多元入口</span>
-        <h2 id="integration-title">
-          简则易从<br /><span>引而即用</span>
-        </h2>
+        <h2 id="integration-title">简则易从<br /><span>引而即用</span></h2>
         <p>
-          在线 Demo、浏览器扩展与 Android 端皆开箱可用。
-          开发者也可直接引入 JavaScript 核心库，或在命令行调用 WebAssembly 版本。
+          在线 Demo、浏览器扩展与 Android 端皆开箱可用。 开发者也可直接引入
+          JavaScript 核心库，或在命令行调用 WebAssembly 版本。
         </p>
         <div class="entry-links">
-          <a href="https://abra.js.org/">网页 Demo <span>↗</span></a><a :href="withBase('/document/quick-start.html')">扩展
-            / Android <span>↗</span></a><a :href="withBase('/document/wasm-deploy.html')">WebAssembly CLI
-            <span>↗</span></a><a :href="withBase('/document/frontend-deploy.html')">自行部署 <span>↗</span></a>
+          <a href="https://abra.js.org/">网页 Demo <span>↗</span></a
+          ><a :href="withBase('/document/quick-start.html')"
+            >扩展 / Android <span>↗</span></a
+          ><a :href="withBase('/document/wasm-deploy.html')"
+            >WebAssembly CLI <span>↗</span></a
+          ><a :href="withBase('/document/frontend-deploy.html')"
+            >自行部署 <span>↗</span></a
+          >
         </div>
       </div>
       <div class="code-scene">
         <div class="code-stage">
           <div class="install-line">
-            <span><span aria-hidden="true">$</span> npm install abracadabra-cn</span>
+            <span
+              ><span aria-hidden="true">$</span> npm install
+              abracadabra-cn</span
+            >
             <button type="button" @click="copyCode">
               {{ copied ? "已复制 ✓" : "复制代码" }}
             </button>
           </div>
-          <pre tabindex="0"
-            aria-label="JavaScript 接入示例"><code><span class="code-purple">import</span> { Abracadabra } <span class="code-purple">from</span> <span class="code-mint">'abracadabra-cn'</span>;
+          <pre
+            tabindex="0"
+            aria-label="JavaScript 接入示例"
+          ><code><span class="code-purple">import</span> { Abracadabra } <span class="code-purple">from</span> <span class="code-mint">'abracadabra-cn'</span>;
 
 <span class="code-purple">const</span> abra = <span class="code-purple">new</span> Abracadabra();
 <span class="code-purple">const</span> config = <span class="code-purple">new</span> Abracadabra.WenyanConfig();
@@ -257,8 +307,9 @@ abra.WenyanInput(
   <span class="code-mint">'见字如晤'</span>, <span class="code-mint">'ENCRYPT'</span>, <span class="code-mint">'你的魔咒'</span>, config
 );
 <span class="code-purple">const</span> cipher = abra.Output();<span class="code-caret animated" aria-hidden="true"></span></code></pre>
-          <a class="code-doc" :href="withBase('/document/js-deploy.html')">完整 API、参数配置与示例 <span
-              aria-hidden="true">↗</span></a>
+          <a class="code-doc" :href="withBase('/document/js-deploy.html')"
+            >完整 API、参数配置与示例 <span aria-hidden="true">↗</span></a
+          >
         </div>
       </div>
     </section>
@@ -267,11 +318,19 @@ abra.WenyanInput(
       <div class="questions-heading">
         <span class="section-label">常见疑问</span>
         <h2 id="questions-title">落笔之前<br /><span>疑义相与析</span></h2>
-        <a :href="withBase('/document/FAQ.html')">查阅完整常见问题 <span aria-hidden="true">↗</span></a>
+        <a :href="withBase('/document/FAQ.html')"
+          >查阅完整常见问题 <span aria-hidden="true">↗</span></a
+        >
       </div>
       <div class="questions">
-        <FaqItem v-for="(item, index) in questions" :key="item.q" :item="item" :index="index"
-          :open="openQuestion === index" @toggle="openQuestion = openQuestion === index ? -1 : index" />
+        <FaqItem
+          v-for="(item, index) in questions"
+          :key="item.q"
+          :item="item"
+          :index="index"
+          :open="openQuestion === index"
+          @toggle="openQuestion = openQuestion === index ? -1 : index"
+        />
       </div>
     </section>
     <p v-if="failure" class="feature-error" role="status">{{ failure }}</p>
@@ -286,18 +345,34 @@ abra.WenyanInput(
       </div>
       <div class="community-actions">
         <div class="community-buttons">
-          <a class="community-primary" href="https://github.com/SheepChef/Abracadabra" target="_blank"
-            rel="noopener noreferrer">
+          <a
+            class="community-primary"
+            href="https://github.com/SheepChef/Abracadabra"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <svg viewBox="0 0 16 16" aria-hidden="true">
-              <path fill="currentColor" stroke="none"
-                d="M8 1.5a6.5 6.5 0 0 0-2.05 12.67c.32.06.44-.14.44-.31v-1.21c-1.8.39-2.18-.76-2.18-.76-.29-.75-.72-.95-.72-.95-.59-.4.04-.39.04-.39.65.05.99.67.99.67.58.99 1.52.7 1.89.54.06-.42.23-.7.41-.86-1.44-.16-2.95-.72-2.95-3.2 0-.71.25-1.29.67-1.74-.07-.16-.29-.82.06-1.72 0 0 .55-.18 1.79.66a6.2 6.2 0 0 1 3.26 0c1.24-.84 1.79-.66 1.79-.66.35.9.13 1.56.06 1.72.42.45.67 1.03.67 1.74 0 2.49-1.52 3.04-2.96 3.2.23.2.44.6.44 1.21v1.79c0 .17.12.38.45.31A6.5 6.5 0 0 0 8 1.5Z" />
-            </svg>GitHub 仓库</a><a class="community-secondary" :href="withBase('/document/quick-start.html')">阅读文档
+              <path
+                fill="currentColor"
+                stroke="none"
+                d="M8 1.5a6.5 6.5 0 0 0-2.05 12.67c.32.06.44-.14.44-.31v-1.21c-1.8.39-2.18-.76-2.18-.76-.29-.75-.72-.95-.72-.95-.59-.4.04-.39.04-.39.65.05.99.67.99.67.58.99 1.52.7 1.89.54.06-.42.23-.7.41-.86-1.44-.16-2.95-.72-2.95-3.2 0-.71.25-1.29.67-1.74-.07-.16-.29-.82.06-1.72 0 0 .55-.18 1.79.66a6.2 6.2 0 0 1 3.26 0c1.24-.84 1.79-.66 1.79-.66.35.9.13 1.56.06 1.72.42.45.67 1.03.67 1.74 0 2.49-1.52 3.04-2.96 3.2.23.2.44.6.44 1.21v1.79c0 .17.12.38.45.31A6.5 6.5 0 0 0 8 1.5Z"
+              /></svg
+            >GitHub 仓库</a
+          ><a
+            class="community-secondary"
+            :href="withBase('/document/quick-start.html')"
+            >阅读文档
             <svg viewBox="0 0 16 16" aria-hidden="true">
-              <path d="M3.5 8h9M9 4.5 12.5 8 9 11.5" />
-            </svg></a>
+              <path d="M3.5 8h9M9 4.5 12.5 8 9 11.5" /></svg
+          ></a>
         </div>
-        <a class="community-tertiary" href="https://abra.js.org/" target="_blank" rel="noopener noreferrer">进入在线演示
-          <span aria-hidden="true">↗</span></a>
+        <a
+          class="community-tertiary"
+          href="https://abra.js.org/"
+          target="_blank"
+          rel="noopener noreferrer"
+          >进入在线演示 <span aria-hidden="true">↗</span></a
+        >
       </div>
     </section>
   </div>
@@ -353,8 +428,8 @@ abra.WenyanInput(
 .integration-copy h2,
 .questions-heading h2,
 .community-section h2 {
-  font-family:
-    "Noto Serif SC", "Source Han Serif SC", "Songti SC", STSong, Georgia, serif;
+  font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", STSong,
+    Georgia, serif;
   font-size: 34px;
   line-height: 1.4;
   font-weight: 400;
@@ -363,15 +438,15 @@ abra.WenyanInput(
   text-wrap: balance;
 }
 
-.section-intro h2>span,
-.integration-copy h2>span,
-.questions-heading h2>span,
-.community-section h2>span {
+.section-intro h2 > span,
+.integration-copy h2 > span,
+.questions-heading h2 > span,
+.community-section h2 > span {
   color: #b1a2bf;
 }
 
 .section-intro p,
-.integration-copy>p {
+.integration-copy > p {
   color: #a19aa9;
   font-size: 14px;
   line-height: 1.95;
@@ -380,8 +455,8 @@ abra.WenyanInput(
   text-wrap: pretty;
 }
 
-.section-intro>a,
-.questions-heading>a {
+.section-intro > a,
+.questions-heading > a {
   display: inline-flex;
   gap: 10px;
   color: #cba5e9;
@@ -389,8 +464,8 @@ abra.WenyanInput(
   margin-top: 23px;
 }
 
-.section-intro>a:hover,
-.questions-heading>a:hover {
+.section-intro > a:hover,
+.questions-heading > a:hover {
   color: #e0bdff;
 }
 
@@ -478,9 +553,7 @@ abra.WenyanInput(
   width: 19px;
   height: 19px;
   color: #8a739c;
-  transition:
-    background 0.4s,
-    color 0.4s;
+  transition: background 0.4s, color 0.4s;
 }
 
 .enabled .option-check {
@@ -489,7 +562,7 @@ abra.WenyanInput(
   color: #98dbc5;
 }
 
-.security-option>div {
+.security-option > div {
   display: flex;
   flex-direction: column;
   gap: 3px;
@@ -500,7 +573,7 @@ abra.WenyanInput(
   color: #cbbbd9;
 }
 
-.security-option>div>span {
+.security-option > div > span {
   font-size: 11px;
   color: #9586a3;
 }
@@ -531,10 +604,7 @@ abra.WenyanInput(
 
 .number-enter-active,
 .number-leave-active {
-  transition:
-    transform 0.2s,
-    opacity 0.2s,
-    filter 0.2s;
+  transition: transform 0.2s, opacity 0.2s, filter 0.2s;
 }
 
 .number-enter-from {
@@ -554,7 +624,7 @@ abra.WenyanInput(
   padding-block: 76px;
 }
 
-.integration-copy>p {
+.integration-copy > p {
   max-width: 400px;
 }
 
@@ -614,7 +684,7 @@ abra.WenyanInput(
   overflow-wrap: anywhere;
 }
 
-.install-line>span>span {
+.install-line > span > span {
   color: #766582;
   margin-right: 10px;
 }
@@ -679,7 +749,7 @@ abra.WenyanInput(
   margin-bottom: 0;
 }
 
-.questions-heading>a {
+.questions-heading > a {
   margin-top: 21px;
 }
 
@@ -731,11 +801,7 @@ abra.WenyanInput(
   font-weight: 500;
   line-height: 1;
   white-space: nowrap;
-  transition:
-    background 0.22s,
-    border-color 0.22s,
-    color 0.22s,
-    transform 0.22s,
+  transition: background 0.22s, border-color 0.22s, color 0.22s, transform 0.22s,
     box-shadow 0.22s;
 }
 
@@ -750,9 +816,7 @@ abra.WenyanInput(
   background: linear-gradient(180deg, #c68cff38 0%, #9b5ae024 100%);
   color: #f3ecff !important;
   border: 1px solid #c68cff61;
-  box-shadow:
-    inset 0 1px 0 #ffffff24,
-    0 6px 20px #9f5ae61c;
+  box-shadow: inset 0 1px 0 #ffffff24, 0 6px 20px #9f5ae61c;
 }
 
 .community-primary svg {
@@ -763,9 +827,7 @@ abra.WenyanInput(
   background: linear-gradient(180deg, #c68cff4d 0%, #9b5ae033 100%);
   border-color: #c68cff8c;
   transform: translateY(-1px);
-  box-shadow:
-    inset 0 1px 0 #ffffff2e,
-    0 8px 24px #c68cff26;
+  box-shadow: inset 0 1px 0 #ffffff2e, 0 8px 24px #c68cff26;
 }
 
 .community-secondary {
@@ -896,15 +958,15 @@ abra.WenyanInput(
   }
 
   .section-intro p,
-  .integration-copy>p,
+  .integration-copy > p,
   .community-section p {
     font-size: 13px;
     line-height: 1.95;
     max-width: none;
   }
 
-  .section-intro>a,
-  .questions-heading>a {
+  .section-intro > a,
+  .questions-heading > a {
     font-size: 12px;
     margin-top: 17px;
   }
@@ -918,7 +980,7 @@ abra.WenyanInput(
     padding: 13px 12px 14px;
   }
 
-  .local-section> :first-child {
+  .local-section > :first-child {
     order: 2;
   }
 
@@ -971,7 +1033,7 @@ abra.WenyanInput(
     display: block;
   }
 
-  .questions-heading>a {
+  .questions-heading > a {
     margin-top: 13px;
   }
 

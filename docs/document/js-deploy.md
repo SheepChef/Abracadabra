@@ -262,9 +262,9 @@ let CallbackData = new Abracadabra.CallbackObj("NORMAL", null);
 
 配置类型的构造函数挂载在 `Abracadabra` 类型本身，通过 `new Abracadabra.WenyanConfig()` 等方式调用，它们不属于实例化后的主对象。
 
-文言稀释配置必须使用 `new Abracadabra.DilutionConfig()` 创建。
+文言文生成、密文稀释、高级加密和灵活传输均接受普通配置对象(可自行组装)，缺省项自动使用默认值，稀释配置会执行全参数校验。
 
-文言文生成、高级加密和灵活传输仍接受普通配置对象(可自行组装)，缺省项自动使用默认值。
+稀释语料库 `DilutionCorpus` 必须通过 `new Abracadabra.DilutionCorpus()` 初始化。
 
 ### WenyanConfig 文言文生成配置
 
@@ -382,9 +382,9 @@ export interface DilutionConfig {
 
 ::: warning 调用须知
 
-稀释配置对象**必须**使用 `new Abracadabra.DilutionConfig()` 实例化。
+`DilutionConfig` 既可以使用 `new Abracadabra.DilutionConfig()` 实例化，也可以直接传入 `{ Enable: true }` 等普通配置对象，缺省项会自动补全默认值，任意非法参数会抛出错误。
 
-如果在加密时传入 `{ Enable: true }` 等普通对象，则会被替换为默认配置，稀释不会启用。
+但 `Corpus` 若传入非 `null` 值，**必须**是由 `new Abracadabra.DilutionCorpus()` 初始化的语料库对象，不能传入普通对象。
 
 :::
 
@@ -567,7 +567,7 @@ B、S、C 可以是单份 JSON，也可以是按原顺序排列的分片数组�
 
 `Tier` 和 `SentenceType` 必须与对应语料一致。第一片的 `SentenceCount` 必须等于该文体所有分片的句式总数。
 
-初始化保留原始句式顺序。
+初始化保留原始句式顺序。语料库对象原型链不继承 `Object.prototype`，且必须通过 `new Abracadabra.DilutionCorpus()` 初始化。
 
 ::: tip 提示
 

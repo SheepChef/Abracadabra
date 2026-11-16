@@ -25,6 +25,7 @@ import {
   FlexibleTransferDataObj,
   FLEXIBLE_TRANSFER_MAGIC,
   DilutionConfig,
+  normalizeDilutionConfig,
 } from "./CoreHandler.js";
 import * as OpenCC from "opencc-js";
 import { Base64 } from "js-base64";
@@ -484,6 +485,14 @@ export class WenyanSimulator {
     RandomParagraphing,
     DilutionConfigObj
   ) {
+    if (
+      !DilutionConfigObj ||
+      typeof DilutionConfigObj !== "object" ||
+      Array.isArray(DilutionConfigObj)
+    ) {
+      throw new Error("Unexpected Function Call to selectDilutionSentence()");
+    }
+    DilutionConfigObj = normalizeDilutionConfig(DilutionConfigObj);
     //只有启用稀释时才允许进入本函数，非法调用报错。
     if (!DilutionConfigObj.Enable) {
       throw new Error("Unexpected Function Call to selectDilutionSentence()");
@@ -504,30 +513,14 @@ export class WenyanSimulator {
     /** 指定的诗词句式过滤器 */
     const PoemFilterMode = DilutionConfigObj.PoemFilterMode;
     /** 指定的文体随机性因子 */
-    const StyleRandomIndex = DilutionConfigObj.StyleRandomIndex ?? 0;
+    const StyleRandomIndex = DilutionConfigObj.StyleRandomIndex;
 
-    //验证载荷、目标率和模式
-    //验证几个参数的合法性
+    //验证载荷和随机指数的合法性
     if (!Number.isSafeInteger(PayloadLength) || PayloadLength < 0) {
       throw new Error("Invalid Dilution Payload Length.");
     }
-    if (
-      !Number.isFinite(TargetPayloadRate) ||
-      TargetPayloadRate < 0.01 ||
-      TargetPayloadRate > 1
-    ) {
-      throw new Error("Invalid Dilution Target Rate.");
-    }
     if (!Number.isFinite(RandomIndex) || RandomIndex < 0 || RandomIndex > 100) {
       throw new Error("Incorrect Random Index");
-    }
-    if (
-      !["ALL", "ESSAY", "POEM", "LYRIC"].includes(FilterMode) ||
-      !["ALL", "FOUR", "FIVE", "SEVEN"].includes(PoemFilterMode) ||
-      !["SMART", "RANDOM"].includes(SampleMode) ||
-      !["UNIFORM", "CONCENTRATE"].includes(PayloadDistributionMode)
-    ) {
-      throw new Error("Invalid Dilution Sampling Mode.");
     }
     //如果未传入任何语料，抛出错误。
     if (!Corpus) {
@@ -1770,11 +1763,17 @@ export class WenyanSimulator {
     let size = OriginStr.length;
 
     //从这里开始做文章，开始文言文仿真，以及三重轮转对表。
+    const NormalizedDilution = normalizeDilutionConfig(d);
     let Sentence;
-    if (d.Enable) {
-      Sentence = this.selectDilutionSentence(OriginStr.length, r, rp, d); //选择稀释句式
+    if (NormalizedDilution.Enable) {
+      Sentence = this.selectDilutionSentence(
+        OriginStr.length,
+        r,
+        rp,
+        NormalizedDilution
+      ); //选择稀释句式
     } else {
-      Sentence = this.selectSentence(OriginStr.length, r, rp, p, l, d); //选择句式
+      Sentence = this.selectSentence(OriginStr.length, r, rp, p, l); //选择句式
     }
     let i = 0;
     let Finished = false;

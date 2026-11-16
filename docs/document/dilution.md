@@ -43,7 +43,7 @@
 
 ### 配置参数
 
-在调用 `WenyanInput()` 加密时，可通过 `new Abracadabra.DilutionConfig()` 创建配置对象，并作为文言配置中的 `DilutionConfig` 传入：
+在调用 `WenyanInput()` 加密时，可直接传入普通配置对象，也可通过 `new Abracadabra.DilutionConfig()` 创建配置对象，作为文言配置中的 `DilutionConfig` 传入：
 
 - **Enable** (Boolean, 默认 `false`)：是否启用密文稀释。启用后选句由稀释语料库接管，原有的骈文(`PianwenMode`)和逻辑(`LogicMode`)开关不参与稀释选句；标点、繁体、随机因子和分段参数仍继续生效。
 - **DilutionTargetRate** (Number, 默认 `0.18`)：目标载荷率，须为 [0.01, 1] 范围内最多保留两位小数的有限数值。**作用**是估算理想文本长度以控制稀释程度；**副作用**是数值越低，输出密文越长。
@@ -57,11 +57,11 @@
 
 ::: warning 参数须知
 
-稀释配置**必须**使用 `new Abracadabra.DilutionConfig(...)` 创建。若直接传入普通对象，程序会将其替换为默认配置，稀释将不会启用。
+`DilutionConfig` 既支持传入普通配置对象，也支持通过 `new Abracadabra.DilutionConfig()` 创建。未提供的字段会自动补全默认值，所有参数均会执行完整校验，任意非法取值都会抛出错误。
 
 目标载荷率超出 `[0.01, 1]`，以及随机因子超出 `[0, 100]` 时，构造函数都会抛出错误。
 
-若先以未启用状态(且不传语料库)创建配置对象，默认语料库将不会自动加载。若之后手动修改 `Enable` 开关，选句时将因缺少语料库而抛出错误。
+语料库 `Corpus` 若显式传入非 `null` 值，**必须**通过 `new Abracadabra.DilutionCorpus()` 初始化；直接传入普通对象作为语料库将被拒绝。
 
 :::
 
@@ -257,7 +257,7 @@ flowchart TD
 
 ### 基础调用
 
-使用 `new Abracadabra.DilutionConfig()` 创建配置对象，并通过 `WenyanInput()` 的第四个参数传入：
+支持直接传入普通配置对象，或使用 `new Abracadabra.DilutionConfig()` 创建配置对象，通过 `WenyanInput()` 的第四个参数传入：
 
 ```js
 import { Abracadabra } from "abracadabra-cn";

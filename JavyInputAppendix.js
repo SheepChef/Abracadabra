@@ -25,11 +25,18 @@
   "mode":"",   // ENCRYPT | DECRYPT | AUTO   // AUTO 仅在 method 指定 OLD 时合法 
   "key":"",    // 加密密钥，一个字符串 //如果缺省，自动使用默认值
   "q":bool,    // OLD模式下，决定是否添加标志位
-  "WenyanConfig":{...}, //文言文生成配置，详情见JavaScript接口定义。
+  "WenyanConfig":{...}, //文言文生成配置(可含 DilutionConfig，仅支持内置 Std 语料库)，详情见JavaScript接口定义。
   "AdvancedEncConfig":{...} //高级加密配置，详情见JavaScript接口定义。
 }
 
 */
+
+if (typeof console !== "undefined" && typeof console.warn !== "function") {
+  console.warn =
+    typeof console.error === "function"
+      ? console.error.bind(console)
+      : function () {};
+}
 
 const B64_CHARS =
   "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
@@ -117,7 +124,7 @@ function base64ToUint8Array(base64) {
 }
 
 function uint8ArrayToBase64(uint8Array) {
-  return encodeBase64(String.fromCharCode.apply(null, uint8Array));
+  return encodeBase64(uint8Array);
 }
 
 // Read input from stdin
@@ -147,6 +154,22 @@ function index(input) {
 
   try {
     if (input.method === "WENYAN") {
+      const dilutionConfig =
+        input.WenyanConfig &&
+        typeof input.WenyanConfig === "object" &&
+        !Array.isArray(input.WenyanConfig)
+          ? input.WenyanConfig.DilutionConfig
+          : undefined;
+      if (
+        dilutionConfig &&
+        typeof dilutionConfig === "object" &&
+        !Array.isArray(dilutionConfig) &&
+        dilutionConfig.Corpus != null
+      ) {
+        throw new Error(
+          "Custom DilutionCorpus is not supported in WASM. Omit Corpus or set it to null to use the built-in Std corpus."
+        );
+      }
       Abra.WenyanInput(
         decodedInput,
         input.mode,

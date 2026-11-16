@@ -10,12 +10,11 @@ watch(
   (open) => {
     const el = body.value;
     if (!el) return;
-    const fromHeight = el.getBoundingClientRect().height,
+    const inner = el.firstElementChild;
+    const fromHeight = parseFloat(getComputedStyle(el).height) || 0,
       fromOpacity = getComputedStyle(el).opacity;
     animation?.cancel();
-    const height = open
-      ? Math.ceil(el.firstElementChild.getBoundingClientRect().height)
-      : 0;
+    const height = open ? parseFloat(getComputedStyle(inner).height) || 0 : 0;
     if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
       el.style.height = open ? "auto" : "0px";
       el.style.opacity = open ? "1" : "0";
@@ -28,7 +27,7 @@ watch(
         { height: fromHeight + "px", opacity: fromOpacity },
         { height: height + "px", opacity: open ? 1 : 0 },
       ],
-      { duration: 360, easing: "cubic-bezier(.22,1,.36,1)", fill: "forwards" },
+      { duration: 360, easing: "cubic-bezier(.22,1,.36,1)", fill: "forwards" }
     );
     animation = current;
     current.onfinish = () => {
@@ -39,7 +38,7 @@ watch(
       animation = null;
     };
   },
-  { flush: "post" },
+  { flush: "post" }
 );
 onBeforeUnmount(() => animation?.cancel());
 </script>
@@ -102,9 +101,7 @@ onBeforeUnmount(() => animation?.cancel());
   stroke: #9b88a8;
   stroke-width: 1.5;
   stroke-linecap: round;
-  transition:
-    transform 0.36s cubic-bezier(0.22, 1, 0.36, 1),
-    stroke 0.2s;
+  transition: transform 0.36s cubic-bezier(0.22, 1, 0.36, 1), stroke 0.2s;
 }
 .open .question {
   color: #dab4f6;

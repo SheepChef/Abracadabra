@@ -31,13 +31,21 @@ WASM 模块执行完毕后，结果将通过 `stdout` 以 JSON 编码形式输�
 
 :::
 
+::: tip 密文稀释支持
+
+WASM 模式下可通过 `WenyanConfig.DilutionConfig` 启用密文稀释。只需传入普通 JSON 对象，缺省项自动补全默认值并执行全参数校验。
+
+由于 WASM 环境限制，**仅支持使用内置 Std 语料库**，无法加载自定义外部语料库。传入配置时请省略 `Corpus` 或将其设为 `null`，传入非空值将会报错。
+
+:::
+
 ::: warning 安全性和性能警告
 
 此 WASM 模块将 JS 代码和 `QuickJS` 运行时捆绑在一起，允许你在有 `wasmtime` 的环境中调用模块。你需要注意以下事项。
 
 - 执行效率将显著劣于 V8 引擎环境，尤其是执行密集哈希运算的时候。`QuickJS` 是轻量化的 JS 运行时，无法和 V8 媲美。
 
-- `QuickJS` 不支持获取密码学安全随机数，因此，随机数算法将由梅森旋转作为代替。这会削弱加密安全性，不建议用于敏感数据。
+- `QuickJS` 不支持获取密码学安全随机数，因此，随机数算法将由梅森旋转作为代替。这会**严重削弱加密安全性**，不建议用于敏感数据。
 
 WASM 不是魔曰的主线开发任务，依赖库未经积极更新，如果遇到问题，请提 Issue。
 
@@ -53,6 +61,12 @@ WASM 不是魔曰的主线开发任务，依赖库未经积极更新，如果遇
 
 ```sh
 echo '{"method":"WENYAN","mode":"ENCRYPT","inputType":"TEXT","outputType":"TEXT","input":"愿青空的祝福，与我的羽翼同在","key":"ABRACADABRA","WenyanConfig":{"PianwenMode":true}}' | wasmtime abracadabra-cn.wasm
+```
+
+启用密文稀释（内置 Std 语料库）的调用示例：
+
+```sh
+echo '{"method":"WENYAN","mode":"ENCRYPT","inputType":"TEXT","outputType":"TEXT","input":"愿青空的祝福，与我的羽翼同在","key":"ABRACADABRA","WenyanConfig":{"DilutionConfig":{"Enable":true,"DilutionTargetRate":0.18,"FilterMode":"POEM","PoemFilterMode":"FIVE"}}}' | wasmtime abracadabra-cn.wasm
 ```
 
 对于其他语言，你需要使用 Wasmtime WASI 的 `stdin` 和 `stdout` 接口来操作本模块的输入输出，调用 `_start` 方法来启动本模块。
