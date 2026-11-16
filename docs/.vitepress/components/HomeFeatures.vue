@@ -216,7 +216,7 @@ onBeforeUnmount(() => {
           IV；HMAC 以校验密文是否遭篡改；PBKDF2 以提高口令枚举成本。
         </p>
         <p>
-          防护愈重，成文亦会相应加长。按场景择取配置，并为真正的秘密设定高强度魔咒。
+          防护愈重，加密结果亦会相应变长。须按场景择取配置，并为高价值数据设定强密钥。
         </p>
         <a :href="withBase('/document/enc.html')"
           >查阅安全参数 <span aria-hidden="true">↗</span></a
@@ -230,7 +230,7 @@ onBeforeUnmount(() => {
     >
       <div class="section-intro">
         <span class="section-label">分段传输</span>
-        <h2 id="transfer-title">分道扬镳<br /><span>萍水相逢</span></h2>
+        <h2 id="transfer-title">各行其道<br /><span>聚而成章</span></h2>
         <p>
           使用灵活分段传输功能，可将数据拆成多段，分别加密，分别发送。<br />
           收齐后无须顾虑顺序，魔曰自会辨序重组。
