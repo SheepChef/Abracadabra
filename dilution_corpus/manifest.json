@@ -18,7 +18,7 @@
   "NestedSampling": true,
   "UltraSentenceCount": 15302451,
   "UltraSource": "..\\..\\dilution_templates.json",
-  "UltraSentencesSHA256": "7938403b75b6dc441e74578aed7a71014e8661119558aca757f83c9346e9cd92",
+  "UltraSentencesSHA256": "92d9f7d5653212e826ad9006ce5683e957073131da3b824a069ada269cd75e32",
   "Statistics": {
     "Overall": {
       "SentenceCount": 110000,
@@ -34,9 +34,9 @@
         1.0
       ],
       "ZeroPayloadAllowed": true,
-      "ZeroPayloadSentenceCount": 13069,
-      "PayloadBearingSentenceCount": 96931,
-      "TotalPayloadCharacterCount": 262885,
+      "ZeroPayloadSentenceCount": 13068,
+      "PayloadBearingSentenceCount": 96932,
+      "TotalPayloadCharacterCount": 262886,
       "SentenceTypeCount": {
         "B": 63752,
         "S": 36248,
@@ -47,7 +47,7 @@
         "Mode": "ROUND_HALF_EVEN"
       },
       "PayloadRateDistribution": {
-        "0.00": 13069,
+        "0.00": 13068,
         "0.02": 17,
         "0.03": 564,
         "0.04": 1235,
@@ -57,7 +57,7 @@
         "0.08": 4188,
         "0.09": 7213,
         "0.10": 3552,
-        "0.11": 5389,
+        "0.11": 5390,
         "0.12": 4454,
         "0.13": 6188,
         "0.14": 2971,
@@ -253,9 +253,9 @@
         0.82
       ],
       "ZeroPayloadAllowed": true,
-      "ZeroPayloadSentenceCount": 4846,
-      "PayloadBearingSentenceCount": 31402,
-      "TotalPayloadCharacterCount": 77435,
+      "ZeroPayloadSentenceCount": 4845,
+      "PayloadBearingSentenceCount": 31403,
+      "TotalPayloadCharacterCount": 77436,
       "SentenceTypeCount": {
         "B": 0,
         "S": 36248,
@@ -266,10 +266,10 @@
         "Mode": "ROUND_HALF_EVEN"
       },
       "PayloadRateDistribution": {
-        "0.00": 4846,
+        "0.00": 4845,
         "0.07": 2486,
         "0.09": 4159,
-        "0.11": 2368,
+        "0.11": 2369,
         "0.13": 3726,
         "0.18": 3900,
         "0.20": 3532,
@@ -531,9 +531,9 @@
         "Mode": "single-json",
         "File": "dilution_templates_S.json",
         "SentenceCount": 36248,
-        "ByteSize": 2329717,
-        "SHA256": "bdcdeebca053d9426e67f6c32d13bdaab885ba6906481a90ab565473992b84c8",
-        "TierContentSHA256": "7edfa8a52590b61fea74d6561f1a927c2e20e067e355e333ce2500d84bd27cbc"
+        "ByteSize": 2329715,
+        "SHA256": "40e692c4ef620659bbe5d69f34cb002d73f7dd55309af00f3e5f29a7526398da",
+        "TierContentSHA256": "d6cd0e24c20bc5120ec631d1248a135f5673688a20e37c41f4ea18e45a4bb29f"
       },
       "C": {
         "Mode": "single-json",
