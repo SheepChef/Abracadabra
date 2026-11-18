@@ -102,7 +102,7 @@ export interface DilutionConfig {
   PayloadDistribution?: "UNIFORM" | "CONCENTRATE";
   /** 传入一个稀释语料库对象，用于稀释，若不传，则使用内置库 */
   Corpus?: DilutionCorpus | null;
-  /** 古诗词每条模板后自动单换行，默认 true；段落仍使用双换行 */
+  /** 古诗词每条模板后自动单换行，默认 false；段落仍使用双换行 */
   PoemAutoLineBreak?: boolean;
   /** 每次生成，在选择文体时的随机性，应当是[0~100]之间的整数。此参数越低，文体的选择将越与载荷率的取值、语料库的载荷率分布相关，默认 50。*/
   StyleRandomIndex?: number;
