@@ -1,12 +1,14 @@
 <script setup>
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { useSceneClock } from "./useSceneClock.js";
 import { markPayload } from "./homeCipher.js";
+import { useTouchScrollLock } from "./useTouchScrollLock.js";
 const props = defineProps({
   trace: { type: Array, default: () => [] },
   alphabet: String,
 });
 const scene = ref(null);
+const traceBox = ref(null);
 const clock = useSceneClock(scene);
 const durations = [1700, 2000, 2300, 2900, 3800];
 const completedHold = 3000;
@@ -46,6 +48,18 @@ const select = (i) => {
     durations.slice(0, i).reduce((a, b) => a + b, 0) + durations[i] * 0.95,
   );
 };
+const {
+  unlocked: traceUnlocked,
+  clipped: traceClipped,
+  onTap: onTraceTap,
+} = useTouchScrollLock(
+  traceBox,
+  () => position.value.index,
+  () => text.value,
+);
+watch(traceUnlocked, (value) => {
+  clock.held.value = value;
+});
 </script>
 <template>
   <div ref="scene" class="pipeline-demo">
@@ -59,12 +73,14 @@ const select = (i) => {
           }"></i>
         </button>
       </div>
-      <div class="trace-window">
+      <div class="trace-window" :class="{ 'is-unlocked': traceUnlocked }">
         <div class="trace-window-bar">
           <span>{{ selected?.format || "TEXT" }}</span><span>{{ selected?.meta || "本地执行" }}</span>
         </div>
         <Transition name="materialize" mode="out-in">
-          <div :key="position.index" class="trace-text" :class="{ wenyan: position.index === 4 }">
+          <div :key="position.index" ref="traceBox" class="trace-text"
+            :class="{ wenyan: position.index === 4, 'is-clipped': traceClipped, 'is-unlocked': traceUnlocked }"
+            @click="onTraceTap">
             <template v-if="position.index === 4"><span v-for="chunk in chunks" :key="chunk.id"
                 class="wenyan-chunk"><span v-for="(token, index) in chunk.tokens" :key="index"
                   :class="token.payload ? 'payload tone-' + token.tone : ''">{{ token.char
@@ -265,6 +281,27 @@ const select = (i) => {
 
   .trace-text.wenyan {
     font-size: 15px;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .trace-text {
+    overflow: hidden;
+    touch-action: pan-y;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .trace-text.is-clipped {
+    -webkit-mask-image: linear-gradient(180deg, #000 72%, transparent 100%);
+    mask-image: linear-gradient(180deg, #000 72%, transparent 100%);
+  }
+
+  .trace-text.is-unlocked {
+    overflow: auto;
+  }
+
+  .trace-window.is-unlocked {
+    border-color: #c68cff4d;
   }
 }
 

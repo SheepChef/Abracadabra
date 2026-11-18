@@ -4,8 +4,10 @@ import { withBase } from "vitepress";
 import { getDilutionCorpus, markPayload } from "./homeCipher.js";
 import { DEMO_KEY, PAYLOAD_ALPHABET, DILUTION_PRESET } from "./homePresets.js";
 import { useSceneClock } from "./useSceneClock.js";
+import { useTouchScrollLock } from "./useTouchScrollLock.js";
 const props = defineProps({ loadEngine: Function });
 const scene = ref(null);
+const dilutionBox = ref(null);
 const clock = useSceneClock(scene);
 const styles = [
   { name: "古文", filter: "ESSAY", poem: "ALL" },
@@ -42,6 +44,11 @@ let api,
   disposed = false,
   ticket = 0;
 const cache = new Map([["0-0.18-UNIFORM", initialSample]]);
+const {
+  unlocked: paperUnlocked,
+  clipped: paperClipped,
+  onTap: onPaperTap,
+} = useTouchScrollLock(dilutionBox, () => result.value?.text);
 const bins = computed(() => {
   const tokens = result.value?.tokens.filter((t) => !/\s/u.test(t.char)) || [];
   return Array.from({ length: 40 }, (_, index) => {
@@ -275,18 +282,22 @@ onBeforeUnmount(() => {
             </button>
           </div>
         </div>
-        <div class="dilution-paper">
+        <div class="dilution-paper" :class="{ 'is-unlocked': paperUnlocked }">
           <Transition name="poem-ink" mode="out-in">
             <div
               v-if="result"
               :key="result.text"
+              ref="dilutionBox"
               class="dilution-text"
               :class="{
                 verse: result.verse,
                 'plain-ink': !showPayload,
+                'is-clipped': paperClipped,
+                'is-unlocked': paperUnlocked,
               }"
               tabindex="0"
               :aria-label="result.text"
+              @click="onPaperTap"
             >
               <span
                 v-for="(token, index) in result.tokens"
@@ -823,6 +834,27 @@ onBeforeUnmount(() => {
 
   .sample-caption {
     font-size: 10px;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .dilution-text {
+    overflow: hidden;
+    touch-action: pan-y;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .dilution-text.is-clipped {
+    -webkit-mask-image: linear-gradient(180deg, #000 72%, transparent 100%);
+    mask-image: linear-gradient(180deg, #000 72%, transparent 100%);
+  }
+
+  .dilution-text.is-unlocked {
+    overflow: auto;
+  }
+
+  .dilution-paper.is-unlocked {
+    border-color: #c68cff4d;
   }
 }
 

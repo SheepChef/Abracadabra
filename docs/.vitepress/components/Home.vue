@@ -3,6 +3,7 @@ import { computed, onMounted, onBeforeUnmount, ref } from "vue";
 import HomeBanner from "./HomeBanner.vue";
 import HomeFeatures from "./HomeFeatures.vue";
 import { markPayload } from "./homeCipher.js";
+import { useTouchScrollLock } from "./useTouchScrollLock.js";
 import {
   DEMO_KEY,
   PAYLOAD_ALPHABET,
@@ -32,7 +33,13 @@ const paused = ref(false);
 const reducedMotion = ref(false);
 const inView = ref(false);
 const stage = ref(null);
+const cipherBox = ref(null);
 const progress = ref(0);
+const {
+  unlocked: cipherUnlocked,
+  clipped: cipherClipped,
+  onTap: onCipherTap,
+} = useTouchScrollLock(cipherBox, revision);
 const copied = ref(false);
 const payloadAlphabet = ref(PAYLOAD_ALPHABET);
 const bannerCipher = ref(BANNER_PRESET.cipher);
@@ -242,13 +249,13 @@ onBeforeUnmount(() => {
                   </svg>{{ busy ? "落笔中" : "换一篇" }}
                 </button>
               </form>
-              <div class="writing" :class="{ 'is-revealed': revealed }">
+              <div class="writing" :class="{ 'is-revealed': revealed, 'is-unlocked': cipherUnlocked }">
                 <div class="writing-margin">
                   <span>{{ revealed ? "明文" : "魔曰" }}</span><span class="margin-line"></span>
                 </div>
                 <div class="cipher-wrap">
-                  <div :key="revision" class="cipher-text" :class="{ loading: !cipher }"
-                    :aria-label="output || '正在加载魔曰引擎'" tabindex="0">
+                  <div :key="revision" ref="cipherBox" class="cipher-text" :class="{ loading: !cipher, 'is-clipped': cipherClipped, 'is-unlocked': cipherUnlocked }"
+                    :aria-label="output || '正在加载魔曰引擎'" tabindex="0" @click="onCipherTap">
                     <template v-if="cipher"><span v-for="(letter, index) in letters" :key="index" class="glyph" :class="letter.payload ? 'payload tone-' + letter.tone : ''
                       " :style="{ '--arrival': Math.min(index * 5, 850) + 'ms' }" aria-hidden="true">{{ letter.char
                         }}</span></template><span v-else class="loading-text">正在载入魔曰引擎<span
@@ -1033,6 +1040,27 @@ onBeforeUnmount(() => {
 
   .result-actions {
     gap: 10px;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .cipher-text {
+    overflow: hidden;
+    touch-action: pan-y;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .cipher-text.is-clipped {
+    -webkit-mask-image: linear-gradient(180deg, #000 72%, transparent 100%);
+    mask-image: linear-gradient(180deg, #000 72%, transparent 100%);
+  }
+
+  .cipher-text.is-unlocked {
+    overflow: auto;
+  }
+
+  .writing.is-unlocked .margin-line {
+    background: #c68cff55;
   }
 }
 

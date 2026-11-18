@@ -25,7 +25,7 @@ defineProps({
         <span>把消息加密成<span class="banner-ink">古文</span></span><span>熔古铸今，韵入密语</span>
       </h1>
       <p class="banner-description">
-        将现代密码学与古典文学相融合的加密方案<br />让密文呈现古文、诗、词的模样，一切加解密均在本地完成
+        将现代密码与古典文学相融合的加密方案<br />让密文呈现古文和诗词的模样，加解密在本地完成
       </p>
       <div class="banner-actions">
         <a class="banner-primary" :href="withBase('/document/quick-start.html')">快速开始
