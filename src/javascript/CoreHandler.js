@@ -38,7 +38,7 @@ export class WenyanConfig {
    * 魔曰 文言文加密参数
    *
    * @param{bool}PunctuationMark 指定是否为密文添加标点符号，默认 true/添加;
-   * @param{int}RandomIndex 密文算法的随机程度，越大随机性越强，默认 50，最大100，超过100将会出错;
+   * @param{int}RandomIndex 密文算法的随机程度，越大随机性越强，默认 50，最大100，超过100将会出错。启用稀释功能时，用于控制上下文随机性;
    * @param{DilutionConfig}DilutionConfigObj 控制文言文密文的稀释配置;
    * @param{[number, number]}RandomParagraphing 密文所使用的分段函数每段载荷上下限。传入 min 和 max，默认 20/80。min 小于 20, max 大于 200, 或者 max < min 将会出错;
    * @param{bool}PianwenMode 指定是否强制生成骈文密文，默认 false;
@@ -74,7 +74,7 @@ export class DilutionConfig {
    * @param{"SMART" | "RANDOM"}SampleMode 采样模式，SMART 为自适应算法采样，RANDOM 为简单随机采样，默认 SMART;
    * @param{"UNIFORM" | "CONCENTRATE"}PayloadDistribution 段内载荷分配模式，UNIFORM 为均匀，CONCENTRATE 为集中，默认 UNIFORM;
    * @param{DilutionCorpus | null}Corpus 指定用于稀释的语料库对象，默认 null，使用内置语料库;
-   * @param{boolean}PoemAutoLineBreak 古诗词每条模板后自动换行，默认 true；不影响古文和段落分隔;
+   * @param{boolean}PoemAutoLineBreak 古诗词每条模板后自动换行，默认 false；不影响古文和段落分隔;
    * @param{number}StyleRandomIndex 每次生成，在选择文体时的随机性，应当是[0~100]之间的整数。此参数越低，文体的选择将越与载荷率的取值、语料库的载荷率分布相关，默认 50。
    * @constructor
    */
@@ -86,7 +86,7 @@ export class DilutionConfig {
     SampleMode = "SMART",
     PayloadDistribution = "UNIFORM",
     Corpus = null,
-    PoemAutoLineBreak = true,
+    PoemAutoLineBreak = false,
     StyleRandomIndex = 50
   ) {
     if (typeof Enable !== "boolean") {

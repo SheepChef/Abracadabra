@@ -293,6 +293,14 @@ export interface WenyanConfig {
 
 `RandomIndex` 是整数值，默认为`50`，最小值`0`，最大值`100`，超过 100 的输入将会报错。输入值越大，载荷量选择算法的随机性越大；输入值为 0 时，句式选择步骤将只选择载荷字较多的那个。解密时可以忽略这个参数。
 
+::: tip 提示
+
+`RandomIndex` 在密文稀释功能启用时，将负责控制不同的功能。
+
+具体请见 [**密文稀释**](/document/dilution.md)。
+
+:::
+
 `RandomParagraphing` 是一个数组。指定文言文分段长度上下限(载荷字个数) `[min, max]`，默认 `[20, 80]` 。min 小于 20, max 大于 200, 或者 max < min 将会出错;
 
 `PianwenMode` 是布尔值，不指定则默认为 `false`。如果传入 `true`，则加密结果会优先使用骈文句式，呈现四字到五字一组的对仗格律，这有助于减少密文的总体长度。解密时可以忽略这个参数。
@@ -376,7 +384,7 @@ export interface DilutionConfig {
 
 `Corpus` 接受一个 `DilutionCorpus` 对象，默认为 `null`。启用稀释且未提供语料库时，自动加载内置 Std 语料库。
 
-`PoemAutoLineBreak` 是布尔值，默认为 `true`。如果传入 `false`，则不在古诗模板后自动添加换行，段落仍使用双换行。
+`PoemAutoLineBreak` 是布尔值，默认为 `false`。如果传入 `true`，则在古诗模板后自动添加换行，段落仍使用双换行。
 
 `StyleRandomIndex` 是整数值，默认为 `50`，取值范围为 `0~100`。数值越低，文体选择越依赖目标载荷率和语料库的载荷率分布。
 

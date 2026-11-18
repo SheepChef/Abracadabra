@@ -15,7 +15,7 @@ declare module "abracadabra-cn";
 export interface WenyanConfig {
   /** 指定是否为密文添加标点符号，默认 true/添加; */
   PunctuationMark?: boolean;
-  /** 密文算法的随机程度，越大随机性越强，默认 50，最大100，超过100将会出错; */
+  /** 密文算法的随机程度，越大随机性越强，默认 50，最大100，超过100将会出错; 启用稀释功能时，用于控制上下文随机性。*/
   RandomIndex?: number;
   /** 控制文言文密文的稀释配置; */
   DilutionConfig?: DilutionConfig;
