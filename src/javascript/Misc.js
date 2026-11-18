@@ -239,6 +239,15 @@ export function packFlexibleTransferConfig(
   key = null,
   iv = 0
 ) {
+  //校验参数，超出限制就丢出错误。
+  if (
+    !Number.isSafeInteger(lengthToBoundary) ||
+    lengthToBoundary < 0 ||
+    lengthToBoundary > 511
+  ) {
+    throw new Error("Invalid Flexible Transfer Boundary.");
+  }
+
   //掩码截断，防止外部传入的数值过大导致位溢出
   const len = lengthToBoundary & 0x1ff; // 9 bits (max 511)
   const msg = messageID & 0xfff; // 12 bits (max 4095)
