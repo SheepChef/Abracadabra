@@ -293,6 +293,14 @@ onBeforeUnmount(() => {
 
 <!-- These variables belong only to the homepage Layout, never :root or docs. -->
 <style>
+@font-face {
+  font-family: "Abra Serif Fallback";
+  src: url("/fonts/NotoSerifSC-Simplified.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
+
 .abra-landing {
   --vp-c-bg: #1b1b1f;
   --vp-c-bg-alt: #202025;
@@ -323,6 +331,10 @@ onBeforeUnmount(() => {
   --accent: var(--purple);
   --surface: #202025;
   --line: #ffffff12;
+  --abra-font-serif:
+    "Noto Serif SC", "Noto Serif CJK SC", "Source Han Serif SC",
+    "Source Han Serif CN", "Songti SC", STSong, SimSun, Georgia,
+    "Abra Serif Fallback", serif;
   background: #1b1b1f;
   color: #eae9ef;
   overflow: hidden;
@@ -387,8 +399,7 @@ onBeforeUnmount(() => {
 }
 
 .demo-intro h2 {
-  font-family:
-    "Noto Serif SC", "Source Han Serif SC", "Songti SC", STSong, serif;
+  font-family: var(--abra-font-serif);
   font-size: 34px;
   line-height: 1.35;
   font-weight: 400;
@@ -638,7 +649,7 @@ onBeforeUnmount(() => {
 }
 
 .cipher-text {
-  font-family: "Noto Serif SC", "Songti SC", "STSong", SimSun, serif;
+  font-family: var(--abra-font-serif);
   font-size: 19px;
   line-height: 1.95;
   letter-spacing: 1.2px;

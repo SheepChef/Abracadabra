@@ -365,8 +365,7 @@ const visibleTokens = (tokens) =>
   overflow: hidden;
   white-space: nowrap;
   color: #c5bcd0;
-  font:
-    16px/1.8 "Noto Serif SC", "Songti SC", STSong, serif;
+  font: 16px/1.8 var(--abra-font-serif);
   letter-spacing: 0.6px;
   -webkit-mask-image: linear-gradient(90deg, #000 84%, transparent 100%);
   mask-image: linear-gradient(90deg, #000 84%, transparent 100%);

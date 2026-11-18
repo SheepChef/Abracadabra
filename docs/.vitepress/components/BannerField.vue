@@ -51,7 +51,7 @@ function typeset() {
     size = compact ? 18 : 21,
     advance = compact ? 21 : 25,
     line = compact ? 28 : 32;
-  const font = `${size}px STSong, SimSun, serif`;
+  const font = `${size}px "Noto Serif SC", "Noto Serif CJK SC", "Source Han Serif SC", "Source Han Serif CN", "Songti SC", STSong, SimSun, "Abra Serif Fallback", serif`;
   baseContext.font = font;
   baseContext.textBaseline = "middle";
   baseContext.textAlign = "left";
@@ -59,11 +59,11 @@ function typeset() {
     copy = banner.querySelector(".banner-copy")?.getBoundingClientRect();
   copyBounds = copy
     ? {
-        left: copy.left - field.left - 14,
-        right: copy.right - field.left + 14,
-        top: copy.top - field.top - 4,
-        bottom: copy.bottom - field.top + 4,
-      }
+      left: copy.left - field.left - 14,
+      right: copy.right - field.left + 14,
+      top: copy.top - field.top - 4,
+      bottom: copy.bottom - field.top + 4,
+    }
     : null;
   glyphs = [];
   if (!props.tokens.length) {

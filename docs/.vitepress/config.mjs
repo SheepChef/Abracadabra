@@ -11,6 +11,7 @@ export default withMermaid({
   lang: "zh-CN",
   title: SITE_NAME,
   description: SITE_DESCRIPTION,
+  appearance: "force-dark",
   sitemap: {
     hostname: SITE_URL,
   },

@@ -101,8 +101,7 @@ defineProps({
 
 .banner-copy h1 {
   font-family:
-    "Recife Text", "Iowan Old Style", Georgia, "Noto Serif SC", "Songti SC",
-    STSong, SimSun, serif;
+    "Recife Text", "Iowan Old Style", Georgia, var(--abra-font-serif);
   font-size: clamp(1.625rem, 1.15rem + 1.8vw, 2.75rem);
   line-height: 1.18;
   letter-spacing: -0.03em;

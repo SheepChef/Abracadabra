@@ -366,8 +366,7 @@ onBeforeUnmount(() => {
 }
 
 .dilution-copy h2 {
-  font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", STSong,
-    serif;
+  font-family: var(--abra-font-serif);
   font-size: 34px;
   font-weight: 400;
   line-height: 1.38;
@@ -566,7 +565,7 @@ onBeforeUnmount(() => {
   scrollbar-color: #66516f transparent;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
-  font: 16px/1.95 "Noto Serif SC", "Songti SC", STSong, SimSun, serif;
+  font: 16px/1.95 var(--abra-font-serif);
   letter-spacing: 0.7px;
   color: #a69baa;
   padding-right: 5px;

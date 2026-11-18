@@ -428,8 +428,7 @@ abra.WenyanInput(
 .integration-copy h2,
 .questions-heading h2,
 .community-section h2 {
-  font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", STSong,
-    Georgia, serif;
+  font-family: var(--abra-font-serif);
   font-size: 34px;
   line-height: 1.4;
   font-weight: 400;
