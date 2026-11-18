@@ -191,40 +191,29 @@ const RUNNER_SOURCE = `
     const packetMessage =
       "春天想去看海，夏天想去山里听雨。秋天把路上拍的照片寄给你，冬天留一盏灯等你回来。明天从东站出发，带上相机。";
     const transfer = new Abracadabra();
-    const transferRanges = [
-      [20, 25],
-      [18, 24],
-      [22, 28],
-      [16, 32],
-    ];
-    let tfOut = null;
-    for (let attempt = 0; attempt < 32; attempt++) {
-      const range = transferRanges[Math.floor(attempt / 8)];
-      const tfCfg = new AdvancedEncConfig(
-        false,
-        false,
-        false,
-        false,
-        false,
-        4,
-        Date.now(),
-        null,
-        new FlexibleTransferConfig(true, true, 1729, range)
-      );
-      transfer.WenyanInput(
-        packetMessage,
-        "ENCRYPT",
-        key,
-        new WenyanConfig(),
-        tfCfg
-      );
-      const candidate = transfer.Output();
-      if (Array.isArray(candidate) && candidate.length === 4) {
-        tfOut = candidate;
-        break;
-      }
-    }
-    if (!tfOut) {
+    const packetSize = Math.ceil(
+      Compress(new TextEncoder().encode(packetMessage)).byteLength / 4
+    );
+    const tfCfg = new AdvancedEncConfig(
+      false,
+      false,
+      false,
+      false,
+      false,
+      4,
+      Date.now(),
+      null,
+      new FlexibleTransferConfig(true, true, 1729, [packetSize, packetSize])
+    );
+    transfer.WenyanInput(
+      packetMessage,
+      "ENCRYPT",
+      key,
+      new WenyanConfig(),
+      tfCfg
+    );
+    const tfOut = transfer.Output();
+    if (!Array.isArray(tfOut) || tfOut.length !== 4) {
       throw new Error("Failed to generate 4 transfer packets");
     }
     const order = [2, 0, 3, 1];
