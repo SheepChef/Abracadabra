@@ -348,7 +348,14 @@ export class Abracadabra {
     p = false,
     l = false
   ) {
-    let conf = new Core.WenyanConfig(q, r, [35, 80], p, l);
+    let conf = new Core.WenyanConfig(
+      q,
+      r,
+      new Core.DilutionConfig(),
+      [35, 80],
+      p,
+      l
+    );
     return this.WenyanInput(input, mode, key, conf);
   }
 }

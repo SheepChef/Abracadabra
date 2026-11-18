@@ -267,10 +267,8 @@ function AES_256_CTR_HMAC_SHA256_D(
       throw new Error("Error Decrypting. HMAC Mismatch."); // HMAC不匹配，阻止进一步解密
     }
 
-    for (let i = 0; i < HMAC_HASH.byteLength; i++) {
-      if (!equalBytes(HMAC_HASH[i], HMAC_HASH_B[i])) {
-        throw new Error("Error Decrypting. HMAC Mismatch."); // HMAC不匹配，阻止进一步解密
-      }
+    if (!equalBytes(HMAC_HASH, HMAC_HASH_B)) {
+      throw new Error("Error Decrypting. HMAC Mismatch."); // HMAC不匹配，阻止进一步解密
     }
   }
 
