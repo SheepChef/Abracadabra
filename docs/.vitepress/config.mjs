@@ -54,7 +54,10 @@ export default withMermaid({
     const head = [
       ["link", { rel: "canonical", href: canonicalUrl }],
       ["meta", { property: "og:url", content: canonicalUrl }],
-      ["meta", { property: "og:type", content: isHome ? "website" : "article" }],
+      [
+        "meta",
+        { property: "og:type", content: isHome ? "website" : "article" },
+      ],
       ["meta", { property: "og:title", content: fullTitle }],
       ["meta", { property: "og:description", content: pageDesc }],
       ["meta", { name: "twitter:title", content: fullTitle }],

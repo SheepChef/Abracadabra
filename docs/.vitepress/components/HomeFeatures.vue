@@ -339,7 +339,7 @@ abra.WenyanInput(
         <span class="section-label">开源共享</span>
         <h2 id="contribution-title">海纳百川<br /><span>博采众议</span></h2>
         <p>
-          代码悉数公开，欢迎查阅实现、商榷文体语料或提交改进。<br />使用与二次开发请遵循
+          代码悉数公开，欢迎查阅实现或提交改进。<br />使用与二次开发请遵循
           AIPL-1.2 开源许可。
         </p>
       </div>
