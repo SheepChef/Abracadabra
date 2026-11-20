@@ -17,7 +17,7 @@
     "prebuild": "npx patch-package && node build-dilution-std.mjs && vitest run",
     "preview": "vite preview",
     "test": "npx patch-package && node build-dilution-std.mjs && vitest run",
-    "coverage": "npx patch-package && vitest run --coverage",
+    "coverage": "npx patch-package && node build-dilution-std.mjs && vitest run --coverage",
     "docs:presets": "node build-dilution-std.mjs && node build-home-presets.mjs",
     "docs:dev": "npm run docs:presets && vitepress dev docs",
     "docs:build": "npm run docs:presets && vitepress build docs",
