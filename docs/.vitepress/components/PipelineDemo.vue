@@ -44,9 +44,8 @@ const chunks = computed(() => {
   });
 });
 const select = (i) => {
-  clock.seek(
-    durations.slice(0, i).reduce((a, b) => a + b, 0) + durations[i] * 0.95,
-  );
+  const start = durations.slice(0, i).reduce((a, b) => a + b, 0);
+  clock.seek(i === durations.length - 1 ? start + durations[i] : start);
 };
 const {
   unlocked: traceUnlocked,
@@ -58,7 +57,7 @@ const {
   () => text.value,
 );
 watch(traceUnlocked, (value) => {
-  clock.held.value = value;
+  clock.locked.value = value;
 });
 </script>
 <template>
