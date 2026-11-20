@@ -1,10 +1,11 @@
-import { onMounted, onBeforeUnmount, ref } from "vue";
+import { onMounted, onBeforeUnmount, ref, watch } from "vue";
 // A local clock advances only while its scene is visible. Mouse/keyboard readers
 // can hold a scene still; touching a control never leaves an artificial hover.
 export function useSceneClock(element, { pauseOnHover = true } = {}) {
   const time = ref(0),
     reduced = ref(false),
     held = ref(false),
+    locked = ref(false),
     visible = ref(false);
   let observer,
     timer,
@@ -12,7 +13,8 @@ export function useSceneClock(element, { pauseOnHover = true } = {}) {
     hovered = false,
     focused = false,
     last = 0;
-  const updateHold = () => (held.value = hovered || focused);
+  const updateHold = () => (held.value = hovered || focused || locked.value);
+  watch(locked, updateHold);
   const enter = (e) => {
     if (e.pointerType !== "touch") {
       hovered = true;
@@ -72,7 +74,11 @@ export function useSceneClock(element, { pauseOnHover = true } = {}) {
     time,
     reduced,
     held,
+    locked,
     visible,
-    seek: (value) => (time.value = value),
+    seek: (value) => {
+      time.value = value;
+      last = performance.now();
+    },
   };
 }
