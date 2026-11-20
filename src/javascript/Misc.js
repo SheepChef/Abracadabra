@@ -98,6 +98,7 @@ export function GetSecureRandomIndex(length) {
     Rand = Math.floor(random() * length);
   } catch (err) {
     Rand = Math.floor(MT.random() * length);
+    console.warn("CSPRNG unavailable. Now generating weak randomness."); //自动回落，但是输出一个警告
   }
 
   return Rand;
@@ -238,6 +239,15 @@ export function packFlexibleTransferConfig(
   key = null,
   iv = 0
 ) {
+  //校验参数，超出限制就丢出错误。
+  if (
+    !Number.isSafeInteger(lengthToBoundary) ||
+    lengthToBoundary < 0 ||
+    lengthToBoundary > 511
+  ) {
+    throw new Error("Invalid Flexible Transfer Boundary.");
+  }
+
   //掩码截断，防止外部传入的数值过大导致位溢出
   const len = lengthToBoundary & 0x1ff; // 9 bits (max 511)
   const msg = messageID & 0xfff; // 12 bits (max 4095)
@@ -489,8 +499,8 @@ export function distributeFlexibleTransfer(
     let currentLen = Math.floor(minLen + waveFactor * (maxLen - minLen));
 
     //边界收敛
-    if (currentLen >= remaining || remaining - currentLen < minLen) {
-      chunks.push(remaining); // 把剩下的全部打包成最后一段
+    if (remaining <= maxLen) {
+      chunks.push(remaining); // 最后一段不能超过上限
       break;
     }
 
@@ -540,7 +550,8 @@ export function insertEncryptMarks(
   // ==== 场景 2: 只插入 sub2 ====
   if (!hasSub1 && hasSub2) {
     // 此时不存在 sub1 干扰，直接在原字符串 L+1 个缝隙中选一个
-    const i2 = Math.floor(Math.random() * (L + 1));
+    const minIndex = Math.max(0, L - 511);
+    const i2 = minIndex + Math.floor(Math.random() * (L - minIndex + 1));
     // 距离就是原字符串剩下的字符数
     const distanceToEnd = L - i2;
     // 生成 sub2 并插入
@@ -569,7 +580,22 @@ export function insertEncryptMarks(
       originalStr.slice(0, i1) + sub1 + originalStr.slice(i1);
 
     // Step 2: 决定 sub2 虚拟位置 & 计算距离
-    const r = Math.floor(Math.random() * (L + 2));
+
+    //分段标头位于高级加密标记之前的合法位置。
+    const beforeMin = Math.max(0, L + l1 - 511);
+    const beforeCount = Math.max(0, i1 - beforeMin + 1);
+
+    //分段标头位于高级加密标记之后的合法位置。
+    const afterMin = Math.max(i1 + 1, L + 1 - 511);
+    const afterCount = L + 2 - afterMin;
+
+    //在全部合法位置中等概率选择。
+    const selected = Math.floor(Math.random() * (beforeCount + afterCount));
+
+    const r =
+      selected < beforeCount
+        ? beforeMin + selected
+        : afterMin + selected - beforeCount;
     let distanceToEnd = 0;
     let i2 = 0;
 

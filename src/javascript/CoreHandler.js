@@ -14,6 +14,7 @@ import structuredClone from "@ungap/structured-clone";
 import { OldMapper, WenyanSimulator } from "./ChineseMappingHelper.js";
 import { Compress, Decompress } from "./CompressionHelper.js";
 import { DeAONT, Decrypt, EnAONT, Encrypt } from "./EncryptHelper.js";
+import { DilutionCorpus } from "./ChineseDilutionHelper.js";
 
 import {
   Uint8ArrayTostring,
@@ -37,7 +38,8 @@ export class WenyanConfig {
    * 魔曰 文言文加密参数
    *
    * @param{bool}PunctuationMark 指定是否为密文添加标点符号，默认 true/添加;
-   * @param{int}RandomIndex 密文算法的随机程度，越大随机性越强，默认 50，最大100，超过100将会出错;
+   * @param{int}RandomIndex 密文算法的随机程度，越大随机性越强，默认 50，最大100，超过100将会出错。启用稀释功能时，用于控制上下文随机性;
+   * @param{DilutionConfig}DilutionConfigObj 控制文言文密文的稀释配置;
    * @param{[number, number]}RandomParagraphing 密文所使用的分段函数每段载荷上下限。传入 min 和 max，默认 20/80。min 小于 20, max 大于 200, 或者 max < min 将会出错;
    * @param{bool}PianwenMode 指定是否强制生成骈文密文，默认 false;
    * @param{bool}LogicMode 指定是否强制生成逻辑密文，默认 false;
@@ -45,6 +47,7 @@ export class WenyanConfig {
   constructor(
     PunctuationMark = true,
     RandomIndex = 50,
+    DilutionConfigObj = new DilutionConfig(),
     RandomParagraphing = [20, 80],
     PianwenMode = false,
     LogicMode = false,
@@ -52,11 +55,117 @@ export class WenyanConfig {
   ) {
     this.PunctuationMark = PunctuationMark;
     this.RandomIndex = RandomIndex;
+    this.DilutionConfig = DilutionConfigObj;
     this.RandomParagraphing = RandomParagraphing;
     this.PianwenMode = PianwenMode;
     this.LogicMode = LogicMode;
     this.Traditional = Traditional;
   }
+}
+
+export class DilutionConfig {
+  /**
+   * 魔曰 文言文稀释配置
+   *
+   * @param{boolean}Enable 指定是否启用密文稀释功能，默认 false/不开启;
+   * @param{number}DilutionTargetRate 指定用户期望的目标密文载荷率，范围 [0.01,1]，精度为两位小数，默认 0.18。实际生成的密文载荷率允许存在必要误差;
+   * @param{"ALL" | "ESSAY" | "POEM" | "LYRIC"}FilterMode 文体过滤配置，ESSAY 为仅使用一般古文，POEM 为仅使用古诗，LYRIC 为仅使用宋词，ALL 为不特别过滤，默认 ALL;
+   * @param{"ALL" | "FOUR" | "FIVE" | "SEVEN"}PoemFilterMode 古诗过滤配置，FOUR/FIVE/SEVEN 分别为四言/五言/七言，ALL 为不特别过滤，默认 ALL。若不启用古诗则此配置无效;
+   * @param{"SMART" | "RANDOM"}SampleMode 采样模式，SMART 为自适应算法采样，RANDOM 为简单随机采样，默认 SMART;
+   * @param{"UNIFORM" | "CONCENTRATE"}PayloadDistribution 段内载荷分配模式，UNIFORM 为均匀，CONCENTRATE 为集中，默认 UNIFORM;
+   * @param{DilutionCorpus | null}Corpus 指定用于稀释的语料库对象，默认 null，使用内置语料库;
+   * @param{boolean}PoemAutoLineBreak 古诗词每条模板后自动换行，默认 false；不影响古文和段落分隔;
+   * @param{number}StyleRandomIndex 每次生成，在选择文体时的随机性，应当是[0~100]之间的整数。此参数越低，文体的选择将越与载荷率的取值、语料库的载荷率分布相关，默认 50。
+   * @constructor
+   */
+  constructor(
+    Enable = false,
+    DilutionTargetRate = 0.18,
+    FilterMode = "ALL",
+    PoemFilterMode = "ALL",
+    SampleMode = "SMART",
+    PayloadDistribution = "UNIFORM",
+    Corpus = null,
+    PoemAutoLineBreak = false,
+    StyleRandomIndex = 50
+  ) {
+    if (typeof Enable !== "boolean") {
+      throw new Error("Invalid Dilution Enable.");
+    }
+    if (
+      typeof DilutionTargetRate !== "number" ||
+      !Number.isFinite(DilutionTargetRate) ||
+      DilutionTargetRate < 0.01 ||
+      DilutionTargetRate > 1 ||
+      Math.abs(
+        DilutionTargetRate * 100 - Math.round(DilutionTargetRate * 100)
+      ) > 1e-8
+    ) {
+      throw new Error("Invalid Dilution Target Rate.");
+    }
+    if (
+      !["ALL", "ESSAY", "POEM", "LYRIC"].includes(FilterMode) ||
+      !["ALL", "FOUR", "FIVE", "SEVEN"].includes(PoemFilterMode) ||
+      !["SMART", "RANDOM"].includes(SampleMode) ||
+      !["UNIFORM", "CONCENTRATE"].includes(PayloadDistribution)
+    ) {
+      throw new Error("Invalid Dilution Sampling Mode.");
+    }
+    if (typeof PoemAutoLineBreak !== "boolean") {
+      throw new Error("Invalid Dilution PoemAutoLineBreak.");
+    }
+    if (
+      typeof StyleRandomIndex !== "number" ||
+      !Number.isFinite(StyleRandomIndex) ||
+      StyleRandomIndex < 0 ||
+      StyleRandomIndex > 100
+    ) {
+      throw new Error("Invalid Dilution StyleRandomIndex.");
+    }
+    if (Corpus != null && !(Corpus instanceof DilutionCorpus)) {
+      throw new Error("Invalid Dilution Corpus.");
+    }
+
+    if (Enable && Corpus == null) {
+      Corpus = new DilutionCorpus();
+    }
+    this.Enable = Enable;
+    this.DilutionTargetRate = DilutionTargetRate;
+    this.FilterMode = FilterMode;
+    this.PoemFilterMode = PoemFilterMode;
+    this.SampleMode = SampleMode;
+    this.PayloadDistribution = PayloadDistribution;
+    this.Corpus = Corpus;
+    this.PoemAutoLineBreak = PoemAutoLineBreak;
+    this.StyleRandomIndex = StyleRandomIndex;
+  }
+}
+
+export function normalizeDilutionConfig(RawConfig) {
+  if (
+    RawConfig == null ||
+    typeof RawConfig !== "object" ||
+    Array.isArray(RawConfig)
+  ) {
+    return new DilutionConfig();
+  }
+
+  const Normalized = new DilutionConfig(
+    RawConfig.Enable,
+    RawConfig.DilutionTargetRate,
+    RawConfig.FilterMode,
+    RawConfig.PoemFilterMode,
+    RawConfig.SampleMode,
+    RawConfig.PayloadDistribution,
+    RawConfig.Corpus,
+    RawConfig.PoemAutoLineBreak,
+    RawConfig.StyleRandomIndex
+  );
+
+  if (RawConfig.ForceFallBackSearch !== undefined) {
+    Normalized.ForceFallBackSearch = Boolean(RawConfig.ForceFallBackSearch);
+  }
+  return Normalized;
 }
 
 export class FlexibleTransferConfig {
@@ -288,12 +397,20 @@ export function Enc(
       RecursiveAdvancedEncObj.FlexibleTransfer.MessageID = GetRandomIndex(4096);
     }
 
+    const NormalizedDilutionConfig = normalizeDilutionConfig(
+      WenyanConfigObj?.DilutionConfig
+    );
     let ResultArray = new Array(SlicedDataArray.length);
     for (let i = 0; i < SlicedDataArray.length; i++) {
+      const ClonedWenyanConfig = structuredClone({
+        ...WenyanConfigObj,
+        DilutionConfig: undefined,
+      });
+      ClonedWenyanConfig.DilutionConfig = NormalizedDilutionConfig;
       ResultArray[i] = Enc(
         { output: SlicedDataArray[i] },
         key,
-        structuredClone(WenyanConfigObj),
+        ClonedWenyanConfig,
         structuredClone(RecursiveAdvancedEncObj),
         callback
       );
@@ -440,7 +557,8 @@ export function Enc(
     WenyanConfigObj.LogicMode !== undefined ? WenyanConfigObj.LogicMode : false,
     WenyanConfigObj.Traditional !== undefined
       ? WenyanConfigObj.Traditional
-      : false
+      : false,
+    normalizeDilutionConfig(WenyanConfigObj.DilutionConfig)
   );
   let Encoder = new TextEncoder();
   return new EncResultDataObj(Res, Encoder.encode(Res));

@@ -14,6 +14,12 @@ import { expect, test, bench } from "vitest";
 
 import { Abracadabra } from "./main";
 import { FlexibleTransferConfig } from "./CoreHandler";
+import { readFileSync } from "node:fs";
+import { vi } from "vitest";
+import { DilutionConfig } from "./CoreHandler";
+import { DilutionCorpus } from "./ChineseDilutionHelper";
+import { WenyanSimulator } from "./ChineseMappingHelper";
+import { ValueNoise1D } from "./Misc";
 
 const Rand = Math.random() * 100000000000;
 const TestString = Rand.toString();

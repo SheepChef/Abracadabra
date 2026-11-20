@@ -28,11 +28,19 @@
  */
 
 import * as Core from "./CoreHandler.js";
+import { DilutionCorpus } from "./ChineseDilutionHelper.js";
 import { preCheck_OLD, PreCheckResult, stringToUint8Array } from "./Misc.js";
 import { AdvancedEncConfig } from "./CoreHandler.js";
 import { decryptXiongyueSync } from "./XiongyueDecHelper.js";
 export class Abracadabra {
   //主类
+
+  static WenyanConfig = Core.WenyanConfig;
+  static AdvancedEncConfig = Core.AdvancedEncConfig;
+  static FlexibleTransferConfig = Core.FlexibleTransferConfig;
+  static DilutionConfig = Core.DilutionConfig;
+  static DilutionCorpus = DilutionCorpus;
+  static CallbackObj = Core.CallbackObj;
 
   static TEXT = "TEXT"; //常量方便调用
   static UINT8 = "UINT8";
@@ -84,7 +92,14 @@ export class Abracadabra {
     input,
     mode,
     key = "ABRACADABRA",
-    WenyanConfigObj = new Core.WenyanConfig(true, 50, [20, 80], false, false),
+    WenyanConfigObj = new Core.WenyanConfig(
+      true,
+      50,
+      new Core.DilutionConfig(),
+      [20, 80],
+      false,
+      false
+    ),
     AdvancedEncObj = new Core.AdvancedEncConfig(),
     callback = null
   ) {
@@ -333,7 +348,14 @@ export class Abracadabra {
     p = false,
     l = false
   ) {
-    let conf = new Core.WenyanConfig(q, r, [35, 80], p, l);
+    let conf = new Core.WenyanConfig(
+      q,
+      r,
+      new Core.DilutionConfig(),
+      [35, 80],
+      p,
+      l
+    );
     return this.WenyanInput(input, mode, key, conf);
   }
 }

@@ -188,7 +188,8 @@ function Check(Map2) {
               PayloadLetter.indexOf(Sentence[d]) != -1 &&
               Sentence[d] != "Q" &&
               Sentence[d] != "P" &&
-              Sentence[d] != "R"
+              Sentence[d] != "R" &&
+              Sentence[d] != "T"
             ) {
               ErrorOccur = true;
               console.warn(
@@ -252,7 +253,9 @@ function Check(Map2) {
             if (
               PayloadLetter.indexOf(Sentence[d]) != -1 &&
               Sentence[d] != "Q" &&
-              Sentence[d] != "P"
+              Sentence[d] != "P" &&
+              Sentence[d] != "T" &&
+              Sentence[d] != "R"
             ) {
               ErrorOccur = true;
               console.warn(

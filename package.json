@@ -3,7 +3,7 @@
   "description": "Use Chinese to Encode Everything",
   "license": "SEE LICENSE IN LICENSE.md",
   "private": false,
-  "version": "3.5.5",
+  "version": "3.8.0",
   "main": "./dist/abracadabra-cn.js",
   "types": "./dist/abracadabra-cn.d.ts",
   "type": "module",
@@ -14,11 +14,13 @@
     "build:wasm": "npm run build && npm run packwasm",
     "build:all": "npm run build && npm run docs:build && npm run packwasm",
     "packwasm": "javy build ./dist/abracadabra-cn-javy.js -o ./dist/abracadabra-cn.wasm",
-    "prebuild": "npx patch-package && vitest run",
+    "prebuild": "npx patch-package && node build-dilution-std.mjs && vitest run",
     "preview": "vite preview",
-    "test": "npx patch-package && vitest run",
-    "coverage": "npx patch-package && vitest run --coverage",
-    "docs:build": "vitepress build docs",
+    "test": "npx patch-package && node build-dilution-std.mjs && vitest run",
+    "coverage": "npx patch-package && node build-dilution-std.mjs && vitest run --coverage",
+    "docs:presets": "node build-dilution-std.mjs && node build-home-presets.mjs",
+    "docs:dev": "npm run docs:presets && vitepress dev docs",
+    "docs:build": "npm run docs:presets && vitepress build docs",
     "docs:preview": "vitepress preview docs"
   },
   "devDependencies": {
@@ -42,7 +44,8 @@
     "vite": "^8.1.4",
     "vitepress": "^1.6.3",
     "vitepress-plugin-mermaid": "^2.0.17",
-    "vitest": "^4.1.10"
+    "vitest": "^4.1.10",
+    "fzstd": "^0.1.1"
   },
   "files": [
     "dist",
@@ -51,5 +54,6 @@
   "repository": {
     "type": "git",
     "url": "git://github.com/SheepChef/Abracadabra.git"
-  }
+  },
+  "dependencies": {}
 }

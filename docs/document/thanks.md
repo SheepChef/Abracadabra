@@ -4,6 +4,8 @@
 
 感谢 [**中国哲学书电子化计划**](http://ctext.org/zhs) 提供高质量的古籍参考资料。
 
+感谢 [**Erya 数据集**](https://github.com/RUCAIBox/Erya) 和 [**chinese-poetry**](https://github.com/chinese-poetry/chinese-poetry) 提供高质量的密文稀释语料。
+
 感谢 [**JS.ORG**](https://js.org) 为本项目提供域名支持。
 
 感谢 [**@Amlkiller**](https://github.com/amlkiller) 为本项目提供十分有价值的反馈和建议。

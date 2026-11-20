@@ -1,12 +1,24 @@
+/*
+ * Copyright (C) 2025-2026 SheepChef (a.k.a. Haruka Hokuto)
+ *
+ * 这是一个源代码公开的软件。
+ * 在遵守AIPL-1.2许可证的前提下，
+ * 你可以自由复制，修改，分发，使用它。
+ *
+ * 查阅 Academic Innovation Protection License(AIPL) 来了解更多 .
+ * 本作品应随附一份完整的 AIPL-1.2 许可证全文。
+ *
+ */
+
 declare module "abracadabra-cn";
 
 export interface WenyanConfig {
   /** 指定是否为密文添加标点符号，默认 true/添加; */
   PunctuationMark?: boolean;
-  /** 密文算法的随机程度，越大随机性越强，默认 50，最大100，超过100将会出错; */
+  /** 密文算法的随机程度，越大随机性越强，默认 50，最大100，超过100将会出错; 启用稀释功能时，用于控制上下文随机性。*/
   RandomIndex?: number;
-  /** 密文的稀释程度，默认为0，越高将会稀释得越多; */
-  //DiluteIndex?: number;
+  /** 控制文言文密文的稀释配置; */
+  DilutionConfig?: DilutionConfig;
   /** 指定超长密文所使用的分段函数每段载荷上下限。传入 min 和 max，默认 20/80。min 小于 20, max 大于 200, 或者 max < min 将会出错; */
   RandomParagraphing?: [number, number];
   /** 指定是否强制生成骈文密文，默认 false; */
@@ -67,6 +79,135 @@ export interface FlexibleTransferConfig {
   RandomParagraphing?: [number, number];
 }
 
+export interface DilutionConfig {
+  /** 指定是否启用密文稀释功能，默认 false/不开启 */
+  Enable?: boolean;
+  /** 指定用户期望的目标密文载荷率，应当是 [0.01,1] 之间的两位精度的浮点数。目标载荷率不代表实际密文的精确载荷率，将允许有必要误差。默认为 0.18*/
+  DilutionTargetRate?: number;
+  /** 文体过滤配置。
+   *
+   * ESSAY 为仅使用一般古文，POEM 为仅使用古诗，LYRIC 为仅使用宋词。
+   *
+   * ALL 不特别过滤，随机使用全部文体，默认 ALL */
+  FilterMode?: "ALL" | "ESSAY" | "POEM" | "LYRIC";
+  /** 古诗过滤配置，若不启用古诗则此配置无效。
+   *
+   * FOUR/FIVE/SEVEN 分别过滤出四言/五言/七言。
+   *
+   * ALL 不特别过滤，随机使用全部诗词。 */
+  PoemFilterMode?: "ALL" | "FOUR" | "FIVE" | "SEVEN";
+  /** 采样模式，SMART 为自适应算法采样。RANDOM 为简单随机采样。默认为 SMART */
+  SampleMode?: "SMART" | "RANDOM";
+  /** 段内载荷分配的模式， UNIFORM 为均匀。CONCENTRATE 为集中。默认为 UNIFORM */
+  PayloadDistribution?: "UNIFORM" | "CONCENTRATE";
+  /** 传入一个稀释语料库对象，用于稀释，若不传，则使用内置库 */
+  Corpus?: DilutionCorpus | null;
+  /** 古诗词每条模板后自动单换行，默认 false；段落仍使用双换行 */
+  PoemAutoLineBreak?: boolean;
+  /** 每次生成，在选择文体时的随机性，应当是[0~100]之间的整数。此参数越低，文体的选择将越与载荷率的取值、语料库的载荷率分布相关，默认 50。*/
+  StyleRandomIndex?: number;
+}
+
+/** Dilution Corpus 的尺寸分级。 */
+export type DilutionCorpusTier =
+  | "Nano"
+  | "Micro"
+  | "Mini"
+  | "Std"
+  | "Plus"
+  | "Pro"
+  | "Supra"
+  | "Mega"
+  | "Ultra";
+
+/** B 为一般古文，S 为古诗，C 为词 */
+export type DilutionCorpusSentenceType = "B" | "S" | "C";
+
+/** 两端均包含；Manifest 未提供该统计时为 null。 */
+export type DilutionCorpusRange = [number, number] | null;
+
+/** 已初始化的单一 B/S Corpus。 */
+export interface DilutionCorpusObj {
+  Metadata: DilutionCorpusMetadataObj;
+  /** 保持输入 JSON 中的句式顺序。 */
+  Sentences: string[];
+}
+
+/** 已初始化的 Corpus 元数据。 */
+export interface DilutionCorpusMetadataObj {
+  /** 规则库尺寸。 */
+  Tier: DilutionCorpusTier;
+  /** B 为一般古文，S 为古诗，C 为词 */
+  SentenceType: DilutionCorpusSentenceType;
+  /** 当前 B/S/C Corpus 的句式总数。 */
+  SentenceCount: number;
+  /** 运行时使用的精简统计对象，不是原始 JSON 中的 Manifest 文件名。 */
+  Manifest: DilutionCorpusManifestObj;
+}
+
+/** 当前 B/S/C 的必要统计；Manifest 未提供的字段为 null。 */
+export interface DilutionCorpusManifestObj {
+  /** 非零载荷率的众数（精确到两位小数）。 */
+  TargetBaseRate: number | null;
+  /** 全部模板的载荷率边界。 */
+  PayloadRateHardLimit: DilutionCorpusRange;
+  /** 非零载荷率边界。 */
+  NonZeroPayloadRateHardLimit: DilutionCorpusRange;
+  /** 单句有效长度边界。 */
+  SentenceLengthHardLimit: DilutionCorpusRange;
+  /** 单句载荷数量边界。 */
+  PayloadCountHardLimit: DilutionCorpusRange;
+}
+
+/** 发行 Manifest JSON；其他非必要字段允许存在，但不会进入运行时对象。 */
+export interface DilutionCorpusSourceManifestObj {
+  Tier: DilutionCorpusTier;
+  Statistics?: Partial<
+    Record<DilutionCorpusSentenceType, Partial<DilutionCorpusManifestObj>>
+  >;
+}
+
+/** 原始 B/S/C JSON 第一片的 Metadata。 */
+export interface DilutionCorpusSourceMetadataObj {
+  Tier: DilutionCorpusTier;
+  SentenceType: DilutionCorpusSentenceType;
+  SentenceCount: number;
+}
+
+/** 单文件或第一分片：必须包含 Metadata 和 Sentences。 */
+export interface DilutionCorpusJSONFirstObj {
+  Metadata: DilutionCorpusSourceMetadataObj;
+  Sentences: string[];
+}
+
+/** 后续 JSON 分片：只需要 Sentences。 */
+export interface DilutionCorpusJSONPartObj {
+  Sentences: string[];
+}
+
+/** 单份 JSON 可以是已解析对象或 JSON 字符串。 */
+export type DilutionCorpusJSON = DilutionCorpusJSONFirstObj | string;
+
+/**
+ * B/S/C 句式 JSON 输入。
+ * 单文件传入 JSON 对象或 JSON 字符串；分片传入按顺序排列的数组。
+ * 分片第一项必须包含 Metadata，后续项只需要 Sentences。
+ */
+export type DilutionCorpusJSONInput =
+  | DilutionCorpusJSON
+  | [DilutionCorpusJSON, ...(DilutionCorpusJSONPartObj | string)[]];
+
+export interface DilutionCorpus {
+  /** 规则库尺寸。 */
+  readonly Tier: DilutionCorpusTier;
+  /** 已初始化的一般古文 Corpus；未提供 B 时为 null。 */
+  readonly B: DilutionCorpusObj | null;
+  /** 已初始化的古诗 Corpus；未提供 S 时为 null。 */
+  readonly S: DilutionCorpusObj | null;
+  /** 已初始化的词 Corpus；未提供 C 时为 null。 */
+  readonly C: DilutionCorpusObj | null;
+}
+
 export interface CallbackObj {
   /** 回调数据的标签 */
   Type?: string;
@@ -76,6 +217,56 @@ export interface CallbackObj {
 
 type Callback = (Data: CallbackObj) => any;
 export class Abracadabra {
+  /** 文言文生成配置构造函数。 */
+  static WenyanConfig: new (
+    PunctuationMark?: boolean,
+    RandomIndex?: number,
+    DilutionConfigObj?: DilutionConfig,
+    RandomParagraphing?: [number, number],
+    PianwenMode?: boolean,
+    LogicMode?: boolean,
+    Traditional?: boolean
+  ) => WenyanConfig;
+  /** 高级加密配置构造函数。 */
+  static AdvancedEncConfig: new (
+    Enable?: boolean,
+    UseStrongIV?: boolean,
+    UseHMAC?: boolean,
+    UsePBKDF2?: boolean,
+    UseTOTP?: boolean,
+    TOTPTimeStep?: number,
+    TOTPEpoch?: number,
+    TOTPBaseKey?: string | null,
+    FlexibleTransfer?: FlexibleTransferConfig
+  ) => AdvancedEncConfig;
+  /** 灵活传输配置构造函数。 */
+  static FlexibleTransferConfig: new (
+    Enable?: boolean,
+    UseAONT?: boolean,
+    MessageID?: number,
+    RandomParagraphing?: [number, number]
+  ) => FlexibleTransferConfig;
+  /** 密文稀释配置构造函数。 */
+  static DilutionConfig: new (
+    Enable?: boolean,
+    DilutionTargetRate?: number,
+    FilterMode?: "ALL" | "ESSAY" | "POEM" | "LYRIC",
+    PoemFilterMode?: "ALL" | "FOUR" | "FIVE" | "SEVEN",
+    SampleMode?: "SMART" | "RANDOM",
+    PayloadDistribution?: "UNIFORM" | "CONCENTRATE",
+    Corpus?: DilutionCorpus | null,
+    PoemAutoLineBreak?: boolean,
+    StyleRandomIndex?: number
+  ) => DilutionConfig;
+  /** 语料库构造函数；不传 Manifest 时加载内置语料库。 */
+  static DilutionCorpus: new (
+    Manifest?: DilutionCorpusSourceManifestObj | string | null,
+    B?: DilutionCorpusJSONInput | null,
+    S?: DilutionCorpusJSONInput | null,
+    C?: DilutionCorpusJSONInput | null
+  ) => DilutionCorpus;
+  /** 调试回调数据构造函数。 */
+  static CallbackObj: new (Type?: string, Value?: any) => CallbackObj;
   static TEXT: "TEXT";
   static UINT8: "UINT8";
 

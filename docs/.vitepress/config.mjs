@@ -1,12 +1,20 @@
 import { defineConfig } from "vitepress";
 import { withMermaid } from "vitepress-plugin-mermaid";
 
+const SITE_URL = "https://abracadabra.js.org";
+const SITE_NAME = "Abracadabra 魔曰";
+const SITE_DESCRIPTION =
+  "Abracadabra 魔曰是安全，高效的文本加密工具，可以将数据加密为汉字构成的文言文、古诗或词。";
+
 // https://vitepress.dev/reference/site-config
 export default withMermaid({
   lang: "zh-CN",
-  title: "Abracadabra 魔曰",
-  description:
-    "Abracadabra 魔曰是安全，高效的文本加密工具，可以将数据加密为汉字构成的文言文。",
+  title: SITE_NAME,
+  description: SITE_DESCRIPTION,
+  appearance: "force-dark",
+  sitemap: {
+    hostname: SITE_URL,
+  },
   head: [
     ["link", { rel: "icon", href: "/logo.png" }],
     [
@@ -14,30 +22,14 @@ export default withMermaid({
       {
         name: "keywords",
         content:
-          "加密, 文本加密, 链接加密, 隐私工具, 数据安全, 安全, 网络安全, 密码, 汉字编码, 中文",
+          "Abracadabra, 魔曰, 文本加密, 古文加密, 文言文加密, AES-256, 密文稀释, 本地加密, 隐私工具, 开源加密",
       },
     ],
     ["meta", { name: "author", content: "SheepChef" }],
-    [
-      "meta",
-      {
-        property: "og:title",
-        content: "魔曰 — 古文风文本加密工具",
-      },
-    ],
-    [
-      "meta",
-      {
-        property: "og:description",
-        content:
-          "Abracadabra 魔曰，是安全高效的文本加密工具，可以将数据加密为汉字构成的文言文",
-      },
-    ],
-    ["meta", { property: "og:url", content: "https://abracadabra.js.org" }],
-    [
-      "meta",
-      { property: "og:image", content: "https://abracadabra.js.org/logo.png" },
-    ],
+    ["meta", { property: "og:site_name", content: SITE_NAME }],
+    ["meta", { property: "og:locale", content: "zh_CN" }],
+    ["meta", { property: "og:image", content: `${SITE_URL}/logo.png` }],
+    ["meta", { name: "twitter:card", content: "summary" }],
     [
       "meta",
       {
@@ -46,6 +38,63 @@ export default withMermaid({
       },
     ],
   ],
+  transformHead({ pageData }) {
+    const cleanPath = pageData.relativePath
+      .replace(/(^|\/)index\.md$/, "$1")
+      .replace(/\.md$/, ".html");
+    const canonicalUrl = `${SITE_URL}/${cleanPath}`;
+    const isHome = pageData.relativePath === "index.md";
+    const pageTitle = pageData.frontmatter?.title || pageData.title;
+    const fullTitle = pageTitle ? `${pageTitle} | ${SITE_NAME}` : SITE_NAME;
+    const pageDesc =
+      pageData.frontmatter?.description ||
+      pageData.description ||
+      SITE_DESCRIPTION;
+
+    const head = [
+      ["link", { rel: "canonical", href: canonicalUrl }],
+      ["meta", { property: "og:url", content: canonicalUrl }],
+      [
+        "meta",
+        { property: "og:type", content: isHome ? "website" : "article" },
+      ],
+      ["meta", { property: "og:title", content: fullTitle }],
+      ["meta", { property: "og:description", content: pageDesc }],
+      ["meta", { name: "twitter:title", content: fullTitle }],
+      ["meta", { name: "twitter:description", content: pageDesc }],
+    ];
+
+    if (isHome) {
+      head.push([
+        "script",
+        { type: "application/ld+json" },
+        JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          name: SITE_NAME,
+          alternateName: "魔曰",
+          url: `${SITE_URL}/`,
+          applicationCategory: "SecurityApplication",
+          operatingSystem: "Web, Android, Windows, macOS, Linux",
+          softwareVersion: "3.8.0",
+          inLanguage: "zh-CN",
+          isAccessibleForFree: true,
+          description: pageDesc,
+          author: {
+            "@type": "Person",
+            name: "SheepChef",
+            url: "https://shef.cc",
+          },
+          sameAs: [
+            "https://github.com/SheepChef/Abracadabra",
+            "https://abra.js.org",
+          ],
+        }),
+      ]);
+    }
+
+    return head;
+  },
 
   themeConfig: {
     nav: [
@@ -81,6 +130,7 @@ export default withMermaid({
           { text: "灵活分段传输", link: "/document/flexible.md" },
           { text: "字符映射", link: "/document/character.md" },
           { text: "文言文仿真", link: "/document/wenyan.md" },
+          { text: "密文稀释", link: "/document/dilution.md" },
         ],
       },
       {
