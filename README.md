@@ -249,6 +249,8 @@ Abracadabra 以最常用的部分汉字为密本，对大小写拉丁字母，�
 
 感谢 [**@Amlkiller**](https://github.com/amlkiller) 为本项目提供十分有价值的反馈和建议。
 
+感谢 [秋风广告规则](https://github.com/TG-Twilight/AWAvenue-Ads-Rule) 与本项目的互助。
+
 感谢 **熊曰(与熊论道)、佛曰、兽音译者** 为本项目提供灵感和参考。
 
 感谢贡献 PR 和参与测试的其他所有人，以及**正在使用本项目的您**。
