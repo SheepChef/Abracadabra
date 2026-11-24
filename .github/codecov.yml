@@ -1,0 +1,16 @@
+# Codecov configuration for Abracadabra
+# Coverage reporting only.
+
+coverage:
+  precision: 2
+  round: down
+  range: "80...95"
+
+  status:
+    project: false
+    patch: false
+    changes: false
+
+comment: false
+
+github_checks: false
